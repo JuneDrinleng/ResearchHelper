@@ -1,0 +1,53 @@
+name: Build and Package Application
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pyinstaller
+
+      - name: Build Python executable
+        run: |
+          pyinstaller --onefile --noconsole main.py
+          mkdir dist
+          move dist\main.exe dist\main.exe
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Node.js dependencies
+        run: npm install
+
+      - name: Build Electron application
+        run: npm run build
+
+      - name: Package Electron application
+        run: |
+          npx electron-builder --win --x64 --config electron-builder.json
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: packaged-app
+          path: dist/

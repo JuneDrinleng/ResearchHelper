@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <title>设置 - ResearchHelper</title>
+    <style>
+      body {
+        font-family: "Segoe UI", sans-serif;
+        padding: 40px;
+        max-width: 800px;
+        margin: auto;
+        transition: background-color 0.3s, color 0.3s;
+      }
+
+      h1 {
+        text-align: center;
+        font-size: 36px;
+        margin-bottom: 20px;
+      }
+
+      .top-nav {
+        text-align: left;
+        margin-bottom: 20px;
+      }
+
+      .top-nav a {
+        display: inline-block;
+        padding: 8px 16px;
+        background-color: #e0e0e0;
+        color: #333;
+        text-decoration: none;
+        border-radius: 4px;
+        font-size: 14px;
+      }
+
+      .top-nav a:hover {
+        background-color: #ccc;
+      }
+
+      label {
+        display: block;
+        font-weight: bold;
+        margin-top: 20px;
+      }
+
+      input[type="text"],
+      select {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+        font-size: 16px;
+      }
+
+      button {
+        margin-top: 30px;
+        padding: 12px 30px;
+        background-color: #0078d7;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #005a9e;
+      }
+
+      .footer {
+        text-align: center;
+        margin-top: 40px;
+        font-size: 14px;
+      }
+
+      /* ====== 浅色模式 ====== */
+      body.light-mode {
+        background-color: #f9fafc;
+        color: #000;
+      }
+
+      /* ====== 深色模式 ====== */
+      body.dark-mode {
+        background-color: #1e1e1e;
+        color: #eee;
+      }
+
+      body.dark-mode label,
+      body.dark-mode h1 {
+        color: #fff;
+      }
+
+      body.dark-mode input,
+      body.dark-mode select {
+        background-color: #2e2e2e;
+        color: #fff;
+        border: 1px solid #555;
+      }
+
+      body.dark-mode .top-nav a {
+        background-color: #444;
+        color: #eee;
+      }
+
+      body.dark-mode .top-nav a:hover {
+        background-color: #666;
+      }
+
+      body.dark-mode .footer {
+        color: #aaa;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="top-nav">
+      <a href="/index.html">← 返回首页</a>
+    </div>
+
+    <h1>ResearchHelper 设置</h1>
+
+    <form>
+      <label for="theme">界面主题</label>
+      <select id="theme" name="theme">
+        <option value="light">浅色</option>
+        <option value="dark">深色</option>
+      </select>
+    </form>
+
+    <div class="footer">ResearchHelper v1.0 | From June Drinleng</div>
+
+    <script>
+      // 加载主题
+      const savedTheme = localStorage.getItem("theme") || "light";
+      document.body.classList.add(savedTheme + "-mode");
+      document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("theme").value = savedTheme;
+
+        // 切换主题时
+        document.getElementById("theme").addEventListener("change", (e) => {
+          const newTheme = e.target.value;
+          document.body.classList.remove("light-mode", "dark-mode");
+          document.body.classList.add(newTheme + "-mode");
+          localStorage.setItem("theme", newTheme);
+        });
+      });
+    </script>
+  </body>
+</html>

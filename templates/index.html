@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <title>欢迎 - ResearchHelper</title>
+    <style>
+      body {
+        font-family: "Segoe UI", sans-serif;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0 40px; /* 只左右留空 */
+        text-align: center;
+        transition: background-color 0.3s, color 0.3s;
+        margin: 0; /* 移除默认 margin */
+        box-sizing: border-box;
+      }
+
+      body.light-mode {
+        background-color: #f9fafc;
+        color: #000;
+      }
+
+      body.dark-mode {
+        background-color: #1e1e1e;
+        color: #eee;
+      }
+
+      .btn {
+        padding: 10px 20px;
+        background-color: #0078d7;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: 16px;
+      }
+
+      .btn:hover {
+        background-color: #005a9e;
+      }
+
+      .button-group {
+        display: flex;
+        gap: 20px;
+        margin-top: 20px;
+      }
+
+      .footer {
+        margin-top: 60px;
+        font-size: 14px;
+        color: #888;
+      }
+    </style>
+    <script>
+      const theme = localStorage.getItem("theme") || "light";
+      document.addEventListener("DOMContentLoaded", () => {
+        document.body.classList.add(theme + "-mode");
+      });
+    </script>
+  </head>
+  <body>
+    <h1>欢迎使用 ResearchHelper</h1>
+    <p>这是一个用于聚合微博热搜与自定义设置的桌面助手</p>
+
+    <div class="button-group">
+      <a href="/settings" class="btn">进入设置</a>
+      <a href="/hotsearch" class="btn">查看热搜</a>
+    </div>
+
+    <div class="footer">© 2025 June Drinleng, ResearchHelper</div>
+  </body>
+</html>
