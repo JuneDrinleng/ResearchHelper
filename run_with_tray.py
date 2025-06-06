@@ -5,6 +5,20 @@ from hotsearch_task import hot_search_loop
 from server import run_server
 from get_resource import resource_path
 import ctypes
+
+import sys
+import win32event
+import win32api
+import winerror
+
+def check_single_instance(mutex_name="hotsearch_singleton"):
+    mutex = win32event.CreateMutex(None, False, mutex_name)
+    last_error = win32api.GetLastError()
+    if last_error == winerror.ERROR_ALREADY_EXISTS:
+        print("检测到程序已在运行，自动退出。")
+        sys.exit(0)
+    return mutex  # 需要保留引用，避免被GC释放
+
 def create_emoji_icon(emoji_char="📟"):
     img = Image.new('RGBA', (64, 64), (255,255,255,0))
     draw = ImageDraw.Draw(img)
@@ -25,6 +39,7 @@ def on_quit(icon, item):
     os._exit(0)
 
 if __name__ == '__main__':
+    mutex = check_single_instance()
     try:
         ctypes.windll.shcore.SetProcessDpiAwareness(1)
     except:
@@ -36,7 +51,7 @@ if __name__ == '__main__':
     threading.Thread(target=hot_search_loop, args=("https://weibo.com/ajax/side/hotSearch",), daemon=True).start()
 
     menu = Menu(
-        MenuItem("打开浏览器", open_browser),
+        MenuItem("微博热搜", open_browser),
         MenuItem("退出", on_quit)
     )
     icon_path = resource_path("favicon.ico")
