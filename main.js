@@ -12,7 +12,7 @@ function createWindow() {
     show: true,
   });
 
-  mainWindow.loadURL("http://localhost:8080/index.html");
+  mainWindow.loadFile(path.join(__dirname, "templates", "index.html"));
 
   mainWindow.on("close", (event) => {
     if (!forceQuit) {

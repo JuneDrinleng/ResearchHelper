@@ -131,7 +131,8 @@
 
         // 加载热搜数据
         function loadHotsearch() {
-          fetch("/api/hotsearch")
+          const backendUrl = "http://localhost:8080";
+          fetch(`${backendUrl}/api/hotsearch`)
             .then((res) => res.json())
             .then((data) => {
               const list = document.getElementById("hotsearch-list");
@@ -167,7 +168,7 @@
   </head>
   <body>
     <div class="top-bar">
-      <a class="back-button" href="/index.html">← 返回首页</a>
+      <a class="back-button" href="./index.html">← 返回首页</a>
       <h1 class="hot-title">🔥 微博热搜</h1>
     </div>
 

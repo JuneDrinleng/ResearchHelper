@@ -6,7 +6,7 @@ how to package
 pyinstaller --onefile --noconsole main.py
 ```
 
-把 main.exey 移动到根目录，其他的文件夹删除
+把 main.exe 移动到根目录，其他的文件夹删除
 
 # package electron app
 
