@@ -1,11 +1,11 @@
 @echo off
 call .venv\Scripts\activate
 
-pyinstaller --noconfirm --windowed ^
+pyinstaller --noconfirm --windowed --onefile ^
   --name ResearchHelper ^
-  --icon=favicon.ico ^
+  --icon=static/favicon.ico ^
   --add-data "templates;templates" ^
-  --add-data "favicon.ico;." ^
-  run_with_tray.py
+  --add-data "static;static" ^
+  main.py
 
 pause

@@ -1,9 +1,9 @@
-import threading, subprocess, os, time, webbrowser
+import threading, os,  webbrowser
 from pystray import Icon, Menu, MenuItem
 from PIL import Image, ImageDraw, ImageFont
-from hotsearch_task import hot_search_loop
+from utils.hotsearch_task import hot_search_loop
 from server import run_server
-from get_resource import resource_path
+from utils.get_resource import resource_path
 import ctypes
 
 import sys
@@ -58,7 +58,7 @@ if __name__ == '__main__':
         MenuItem("设置", open_settings),
         MenuItem("退出", on_quit)
     )
-    icon_path = resource_path("favicon.ico")
+    icon_path = resource_path("static/favicon.ico")
     if not os.path.exists(icon_path):
         # Create a default icon if it doesn't exist
         create_emoji_icon("📟").save(icon_path, "ICO")

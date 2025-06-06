@@ -1,6 +1,6 @@
 import time, requests
 import pandas as pd
-from log_utils import record_hotsearch,log,get_log_path
+from utils.log_utils import record_hotsearch,log,get_log_path
 import os
 def hot_search_loop(url, interval=60):
     paste = get_log_path(log_name="hot_history.log")

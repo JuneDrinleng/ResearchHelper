@@ -1,6 +1,6 @@
 from flask import Flask, render_template
-from log_utils import get_log_path
-from get_resource import resource_path
+from utils.log_utils import get_log_path
+from utils.get_resource import resource_path
 
 app = Flask(__name__, template_folder=resource_path("templates"))
 hotsearch_enabled = True
