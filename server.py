@@ -3,15 +3,21 @@ from log_utils import get_log_path
 from get_resource import resource_path
 
 app = Flask(__name__, template_folder=resource_path("templates"))
-
-@app.route('/')
-def index():
+hotsearch_enabled = True
+@app.route('/hotsearch')
+def hotSearch():
     try:
         with open(get_log_path(log_name="hot_history.log"), 'r', encoding='utf-8') as f:
             content = f.read()
     except:
         content = "日志文件读取失败"
-    return render_template("index.html", log=content)
+    return render_template("hotsearch.html", log=content)
+
+
+@app.route('/settings')
+def settings():
+    return render_template("settings.html")
+
 
 def run_server():
     app.run(host='localhost', port=8080)

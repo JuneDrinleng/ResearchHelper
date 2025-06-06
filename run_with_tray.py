@@ -31,8 +31,11 @@ def create_emoji_icon(emoji_char="📟"):
     draw.text(((64-w)/2, (64-h)/2), emoji_char, font=font, fill="black")
     return img
 
-def open_browser(icon, item):
-    webbrowser.open("http://localhost:8080")
+
+def open_settings(icon, item):
+    webbrowser.open("http://localhost:8080/settings")
+def open_hot(icon, item):
+    webbrowser.open("http://localhost:8080/hotsearch")
 
 def on_quit(icon, item):
     icon.stop()
@@ -51,7 +54,8 @@ if __name__ == '__main__':
     threading.Thread(target=hot_search_loop, args=("https://weibo.com/ajax/side/hotSearch",), daemon=True).start()
 
     menu = Menu(
-        MenuItem("微博热搜", open_browser),
+        MenuItem("微博热搜", open_hot),
+        MenuItem("设置", open_settings),
         MenuItem("退出", on_quit)
     )
     icon_path = resource_path("favicon.ico")
