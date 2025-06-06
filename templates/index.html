@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <title>热搜日志</title>
+    <script>
+      function fetchLog() {
+        fetch("/log")
+          .then((response) => response.json())
+          .then((data) => {
+            document.getElementById("latest").innerText = data.latest;
+            document.getElementById("history").innerText =
+              data.history.join("\n");
+          });
+      }
+      setInterval(fetchLog, 5000);
+      window.onload = fetchLog;
+    </script>
+  </head>
+  <body>
+    <h1>📟 实时热搜</h1>
+    <h2>当前榜首</h2>
+    <pre id="latest">加载中...</pre>
+    <h2>历史记录（最多 24 条）</h2>
+    <pre id="history">加载中...</pre>
+  </body>
+</html>
