@@ -1,7 +1,7 @@
 const { app, BrowserWindow, Tray, Menu } = require("electron");
 const path = require("path");
 const { spawn } = require("child_process");
-
+const kill = require("tree-kill");
 let mainWindow;
 let tray = null;
 let forceQuit = false; // ✅ 定义变量
@@ -10,8 +10,13 @@ let backendProcess = null;
 function getBackendExePath() {
   const isPackaged = app.isPackaged;
   return isPackaged
-    ? path.join(process.resourcesPath, "backend", "dist", "main.exe") // 打包后
-    : path.join(__dirname, "backend", "dist", "main.exe"); // 开发时
+    ? path.join(
+        process.resourcesPath,
+        "backend",
+        "dist",
+        "ResearchHelperService.exe"
+      ) // 打包后
+    : path.join(__dirname, "backend", "dist", "ResearchHelperService.exe"); // 开发时
 }
 function startBackend() {
   const exePath = getBackendExePath();
@@ -81,10 +86,30 @@ function createTray() {
   tray.setContextMenu(contextMenu);
 }
 
-app.on("before-quit", () => {
-  forceQuit = true; // ✅ 确保监听 quit 时也允许关闭
+app.on("before-quit", (e) => {
+  forceQuit = true;
+
   if (backendProcess) {
-    backendProcess.kill();
+    console.log("trying to kill ,PID:", backendProcess.pid);
+
+    e.preventDefault(); // 延迟退出，等 kill 完
+
+    kill(backendProcess.pid, "SIGTERM", (err) => {
+      if (err) {
+        console.error("Failed to close", err);
+      } else {
+        console.log("Successfully closed backend process.");
+      }
+
+      // 最终还是退出应用（确保退出）
+      app.exit();
+    });
+
+    // ⏱ 如果 3 秒还没响应，就强杀并退出
+    setTimeout(() => {
+      console.warn("entirely close Electron。");
+      app.exit();
+    }, 3000);
   }
 });
 

@@ -4,7 +4,7 @@ how to package
 
 ```
 cd backend
-pyinstaller --onefile --noconsole main.py
+pyinstaller --onefile --noconsole --name ResearchHelperService main.py
 ```
 
 # package electron app
