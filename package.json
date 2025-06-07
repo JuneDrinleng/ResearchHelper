@@ -30,8 +30,13 @@
     "files": [
       "main.js",
       "templates/**/*",
-      "favicon.ico",
-      "backend/dist/main.exe"
+      "favicon.ico"
+    ],
+    "extraResources": [
+      {
+        "from": "backend/dist/main.exe",
+        "to": "backend/dist/main.exe"
+      }
     ],
     "asar": true,
     "win": {
