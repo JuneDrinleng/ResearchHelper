@@ -40,7 +40,7 @@
     ],
     "asar": true,
     "win": {
-      "target": "portable",
+      "target": "nsis",
       "icon": "favicon.ico"
     },
     "publish": [
