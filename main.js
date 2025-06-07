@@ -1,11 +1,52 @@
-const { app, BrowserWindow, Tray, Menu } = require("electron");
+const { app, BrowserWindow, Tray, Menu, dialog } = require("electron");
 const path = require("path");
 const { spawn } = require("child_process");
 const kill = require("tree-kill");
+const { autoUpdater } = require("electron-updater");
 let mainWindow;
 let tray = null;
 let forceQuit = false; // ✅ 定义变量
 let backendProcess = null;
+
+// ✅ 自动更新配置
+autoUpdater.autoDownload = false;
+
+autoUpdater.on("update-available", () => {
+  dialog
+    .showMessageBox({
+      type: "info",
+      title: "有新版本可用",
+      message: "发现新版本，是否现在下载？",
+      buttons: ["是", "否"],
+    })
+    .then((result) => {
+      if (result.response === 0) {
+        autoUpdater.downloadUpdate();
+      }
+    });
+});
+
+autoUpdater.on("update-downloaded", () => {
+  dialog
+    .showMessageBox({
+      title: "更新已下载",
+      message: "更新已下载，是否立即重启安装？",
+      buttons: ["重启", "稍后"],
+    })
+    .then((result) => {
+      if (result.response === 0) {
+        autoUpdater.quitAndInstall();
+      }
+    });
+});
+
+// 可选：监听错误
+autoUpdater.on("error", (error) => {
+  dialog.showErrorBox(
+    "更新出错",
+    error == null ? "未知错误" : (error.stack || error).toString()
+  );
+});
 
 function getBackendExePath() {
   const isPackaged = app.isPackaged;
@@ -117,4 +158,5 @@ app.whenReady().then(() => {
   startBackend(); // ✅ 启动 Flask 后端
   createWindow();
   createTray();
+  autoUpdater.checkForUpdates();
 });

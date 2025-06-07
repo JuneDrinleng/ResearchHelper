@@ -1,0 +1,49 @@
+name: Build Python + Electron
+
+on:
+  push:
+    branches:
+      - electron
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v3
+
+      - name: 🐍 Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: 🛠 Install Python dependencies
+        working-directory: ./backend
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: 🔨 Build Python backend with PyInstaller
+        working-directory: ./backend
+        run: |
+          pip install pyinstaller
+          pyinstaller --onefile --noconsole --name ResearchHelperService --icon=../favicon.ico main.py
+
+      - name: ⚙️ Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: 📦 Install Node dependencies
+        run: npm install
+
+      - name: 📤 Move backend exe to expected path (optional, if needed)
+        run: |
+          mkdir -p backend/dist
+          move backend/dist/ResearchHelperService.exe backend/dist/ResearchHelperService.exe
+
+      - name: 🔧 Build Electron App
+        run: npx electron-builder --win --x64 --publish=never
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
