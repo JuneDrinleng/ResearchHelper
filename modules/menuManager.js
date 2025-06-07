@@ -7,6 +7,18 @@ function createAppMenu(app, mainWindow, autoUpdater, gracefulExit) {
       label: "文件",
       submenu: [
         {
+          label: "设置",
+          accelerator: "CmdOrCtrl+P", // 常规设置快捷键
+          click: () => {
+            mainWindow.loadFile(
+              path.join(__dirname, "../templates/settings.html")
+            );
+          },
+        },
+        {
+          type: "separator",
+        },
+        {
           label: "退出",
           accelerator: "CmdOrCtrl+Q",
           click: () => {
@@ -51,6 +63,9 @@ function createAppMenu(app, mainWindow, autoUpdater, gracefulExit) {
               autoUpdater.checkForUpdates();
             }
           },
+        },
+        {
+          type: "separator",
         },
         {
           label: "关于",

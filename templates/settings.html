@@ -123,6 +123,7 @@
     <form>
       <label for="theme">界面主题</label>
       <select id="theme" name="theme">
+        <option value="system">跟随系统</option>
         <option value="light">浅色</option>
         <option value="dark">深色</option>
       </select>
@@ -131,18 +132,41 @@
     <div class="footer">ResearchHelper v1.0 | From June Drinleng</div>
 
     <script>
-      // 加载主题
-      const savedTheme = localStorage.getItem("theme") || "light";
-      document.body.classList.add(savedTheme + "-mode");
-      document.addEventListener("DOMContentLoaded", () => {
-        document.getElementById("theme").value = savedTheme;
+      const themeSelect = document.getElementById("theme");
 
-        // 切换主题时
-        document.getElementById("theme").addEventListener("change", (e) => {
-          const newTheme = e.target.value;
-          document.body.classList.remove("light-mode", "dark-mode");
-          document.body.classList.add(newTheme + "-mode");
-          localStorage.setItem("theme", newTheme);
+      // 监听系统主题变更（仅当选择 system 时启用）
+      const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+      mediaQuery.addEventListener("change", () => {
+        if (localStorage.getItem("theme") === "system") {
+          applyTheme("system");
+        }
+      });
+
+      // 应用主题函数
+      function applyTheme(theme) {
+        document.body.classList.remove("light-mode", "dark-mode");
+
+        let finalTheme = theme;
+        if (theme === "system") {
+          const prefersDark = window.matchMedia(
+            "(prefers-color-scheme: dark)"
+          ).matches;
+          finalTheme = prefersDark ? "dark" : "light";
+        }
+
+        document.body.classList.add(finalTheme + "-mode");
+      }
+
+      // 初始化
+      document.addEventListener("DOMContentLoaded", () => {
+        let savedTheme = localStorage.getItem("theme") || "system";
+        themeSelect.value = savedTheme;
+        applyTheme(savedTheme);
+
+        themeSelect.addEventListener("change", (e) => {
+          const selectedTheme = e.target.value;
+          localStorage.setItem("theme", selectedTheme);
+          applyTheme(selectedTheme);
         });
       });
     </script>

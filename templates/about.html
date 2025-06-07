@@ -79,6 +79,37 @@
         color: #0366d6;
         text-decoration: none;
       }
+      body.dark-mode {
+        background-color: #1e1e1e;
+        color: #eee;
+      }
+
+      body.dark-mode .container {
+        background-color: #2b2b2b;
+        color: #eee;
+        box-shadow: 0 2px 8px rgba(255, 255, 255, 0.05);
+      }
+
+      body.dark-mode h1 {
+        color: white;
+      }
+
+      body.dark-mode .label {
+        color: #ffffff;
+      }
+
+      body.dark-mode .value {
+        color: #fff;
+      }
+
+      body.dark-mode .button {
+        background-color: #3391ff;
+        color: white;
+      }
+
+      body.dark-mode .github-link {
+        color: #4fa3f7;
+      }
     </style>
   </head>
   <body>
@@ -86,11 +117,10 @@
       <img class="avatar" src="../assets/self.jpg" alt="Logo" />
       <h1>关于 ResearchHelper</h1>
       <p>
-        <span class="label">版本：</span
-        ><span id="version" class="value"></span>
+        <span class="label">Ver: </span><span id="version" class="value"></span>
       </p>
       <p>
-        <span class="label">作者：</span
+        <span class="label">Author: </span
         ><span class="value">June Drinleng</span>
       </p>
 
@@ -105,6 +135,8 @@
     </div>
 
     <script>
+      const theme = localStorage.getItem("theme") || "light";
+      document.body.classList.add(theme + "-mode");
       fetch("../package.json")
         .then((res) => res.json())
         .then((pkg) => {

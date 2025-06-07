@@ -60,18 +60,38 @@
       .hot-title {
         text-align: center;
         font-size: 28px;
-        color: #d62d20;
+        color: #a83333;
         margin: 0;
         line-height: 40px;
       }
 
       .hot-item {
         border-bottom: 1px solid #ddd;
+        align-items: center;
         padding: 12px 0;
         display: flex;
-        align-items: flex-start;
+      }
+      .meta {
+        display: flex;
+        align-items: center; /* 核心：垂直居中！ */
+        justify-content: flex-end;
+        gap: 10px;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 1;
       }
 
+      .heat {
+        color: #777777;
+        line-height: 1; /* 保证文字和图标贴齐 */
+      }
+
+      .label-icon {
+        width: 30px;
+        height: 30px;
+        display: inline-block;
+        vertical-align: middle; /* 与文字基线对齐 */
+      }
       .rank {
         width: 40px;
         font-size: 18px;
@@ -102,7 +122,9 @@
       body.dark-mode .rank {
         color: #ccc;
       }
-
+      body.dark-mode .heat {
+        color: #bbb;
+      }
       body.dark-mode .title {
         color: #ffffff;
       }
@@ -120,6 +142,9 @@
 
       body.dark-mode .footer {
         color: #888;
+      }
+      body.dark-mode .hot-title {
+        color: #ffaea6;
       }
     </style>
 
@@ -148,11 +173,21 @@
                 const div = document.createElement("div");
                 div.className = "hot-item";
                 div.innerHTML = `
-              <div class="rank">${item.rank}</div>
-              <div class="content">
-                <p class="title">${item.title}</p>
-              </div>
-            `;
+                <div class="rank">${item.rank}</div>
+                <div class="content">
+                  <p class="title">${item.word}</p>
+                </div>
+                <div class="meta">
+                  <span class="heat">🔥 ${
+                    item.num?.toLocaleString?.() || ""
+                  }     </span>  
+                  ${
+                    item.icon
+                      ? `<img class="label-icon" src="${item.icon}" alt="${item.icon_desc}" title="${item.icon_desc}" />`
+                      : ""
+                  }
+                </div>
+              `;
                 list.appendChild(div);
               });
             })
