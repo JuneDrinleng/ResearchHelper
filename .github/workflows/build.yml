@@ -38,11 +38,6 @@ jobs:
       - name: 📦 Install Node dependencies
         run: npm install
 
-      - name: 📤 Move backend exe to expected path (optional, if needed)
-        run: |
-          mkdir -p backend/dist
-          move backend/dist/ResearchHelperService.exe backend/dist/ResearchHelperService.exe
-
       - name: 🔧 Build Electron App
         run: npx electron-builder --win --x64 --publish=never
         env:
