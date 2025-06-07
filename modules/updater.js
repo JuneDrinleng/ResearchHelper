@@ -17,6 +17,14 @@ function setupAutoUpdater(dialog) {
         }
       });
   });
+  autoUpdater.on("update-not-available", () => {
+    dialog.showMessageBox({
+      type: "info",
+      title: "已是最新版本",
+      message: "当前已是最新版本，无需更新。",
+      buttons: ["确定"],
+    });
+  });
 
   autoUpdater.on("update-downloaded", () => {
     dialog
