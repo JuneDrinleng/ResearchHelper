@@ -1,5 +1,5 @@
 const { autoUpdater } = require("electron-updater");
-
+let manualCheck = false;
 function setupAutoUpdater(dialog) {
   autoUpdater.autoDownload = false;
 
@@ -18,12 +18,14 @@ function setupAutoUpdater(dialog) {
       });
   });
   autoUpdater.on("update-not-available", () => {
-    dialog.showMessageBox({
-      type: "info",
-      title: "已是最新版本",
-      message: "当前已是最新版本，无需更新。",
-      buttons: ["确定"],
-    });
+    if (manualCheck) {
+      dialog.showMessageBox({
+        type: "info",
+        title: "已是最新版本",
+        message: "当前已是最新版本，无需更新。",
+        buttons: ["确定"],
+      });
+    }
   });
 
   autoUpdater.on("update-downloaded", () => {
@@ -49,5 +51,17 @@ function setupAutoUpdater(dialog) {
 
   autoUpdater.checkForUpdates();
 }
+function manualUpdateCheck() {
+  manualCheck = true;
+  autoUpdater.checkForUpdates();
+}
 
-module.exports = { setupAutoUpdater };
+function autoUpdateCheck() {
+  manualCheck = false;
+  autoUpdater.checkForUpdates();
+}
+module.exports = {
+  setupAutoUpdater,
+  manualUpdateCheck,
+  autoUpdateCheck,
+};

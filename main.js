@@ -2,6 +2,7 @@ const { app, BrowserWindow, Tray, Menu, dialog } = require("electron");
 const path = require("path");
 const kill = require("tree-kill");
 const { setupAutoUpdater } = require("./modules/updater");
+const { autoUpdateCheck } = require("./modules/updater");
 const backendManager = require("./modules/backendManager");
 const startBackend = backendManager.startBackend;
 const { createAppMenu } = require("./modules/menuManager");
@@ -88,5 +89,6 @@ app.whenReady().then(() => {
     gracefulExit
   );
   createTray();
+  autoUpdateCheck();
   setupAutoUpdater(dialog);
 });

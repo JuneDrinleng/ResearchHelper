@@ -24,12 +24,7 @@ def index():
     return render_template("index.html")
 
 
-def handle_exit(sig, frame):
-    print("[Flask] 接收到退出信号，准备退出...")
-    sys.exit(0)
 
-signal.signal(signal.SIGINT, handle_exit)   # Ctrl+C
-signal.signal(signal.SIGTERM, handle_exit)  # kill 进程 或 Electron quit
 
 if __name__ == '__main__':
     app.run(port=8080)

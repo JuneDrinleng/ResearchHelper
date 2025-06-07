@@ -1,5 +1,6 @@
 const { Menu, shell } = require("electron");
-
+const path = require("path");
+const { manualUpdateCheck } = require("./updater");
 function createAppMenu(app, mainWindow, autoUpdater, gracefulExit) {
   const template = [
     {
@@ -45,6 +46,7 @@ function createAppMenu(app, mainWindow, autoUpdater, gracefulExit) {
         {
           label: "检查更新",
           click: () => {
+            manualUpdateCheck();
             if (autoUpdater) {
               autoUpdater.checkForUpdates();
             }
@@ -53,7 +55,9 @@ function createAppMenu(app, mainWindow, autoUpdater, gracefulExit) {
         {
           label: "关于",
           click: () => {
-            mainWindow.webContents.send("open-about-dialog");
+            mainWindow.loadFile(
+              path.join(__dirname, "../templates/about.html")
+            );
           },
         },
       ],

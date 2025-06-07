@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <title>关于 ResearchHelper</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Segoe UI", Roboto, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 40px;
+        color: #333;
+      }
+
+      .container {
+        max-width: 600px;
+        margin: auto;
+        background: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+        color: #2c3e50;
+      }
+
+      p {
+        font-size: 16px;
+        font-size: 16px;
+        line-height: 1.6;
+      }
+
+      .label {
+        font-weight: bold;
+        color: #555;
+      }
+
+      .value {
+        margin-left: 8px;
+        font-family: "Poetsen One", sans-serif;
+        font-size: 16px;
+        color: #000;
+      }
+
+      .avatar {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        margin-bottom: 20px;
+      }
+
+      .button {
+        display: inline-block;
+        margin-top: 30px;
+        padding: 10px 20px;
+        font-size: 16px;
+        color: white;
+        background-color: #0078d7;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+      }
+
+      .github-link {
+        display: inline-block;
+        margin-top: 20px;
+        font-size: 14px;
+        color: #0366d6;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <img class="avatar" src="../assets/self.jpg" alt="Logo" />
+      <h1>关于 ResearchHelper</h1>
+      <p>
+        <span class="label">版本：</span
+        ><span id="version" class="value"></span>
+      </p>
+      <p>
+        <span class="label">作者：</span
+        ><span class="value">June Drinleng</span>
+      </p>
+      <p>
+        <span class="label">最后更新时间：</span
+        ><span id="updated" class="value"></span>
+      </p>
+
+      <a class="button" href="./index.html">返回首页</a>
+      <br />
+      <a
+        class="github-link"
+        href="https://github.com/JuneDrinleng/ResearchHelper"
+        target="_blank"
+        >🔗 GitHub 项目主页</a
+      >
+    </div>
+
+    <script>
+      fetch("../package.json")
+        .then((res) => res.json())
+        .then((pkg) => {
+          document.getElementById("version").textContent = pkg.version;
+        })
+        .catch(() => {
+          document.getElementById("version").textContent = "unknown";
+        });
+
+      fetch("../package.json")
+        .then((res) => res.headers.get("Last-Modified"))
+        .then((modified) => {
+          document.getElementById("updated").textContent = new Date(
+            modified
+          ).toLocaleDateString();
+        })
+        .catch(() => {
+          document.getElementById("updated").textContent = "unknown";
+        });
+    </script>
+  </body>
+</html>
