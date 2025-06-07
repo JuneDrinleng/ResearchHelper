@@ -42,3 +42,9 @@ jobs:
         run: npx electron-builder --win --x64 --publish=never
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
+      - name: 📦 Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: electron-build-output
+          path: dist/
