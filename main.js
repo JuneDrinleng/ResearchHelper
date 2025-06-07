@@ -1,9 +1,35 @@
 const { app, BrowserWindow, Tray, Menu } = require("electron");
 const path = require("path");
+const { spawn } = require("child_process");
 
 let mainWindow;
 let tray = null;
 let forceQuit = false; // ✅ 定义变量
+let backendProcess = null;
+
+function getBackendExePath() {
+  const isPackaged = app.isPackaged;
+  return isPackaged
+    ? path.join(process.resourcesPath, "backend", "dist", "main.exe") // 打包后
+    : path.join(__dirname, "backend", "dist", "main.exe"); // 开发时
+}
+function startBackend() {
+  const exePath = getBackendExePath();
+  // backendProcess = spawn("python", [script]);
+  backendProcess = spawn(exePath);
+
+  backendProcess.stdout.on("data", (data) => {
+    console.log(`[Flask] ${data}`);
+  });
+
+  backendProcess.stderr.on("data", (data) => {
+    console.error(`[Flask Error] ${data}`);
+  });
+
+  backendProcess.on("close", (code) => {
+    console.log(`Flask backend exited with code ${code}`);
+  });
+}
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -57,9 +83,13 @@ function createTray() {
 
 app.on("before-quit", () => {
   forceQuit = true; // ✅ 确保监听 quit 时也允许关闭
+  if (backendProcess) {
+    backendProcess.kill();
+  }
 });
 
 app.whenReady().then(() => {
+  startBackend(); // ✅ 启动 Flask 后端
   createWindow();
   createTray();
 });

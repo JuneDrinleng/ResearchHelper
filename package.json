@@ -21,7 +21,23 @@
   "homepage": "https://github.com/JuneDrinleng/ResearchHelper#readme",
   "description": "",
   "devDependencies": {
-    "electron": "^36.4.0",
+    "electron": "36.4.0",
     "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "com.example.researchhelper",
+    "productName": "ResearchHelper",
+    "files": [
+      "main.js",
+      "templates/**/*",
+      "favicon.ico",
+      "backend/dist/main.exe"
+    ],
+    "asar": true,
+    "win": {
+      "target": "portable",
+      "icon": "favicon.ico"
+    },
+    "publish": null
   }
 }
