@@ -1,6 +1,6 @@
 const { Menu, shell } = require("electron");
 
-function createAppMenu(app, mainWindow, autoUpdater) {
+function createAppMenu(app, mainWindow, autoUpdater, gracefulExit) {
   const template = [
     {
       label: "文件",
@@ -8,7 +8,14 @@ function createAppMenu(app, mainWindow, autoUpdater) {
         {
           label: "退出",
           accelerator: "CmdOrCtrl+Q",
-          click: () => app.quit(),
+          click: () => {
+            console.log("🟢 menu is clicked ");
+            try {
+              gracefulExit();
+            } catch (e) {
+              console.error("using gracefulExit error:", e);
+            }
+          },
         },
       ],
     },

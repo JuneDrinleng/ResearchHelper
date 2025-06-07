@@ -2,7 +2,8 @@ const { app, BrowserWindow, Tray, Menu, dialog } = require("electron");
 const path = require("path");
 const kill = require("tree-kill");
 const { setupAutoUpdater } = require("./modules/updater");
-const { startBackend, backendProcess } = require("./modules/backendManager");
+const backendManager = require("./modules/backendManager");
+const startBackend = backendManager.startBackend;
 const { createAppMenu } = require("./modules/menuManager");
 let mainWindow;
 let tray = null;
@@ -25,7 +26,31 @@ function createWindow() {
     }
   });
 }
+function gracefulExit() {
+  forceQuit = true;
+  if (backendManager.backendProcess) {
+    console.log(
+      "trying to kill backend PID:",
+      backendManager.backendProcess.pid
+    );
+    kill(backendManager.backendProcess.pid, "SIGTERM", (err) => {
+      if (err) {
+        console.error("Failed to kill backend:", err);
+      } else {
+        console.log("Backend closed.");
+      }
+      app.exit();
+    });
 
+    // Fallback exit
+    setTimeout(() => {
+      console.warn("Force exiting Electron.");
+      app.exit();
+    }, 3000);
+  } else {
+    app.exit();
+  }
+}
 function createTray() {
   const iconPath = path.join(__dirname, "favicon.ico");
   tray = new Tray(iconPath);
@@ -40,10 +65,7 @@ function createTray() {
     { label: "显示主窗口", click: () => mainWindow?.show() },
     {
       label: "退出",
-      click: () => {
-        forceQuit = true;
-        app.quit();
-      },
+      click: gracefulExit,
     },
   ]);
 
@@ -52,28 +74,19 @@ function createTray() {
 }
 
 app.on("before-quit", (e) => {
-  forceQuit = true;
-  if (backendProcess) {
-    console.log("trying to kill ,PID:", backendProcess.pid);
-    e.preventDefault();
-
-    kill(backendProcess.pid, "SIGTERM", (err) => {
-      if (err) console.error("Failed to close", err);
-      else console.log("Successfully closed backend process.");
-      app.exit();
-    });
-
-    setTimeout(() => {
-      console.warn("entirely close Electron。");
-      app.exit();
-    }, 3000);
-  }
+  e.preventDefault();
+  gracefulExit(); // gracefulExit 内部执行 kill 和 app.exit()
 });
 
 app.whenReady().then(() => {
   startBackend(app);
   createWindow();
-  createAppMenu(app, mainWindow, require("electron-updater").autoUpdater);
+  createAppMenu(
+    app,
+    mainWindow,
+    require("electron-updater").autoUpdater,
+    gracefulExit
+  );
   createTray();
   setupAutoUpdater(dialog);
 });
