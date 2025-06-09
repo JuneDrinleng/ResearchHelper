@@ -127,22 +127,19 @@
         <option value="light">浅色</option>
         <option value="dark">深色</option>
       </select>
+      <label for="autostart">
+        <input type="checkbox" id="autostart" />
+        开机时自动启动 ResearchHelper
+      </label>
     </form>
 
     <div class="footer">ResearchHelper v1.0 | From June Drinleng</div>
 
     <script>
+      const { ipcRenderer } = require("electron");
       const themeSelect = document.getElementById("theme");
+      const autostartCheckbox = document.getElementById("autostart");
 
-      // 监听系统主题变更（仅当选择 system 时启用）
-      const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-      mediaQuery.addEventListener("change", () => {
-        if (localStorage.getItem("theme") === "system") {
-          applyTheme("system");
-        }
-      });
-
-      // 应用主题函数
       function applyTheme(theme) {
         document.body.classList.remove("light-mode", "dark-mode");
 
@@ -157,17 +154,42 @@
         document.body.classList.add(finalTheme + "-mode");
       }
 
-      // 初始化
       document.addEventListener("DOMContentLoaded", () => {
+        // 主题设置
         let savedTheme = localStorage.getItem("theme") || "system";
         themeSelect.value = savedTheme;
         applyTheme(savedTheme);
-
         themeSelect.addEventListener("change", (e) => {
           const selectedTheme = e.target.value;
           localStorage.setItem("theme", selectedTheme);
           applyTheme(selectedTheme);
         });
+
+        // 自动启动设置
+        const savedAutostart = localStorage.getItem("autostart");
+        if (savedAutostart !== null) {
+          autostartCheckbox.checked = savedAutostart === "true";
+        }
+
+        ipcRenderer.invoke("get-autostart").then((enabled) => {
+          if (savedAutostart === null) {
+            autostartCheckbox.checked = enabled;
+          }
+        });
+
+        autostartCheckbox.addEventListener("change", () => {
+          const enabled = autostartCheckbox.checked;
+          ipcRenderer.send("set-autostart", enabled);
+          localStorage.setItem("autostart", enabled);
+        });
+      });
+
+      // 监听系统主题变化
+      const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+      mediaQuery.addEventListener("change", () => {
+        if (localStorage.getItem("theme") === "system") {
+          applyTheme("system");
+        }
       });
     </script>
   </body>

@@ -6,9 +6,34 @@ const { autoUpdateCheck } = require("./modules/updater");
 const backendManager = require("./modules/backendManager");
 const startBackend = backendManager.startBackend;
 const { createAppMenu } = require("./modules/menuManager");
+const { ipcMain } = require("electron");
+const AutoLaunch = require("auto-launch");
 let mainWindow;
 let tray = null;
 let forceQuit = false;
+
+const isPackaged = app.isPackaged;
+
+const appLauncher = new AutoLaunch({
+  name: "ResearchHelper",
+  path: isPackaged
+    ? process.execPath
+    : path.join(__dirname, "node_modules", ".bin", "electron.cmd"),
+  args: isPackaged ? [] : [__dirname],
+  isHidden: true,
+});
+
+if (isPackaged) {
+  appLauncher.enable().catch(console.error);
+}
+
+ipcMain.on("set-autostart", (event, enable) => {
+  if (enable) {
+    appLauncher.enable().catch((err) => console.error("启用失败:", err));
+  } else {
+    appLauncher.disable().catch((err) => console.error("禁用失败:", err));
+  }
+});
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -16,6 +41,10 @@ function createWindow() {
     height: 700,
     icon: path.join(__dirname, "favicon.ico"),
     show: true,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+    },
   });
 
   mainWindow.loadFile(path.join(__dirname, "templates", "index.html"));
