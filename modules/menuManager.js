@@ -7,15 +7,15 @@ function createAppMenu(app, mainWindow, autoUpdater, gracefulExit) {
     {
       label: "文件",
       submenu: [
-        {
-          label: "设置",
-          accelerator: "CmdOrCtrl+P", // 常规设置快捷键
-          click: () => {
-            mainWindow.loadFile(
-              path.join(__dirname, "../templates/settings.html")
-            );
-          },
-        },
+        // {
+        //   label: "设置",
+        //   accelerator: "CmdOrCtrl+P", // 常规设置快捷键
+        //   click: () => {
+        //     mainWindow.loadFile(
+        //       path.join(__dirname, "../templates/settings.html")
+        //     );
+        //   },
+        // },
         {
           type: "separator",
         },

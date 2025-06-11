@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
   <head>
+    <!--#include virtual="theme-init.html" -->
+
     <meta charset="UTF-8" />
     <title>设置 - ResearchHelper</title>
     <style>
@@ -114,10 +116,6 @@
     </style>
   </head>
   <body>
-    <div class="top-nav">
-      <a href="./index.html">← 返回首页</a>
-    </div>
-
     <h1>设置</h1>
 
     <form>
@@ -136,7 +134,7 @@
     <div class="footer">ResearchHelper | From June Drinleng</div>
 
     <script>
-      const { ipcRenderer } = require("electron");
+      const { electronAPI } = window;
       const themeSelect = document.getElementById("theme");
       const autostartCheckbox = document.getElementById("autostart");
 

@@ -3,73 +3,169 @@
   <head>
     <meta charset="UTF-8" />
     <title>欢迎 - ResearchHelper</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
     <style>
-      body {
-        font-family: "Segoe UI", sans-serif;
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 0 40px; /* 只左右留空 */
-        text-align: center;
-        transition: background-color 0.3s, color 0.3s;
-        margin: 0; /* 移除默认 margin */
+      * {
         box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body {
+        height: 100%;
+        font-family: "Segoe UI", sans-serif;
+        transition: background-color 0.3s, color 0.3s;
       }
 
       body.light-mode {
-        background-color: #f9fafc;
+        background: #f9fafc;
         color: #000;
       }
-
       body.dark-mode {
-        background-color: #1e1e1e;
+        background: #1e1e1e;
         color: #eee;
       }
 
-      .btn {
-        padding: 10px 20px;
-        background-color: #0078d7;
-        color: white;
-        border: none;
-        border-radius: 6px;
-        text-decoration: none;
-        font-size: 16px;
-      }
-
-      .btn:hover {
-        background-color: #005a9e;
-      }
-
-      .button-group {
+      .container {
         display: flex;
-        gap: 20px;
-        margin-top: 20px;
+        height: 100vh;
       }
 
+      /* ── 侧边栏 ─────────────────────────────── */
+      .sidebar {
+        width: 72px;
+        background: #000;
+        padding: 20px 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo,
+      .nav-links a,
       .footer {
-        margin-top: 60px;
-        font-size: 14px;
-        color: #888;
+        /* 把 footer 也当按钮处理 */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 40px;
+        height: 40px;
+        margin-bottom: 20px;
+        font-size: 24px;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 8px;
+        transition: background 0.2s, transform 0.2s, color 0.2s;
+        cursor: pointer;
+      }
+
+      .logo:hover,
+      .nav-links a:hover,
+      .footer:hover {
+        background: #a2c9ef;
+        transform: translateY(-2px);
+      }
+
+      .nav-links a.active {
+        background: #5da3fa;
+        color: #000;
+      }
+      body.dark-mode .nav-links a.active {
+        background: #2e7ae5;
+        color: #fff;
+      }
+
+      /* ── 主区域 ─────────────────────────────── */
+      .main {
+        flex: 1;
+      }
+      iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+        display: block;
+        background: #1e1e1e; /* match = dark */
+      }
+      body.light-mode iframe {
+        background: #f9fafc; /* match = light */
       }
     </style>
-    <script>
-      const theme = localStorage.getItem("theme") || "light";
-      document.addEventListener("DOMContentLoaded", () => {
-        document.body.classList.add(theme + "-mode");
-      });
-    </script>
   </head>
   <body>
-    <h1>欢迎使用 ResearchHelper</h1>
-    <p>这是一个用于聚合微博热搜与自定义设置的桌面助手</p>
+    <div class="container">
+      <!-- 侧边栏 -->
+      <div class="sidebar">
+        <!-- 顶部 Logo：📟 -->
+        <a href="#" class="logo" title="ResearchHelper">📟</a>
 
-    <div class="button-group">
-      <a href="./settings.html" class="btn">进入设置</a>
-      <a href="./hotsearch.html" class="btn">查看热搜</a>
+        <!-- 导航 -->
+        <div class="nav-links">
+          <a data-src="./hotsearch.html" title="热搜"
+            ><i class="fa-solid fa-fire"></i
+          ></a>
+          <a data-src="settings.html" title="设置"
+            ><i class="fa-solid fa-gear"></i
+          ></a>
+        </div>
+
+        <!-- 底部版权：点它切换 about.html -->
+        <a class="footer" data-src="about.html" title="关于"
+          ><i class="fa-solid fa-user-astronaut"></i
+        ></a>
+      </div>
+
+      <!-- 右侧 iframe -->
+      <div class="main">
+        <iframe id="mainFrame" name="mainFrame" src="./hotsearch.html"></iframe>
+      </div>
     </div>
 
-    <div class="footer">© 2025 June Drinleng, ResearchHelper</div>
+    <script>
+      /* 主题初始化 */
+      document.body.classList.add(
+        (localStorage.getItem("theme") || "light") + "-mode"
+      );
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const iframe = document.getElementById("mainFrame");
+        const navLinks = document.querySelectorAll(".nav-links a");
+        const footer = document.querySelector(".footer[data-src]");
+
+        /** 高亮处理 */
+        function setActive(link) {
+          navLinks.forEach((l) => l.classList.toggle("active", l === link));
+        }
+
+        /* 侧边栏普通按钮 */
+        navLinks.forEach((link) => {
+          link.addEventListener("click", (e) => {
+            e.preventDefault();
+            iframe.src = link.dataset.src;
+            setActive(link);
+          });
+        });
+
+        /* 默认高亮第一个（热搜） */
+        setActive(
+          document.querySelector('.nav-links a[data-src="./hotsearch.html"]')
+        );
+
+        /* footer -> about.html（不参与高亮） */
+        footer.addEventListener("click", (e) => {
+          e.preventDefault();
+          iframe.src = footer.dataset.src;
+          setActive(null); // 取消侧栏高亮
+        });
+      });
+      // 在侧栏 JS 里
+      const prefetch = (url) => fetch(url).then((r) => r.blob());
+
+      // 初始化时：
+      ["hotsearch.html", "settings.html", "about.html"].forEach(prefetch);
+    </script>
   </body>
 </html>

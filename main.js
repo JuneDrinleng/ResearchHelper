@@ -52,8 +52,9 @@ function createWindow() {
     icon: path.join(__dirname, "favicon.ico"),
     show: true,
     webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false,
+      nodeIntegration: false,
+      contextIsolation: true,
+      preload: path.join(__dirname, "modules", "preload.js"),
     },
   });
 
