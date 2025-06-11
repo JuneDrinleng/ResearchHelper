@@ -166,6 +166,27 @@
 
       // 初始化时：
       ["hotsearch.html", "settings.html", "about.html"].forEach(prefetch);
+
+      /* —— 同步父页面主题 —— */
+      (function () {
+        const applyTheme = (theme = "light") => {
+          document.body.classList.remove("light-mode", "dark-mode");
+          document.body.classList.add(theme + "-mode");
+
+          /* 同步 iframe 的纯色底色，防止下一次卸载时出现反色闪烁 */
+          const frame = document.getElementById("mainFrame");
+          if (frame)
+            frame.style.background = theme === "dark" ? "#1e1e1e" : "#f9fafc";
+        };
+
+        /* 首次进来就按 localStorage 绘制 */
+        applyTheme(localStorage.getItem("theme"));
+
+        /* 监听其它页面（iframe）改动 localStorage 时触发的 storage 事件 */
+        window.addEventListener("storage", (e) => {
+          if (e.key === "theme") applyTheme(e.newValue || "light");
+        });
+      })();
     </script>
   </body>
 </html>
