@@ -3,10 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <title>设置 - ResearchHelper</title>
-    <meta name=\"color-scheme\" content=\"light dark\">
-    <!-- ⚡ 仅用系统字体栈，减少外部请求 -->
+    <meta name="color-scheme" content="light dark" />
     <style>
-      /* ----------------------------- 基础变量 ----------------------------- */
       :root {
         --blue: #007bff;
         --green: #28d762;
@@ -14,7 +12,6 @@
         --radius: 12px;
         font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
       }
-
       :root[data-theme="light"] {
         --page-bg: #f0f1f4;
         --card-bg: #ffffff;
@@ -29,7 +26,6 @@
         --muted: #a2a2a2;
         --divider: #333;
       }
-
       * {
         box-sizing: border-box;
       }
@@ -41,8 +37,6 @@
         justify-content: center;
         padding: 40px 16px;
       }
-
-      /* ----------------------------- 容器 ----------------------------- */
       .card {
         background: var(--card-bg);
         width: 100%;
@@ -58,8 +52,6 @@
         font-size: 32px;
         font-weight: 600;
       }
-
-      /* ----------------------------- 行项目 ----------------------------- */
       .setting-row {
         display: flex;
         align-items: center;
@@ -75,7 +67,6 @@
         justify-content: center;
         flex-shrink: 0;
       }
-      /* 统一 SVG 基础样式 */
       .setting-icon svg {
         width: 22px;
         height: 22px;
@@ -92,13 +83,10 @@
       .icon-update {
         color: var(--orange);
       }
-
       .setting-row label {
         flex: 1;
         font-weight: 500;
       }
-
-      /* ----------------------------- 控件 ----------------------------- */
       .select {
         padding: 6px 8px;
         border-radius: 6px;
@@ -106,8 +94,6 @@
         background: var(--card-bg);
         color: var(--text);
       }
-
-      /* Toggle */
       .toggle {
         position: relative;
         width: 50px;
@@ -143,8 +129,6 @@
       .toggle input:checked + .slider:before {
         transform: translateX(24px);
       }
-
-      /* Button */
       .button {
         padding: 6px 16px;
         border: none;
@@ -158,22 +142,26 @@
       .button:hover {
         filter: brightness(0.9);
       }
-
       .footer {
         font-size: 13px;
         color: var(--muted);
         text-align: center;
         padding: 24px 0 40px;
       }
+      #updateStatus {
+        font-size: 13px;
+        color: var(--muted);
+        margin-left: 12px;
+      }
     </style>
   </head>
   <body>
     <div class="card">
       <h1>设置</h1>
+
       <!-- 主题 -->
       <div class="setting-row">
         <div class="setting-icon icon-theme">
-          <!-- Sun Icon -->
           <svg viewBox="0 0 24 24">
             <circle cx="12" cy="12" r="5"></circle>
             <line x1="12" y1="1" x2="12" y2="3"></line>
@@ -197,7 +185,6 @@
       <!-- 开机启动 -->
       <div class="setting-row">
         <div class="setting-icon icon-autostart">
-          <!-- Power Icon -->
           <svg viewBox="0 0 24 24">
             <path d="M12 2v10"></path>
             <path d="M18.364 5.636a9 9 0 1 1-12.728 0"></path>
@@ -213,7 +200,6 @@
       <!-- 检查更新 -->
       <div class="setting-row">
         <div class="setting-icon icon-update">
-          <!-- Refresh Icon -->
           <svg viewBox="0 0 24 24">
             <polyline points="23 4 23 10 17 10"></polyline>
             <polyline points="1 20 1 14 7 14"></polyline>
@@ -223,6 +209,7 @@
         </div>
         <label>检查更新</label>
         <button id="checkUpdate" class="button">检查</button>
+        <span id="updateStatus"></span>
       </div>
 
       <div class="footer">© 2025 ResearchHelper</div>
@@ -241,7 +228,6 @@
         document.documentElement.dataset.theme = startTheme;
       })();
 
-      /* ----------------------------- 主题逻辑 ----------------------------- */
       const html = document.documentElement;
       const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
       const themeSelect = document.getElementById("theme");
@@ -262,14 +248,12 @@
       const savedTheme = localStorage.getItem("theme") || "auto";
       themeSelect.value = savedTheme;
       applyTheme(savedTheme);
-
       themeSelect.addEventListener("change", (e) => {
         const value = e.target.value;
         localStorage.setItem("theme", value);
         applyTheme(value);
       });
 
-      /* ----------------------------- 开机启动 ----------------------------- */
       const autostartToggle = document.getElementById("autostart");
       const savedAutostart = JSON.parse(
         localStorage.getItem("autostart") || "false"
@@ -289,16 +273,23 @@
       );
       persistAutostart(savedAutostart);
 
-      /* ----------------------------- 检查更新 ----------------------------- */
       document.getElementById("checkUpdate").addEventListener("click", () => {
+        const statusEl = document.getElementById("updateStatus");
+        statusEl.textContent = "正在检查更新...";
         if (window.electronAPI?.checkForUpdates) {
           window.electronAPI.checkForUpdates();
         } else if (window.ipcRenderer) {
           window.ipcRenderer.send("check-for-updates");
         } else {
-          alert("检查更新功能仅在桌面端可用");
+          statusEl.textContent = "当前环境不支持更新功能";
         }
       });
+
+      if (window.ipcRenderer) {
+        window.ipcRenderer.on("update-status", (_e, msg) => {
+          document.getElementById("updateStatus").textContent = msg;
+        });
+      }
     </script>
   </body>
 </html>
