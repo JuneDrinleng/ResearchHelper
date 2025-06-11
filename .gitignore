@@ -4,3 +4,4 @@
 /backend/build
 *.spec
 research-helper.log
+*.log
