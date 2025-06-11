@@ -1,207 +1,303 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
   <head>
-    <!--#include virtual="theme-init.html" -->
-
     <meta charset="UTF-8" />
     <title>设置 - ResearchHelper</title>
+    <meta name=\"color-scheme\" content=\"light dark\">
+    <!-- ⚡ 仅用系统字体栈，减少外部请求 -->
     <style>
-      body {
-        font-family: "Segoe UI", sans-serif;
-        padding: 40px;
-        max-width: 800px;
-        margin: auto;
-        transition: background-color 0.3s, color 0.3s;
+      /* ----------------------------- 基础变量 ----------------------------- */
+      :root {
+        --blue: #007bff;
+        --green: #28d762;
+        --orange: #ffb400;
+        --radius: 12px;
+        font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
       }
 
-      h1 {
-        text-align: center;
-        font-size: 36px;
-        margin-bottom: 20px;
+      :root[data-theme="light"] {
+        --page-bg: #f0f1f4;
+        --card-bg: #ffffff;
+        --text: #1f1f1f;
+        --muted: #6b6b6b;
+        --divider: #e2e2e2;
+      }
+      :root[data-theme="dark"] {
+        --page-bg: #1e1f22;
+        --card-bg: #2a2c31;
+        --text: #f8f8f8;
+        --muted: #a2a2a2;
+        --divider: #333;
       }
 
-      .top-nav {
-        text-align: left;
-        margin-bottom: 20px;
-      }
-
-      .top-nav a {
-        display: inline-block;
-        padding: 8px 16px;
-        background-color: #e0e0e0;
-        color: #333;
-        text-decoration: none;
-        border-radius: 4px;
-        font-size: 14px;
-      }
-
-      .top-nav a:hover {
-        background-color: #ccc;
-      }
-
-      label {
-        display: block;
-        font-weight: bold;
-        margin-top: 20px;
-      }
-
-      input[type="text"],
-      select {
-        width: 100%;
-        padding: 10px;
-        margin-top: 5px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
+      * {
         box-sizing: border-box;
-        font-size: 16px;
+      }
+      body {
+        margin: 0;
+        background: var(--page-bg);
+        color: var(--text);
+        display: flex;
+        justify-content: center;
+        padding: 40px 16px;
       }
 
-      button {
-        margin-top: 30px;
-        padding: 12px 30px;
-        background-color: #0078d7;
-        color: white;
+      /* ----------------------------- 容器 ----------------------------- */
+      .card {
+        background: var(--card-bg);
+        width: 100%;
+        max-width: 768px;
+        border-radius: var(--radius);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+        overflow: hidden;
+      }
+      h1 {
+        margin: 0;
+        padding: 32px 0 16px;
+        text-align: center;
+        font-size: 32px;
+        font-weight: 600;
+      }
+
+      /* ----------------------------- 行项目 ----------------------------- */
+      .setting-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 20px 24px;
+        border-top: 1px solid var(--divider);
+      }
+      .setting-icon {
+        width: 34px;
+        height: 34px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      /* 统一 SVG 基础样式 */
+      .setting-icon svg {
+        width: 22px;
+        height: 22px;
+        stroke-width: 2;
+        stroke: currentColor;
+        fill: none;
+      }
+      .icon-theme {
+        color: var(--blue);
+      }
+      .icon-autostart {
+        color: var(--green);
+      }
+      .icon-update {
+        color: var(--orange);
+      }
+
+      .setting-row label {
+        flex: 1;
+        font-weight: 500;
+      }
+
+      /* ----------------------------- 控件 ----------------------------- */
+      .select {
+        padding: 6px 8px;
+        border-radius: 6px;
+        border: 1px solid var(--divider);
+        background: var(--card-bg);
+        color: var(--text);
+      }
+
+      /* Toggle */
+      .toggle {
+        position: relative;
+        width: 50px;
+        height: 26px;
+      }
+      .toggle input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+      .slider {
+        position: absolute;
+        inset: 0;
+        cursor: pointer;
+        border-radius: 50px;
+        background: #c4c4c4;
+        transition: background 0.2s;
+      }
+      .slider:before {
+        content: "";
+        position: absolute;
+        left: 3px;
+        top: 3px;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: #fff;
+        transition: transform 0.2s;
+      }
+      .toggle input:checked + .slider {
+        background: var(--green);
+      }
+      .toggle input:checked + .slider:before {
+        transform: translateX(24px);
+      }
+
+      /* Button */
+      .button {
+        padding: 6px 16px;
         border: none;
         border-radius: 6px;
-        font-size: 16px;
+        background: var(--orange);
+        color: #fff;
+        font-weight: 600;
         cursor: pointer;
+        transition: filter 0.15s;
       }
-
-      button:hover {
-        background-color: #005a9e;
+      .button:hover {
+        filter: brightness(0.9);
       }
 
       .footer {
+        font-size: 13px;
+        color: var(--muted);
         text-align: center;
-        margin-top: 40px;
-        font-size: 14px;
-      }
-
-      /* ====== 浅色模式 ====== */
-      body.light-mode {
-        background-color: #f9fafc;
-        color: #000;
-      }
-
-      /* ====== 深色模式 ====== */
-      body.dark-mode {
-        background-color: #1e1e1e;
-        color: #eee;
-      }
-
-      body.dark-mode label,
-      body.dark-mode h1 {
-        color: #fff;
-      }
-
-      body.dark-mode input,
-      body.dark-mode select {
-        background-color: #2e2e2e;
-        color: #fff;
-        border: 1px solid #555;
-      }
-
-      body.dark-mode .top-nav a {
-        background-color: #444;
-        color: #eee;
-      }
-
-      body.dark-mode .top-nav a:hover {
-        background-color: #666;
-      }
-
-      body.dark-mode .footer {
-        color: #aaa;
+        padding: 24px 0 40px;
       }
     </style>
   </head>
   <body>
-    <h1>设置</h1>
+    <div class="card">
+      <h1>设置</h1>
+      <!-- 主题 -->
+      <div class="setting-row">
+        <div class="setting-icon icon-theme">
+          <!-- Sun Icon -->
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </div>
+        <label for="theme">主题</label>
+        <select id="theme" class="select">
+          <option value="auto">跟随系统</option>
+          <option value="light">浅色</option>
+          <option value="dark">深色</option>
+        </select>
+      </div>
 
-    <form>
-      <label for="theme">界面主题</label>
-      <select id="theme" name="theme">
-        <option value="system">跟随系统</option>
-        <option value="light">浅色</option>
-        <option value="dark">深色</option>
-      </select>
-      <label for="autostart">
-        <input type="checkbox" id="autostart" />
-        开机时自动启动 ResearchHelper
-      </label>
-      <button id="checkUpdate">检查更新</button>
-      <p id="updateStatus" style="margin-top: 8px; font-size: 14px"></p>
-    </form>
+      <!-- 开机启动 -->
+      <div class="setting-row">
+        <div class="setting-icon icon-autostart">
+          <!-- Power Icon -->
+          <svg viewBox="0 0 24 24">
+            <path d="M12 2v10"></path>
+            <path d="M18.364 5.636a9 9 0 1 1-12.728 0"></path>
+          </svg>
+        </div>
+        <label for="autostart">开机启动</label>
+        <div class="toggle">
+          <input id="autostart" type="checkbox" />
+          <span class="slider"></span>
+        </div>
+      </div>
 
-    <div class="footer">ResearchHelper | From June Drinleng</div>
+      <!-- 检查更新 -->
+      <div class="setting-row">
+        <div class="setting-icon icon-update">
+          <!-- Refresh Icon -->
+          <svg viewBox="0 0 24 24">
+            <polyline points="23 4 23 10 17 10"></polyline>
+            <polyline points="1 20 1 14 7 14"></polyline>
+            <path d="M3.51 9a9 9 0 0 1 13.36-3.36L23 10"></path>
+            <path d="M20.49 15a9 9 0 0 1-13.36 3.36L1 14"></path>
+          </svg>
+        </div>
+        <label>检查更新</label>
+        <button id="checkUpdate" class="button">检查</button>
+      </div>
+
+      <div class="footer">© 2025 ResearchHelper</div>
+    </div>
 
     <script>
-      const { electronAPI } = window;
+      (function () {
+        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
+        const savedTheme = localStorage.getItem("theme") || "auto";
+        const startTheme =
+          savedTheme === "auto"
+            ? prefersDark.matches
+              ? "dark"
+              : "light"
+            : savedTheme;
+        document.documentElement.dataset.theme = startTheme;
+      })();
+
+      /* ----------------------------- 主题逻辑 ----------------------------- */
+      const html = document.documentElement;
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
       const themeSelect = document.getElementById("theme");
-      const autostartCheckbox = document.getElementById("autostart");
 
       function applyTheme(theme) {
-        document.body.classList.remove("light-mode", "dark-mode");
-
-        let finalTheme = theme;
-        if (theme === "system") {
-          const prefersDark = window.matchMedia(
-            "(prefers-color-scheme: dark)"
-          ).matches;
-          finalTheme = prefersDark ? "dark" : "light";
+        if (theme === "auto") {
+          html.dataset.theme = prefersDark.matches ? "dark" : "light";
+          prefersDark.addEventListener("change", sysListener);
+        } else {
+          html.dataset.theme = theme;
+          prefersDark.removeEventListener("change", sysListener);
         }
-
-        document.body.classList.add(finalTheme + "-mode");
+      }
+      function sysListener(e) {
+        html.dataset.theme = e.matches ? "dark" : "light";
       }
 
-      document.addEventListener("DOMContentLoaded", () => {
-        // 主题设置
-        let savedTheme = localStorage.getItem("theme") || "system";
-        themeSelect.value = savedTheme;
-        applyTheme(savedTheme);
-        themeSelect.addEventListener("change", (e) => {
-          const selectedTheme = e.target.value;
-          localStorage.setItem("theme", selectedTheme);
-          applyTheme(selectedTheme);
-        });
+      const savedTheme = localStorage.getItem("theme") || "auto";
+      themeSelect.value = savedTheme;
+      applyTheme(savedTheme);
 
-        // 自动启动设置
-        const savedAutostart = localStorage.getItem("autostart");
-        if (savedAutostart !== null) {
-          autostartCheckbox.checked = savedAutostart === "true";
+      themeSelect.addEventListener("change", (e) => {
+        const value = e.target.value;
+        localStorage.setItem("theme", value);
+        applyTheme(value);
+      });
+
+      /* ----------------------------- 开机启动 ----------------------------- */
+      const autostartToggle = document.getElementById("autostart");
+      const savedAutostart = JSON.parse(
+        localStorage.getItem("autostart") || "false"
+      );
+      autostartToggle.checked = savedAutostart;
+
+      function persistAutostart(enabled) {
+        localStorage.setItem("autostart", JSON.stringify(enabled));
+        if (window.electronAPI?.toggleAutostart) {
+          window.electronAPI.toggleAutostart(enabled);
+        } else if (window.ipcRenderer) {
+          window.ipcRenderer.send("autostart-toggle", enabled);
         }
+      }
+      autostartToggle.addEventListener("change", (e) =>
+        persistAutostart(e.target.checked)
+      );
+      persistAutostart(savedAutostart);
 
-        ipcRenderer.invoke("get-autostart").then((enabled) => {
-          if (savedAutostart === null) {
-            autostartCheckbox.checked = enabled;
-          }
-        });
-
-        autostartCheckbox.addEventListener("change", () => {
-          const enabled = autostartCheckbox.checked;
-          ipcRenderer.send("set-autostart", enabled);
-          localStorage.setItem("autostart", enabled);
-        });
-      });
-
-      // 监听系统主题变化
-      const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-      mediaQuery.addEventListener("change", () => {
-        if (localStorage.getItem("theme") === "system") {
-          applyTheme("system");
+      /* ----------------------------- 检查更新 ----------------------------- */
+      document.getElementById("checkUpdate").addEventListener("click", () => {
+        if (window.electronAPI?.checkForUpdates) {
+          window.electronAPI.checkForUpdates();
+        } else if (window.ipcRenderer) {
+          window.ipcRenderer.send("check-for-updates");
+        } else {
+          alert("检查更新功能仅在桌面端可用");
         }
-      });
-      const checkUpdateBtn = document.getElementById("checkUpdate");
-      const updateStatus = document.getElementById("updateStatus");
-
-      checkUpdateBtn.addEventListener("click", () => {
-        updateStatus.textContent = "正在检查更新…";
-        ipcRenderer.send("check-for-updates"); // 发给主进程
-      });
-
-      /* 主进程回传进度（可选，美化体验） */
-      ipcRenderer.on("update-status", (_e, msg) => {
-        updateStatus.textContent = msg;
       });
     </script>
   </body>

@@ -6,7 +6,6 @@ def hot_search_loop(url, interval=30):
         try:
             res = requests.get(url)
             data = res.json()['data']['realtime']
-            data=data[0:9]
             return data
         except Exception as e:
             pass

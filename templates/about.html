@@ -170,6 +170,9 @@
       </a>
     </div>
     <script>
+      const theme = localStorage.getItem("theme") || "light";
+      document.body.classList.add(theme + "-mode");
+
       fetch("../package.json")
         .then((res) => res.json())
         .then((pkg) => {
