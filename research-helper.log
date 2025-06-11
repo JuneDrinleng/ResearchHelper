@@ -1,7 +1,10 @@
-[2025-06-11 19:25:36.231] [info]  [Flask]  * Serving Flask app 'main'
+[2025-06-11 20:02:20.087] [info]  [Flask]  * Serving Flask app 'main'
  * Debug mode: off
 
-[2025-06-11 19:25:36.238] [error] [Flask Error] WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+[2025-06-11 20:02:20.092] [error] [Flask Error] WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
  * Running on http://127.0.0.1:8080
 Press CTRL+C to quit
 
+[2025-06-11 20:03:01.063] [info]  trying to kill backend PID: 35828
+[2025-06-11 20:03:02.056] [info]  Flask backend exited with code 1
+[2025-06-11 20:03:02.058] [info]  Backend closed.

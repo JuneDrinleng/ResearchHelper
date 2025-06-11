@@ -93,16 +93,42 @@
       body.light-mode iframe {
         background: #f9fafc; /* match = light */
       }
+      /* 侧边栏底部按钮组 */
+      .bottom-links {
+        display: flex;
+        flex-direction: column; /* 纵向并排 */
+        align-items: center;
+        gap: 14px; /* 俩图标之间留小空隙 */
+        position: relative;
+      }
+
+      /* 分隔线（可按需删改） */
+      .bottom-links::before {
+        content: "";
+        position: absolute;
+        top: -22px; /* 距离按钮组上方 22px */
+        width: 32px;
+        height: 1px;
+        background: rgba(255, 255, 255, 0.12); /* 深色模式的淡线 */
+        border-radius: 9999px;
+      }
+      body.light-mode .bottom-links::before {
+        background: rgba(0, 0, 0, 0.12); /* 浅色模式 */
+      }
+      .sidebar .footer {
+        margin: 0 !important;
+      }
     </style>
   </head>
   <body>
     <div class="container">
       <!-- 侧边栏 -->
+      <!-- 侧边栏 -->
       <div class="sidebar">
-        <!-- 顶部 Logo：📟 -->
+        <!-- ① 顶部 Logo -->
         <a href="#" class="logo" title="ResearchHelper">📟</a>
 
-        <!-- 导航 -->
+        <!-- ② 主导航 -->
         <div class="nav-links">
           <a data-src="./hotsearch.html" title="热搜"
             ><i class="fa-solid fa-fire"></i
@@ -112,10 +138,16 @@
           ></a>
         </div>
 
-        <!-- 底部版权：点它切换 about.html -->
-        <a class="footer" data-src="about.html" title="关于"
-          ><i class="fa-solid fa-user-astronaut"></i
-        ></a>
+        <!-- ③ 底部“二人组” ⭐️⭐️⭐️ -->
+        <div class="bottom-links">
+          <!-- 新增 -->
+          <a class="footer" data-src="about.html" title="关于">
+            <i class="fa-solid fa-user-astronaut"></i>
+          </a>
+          <a id="btnExit" class="footer" title="退出">
+            <i class="fa-solid fa-right-from-bracket"></i>
+          </a>
+        </div>
       </div>
 
       <!-- 右侧 iframe -->
@@ -187,6 +219,15 @@
           if (e.key === "theme") applyTheme(e.newValue || "light");
         });
       })();
+      const btnExit = document.getElementById("btnExit");
+
+      btnExit.addEventListener("click", (e) => {
+        e.preventDefault();
+        // 可选：二次确认
+        // if (confirm("确认退出 ResearchHelper？")) {
+        ipcRenderer.send("app-exit"); // 发给主进程
+        // }
+      });
     </script>
   </body>
 </html>

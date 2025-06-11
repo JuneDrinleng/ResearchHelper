@@ -2,6 +2,7 @@ const { app, BrowserWindow, Tray, Menu, dialog } = require("electron");
 const path = require("path");
 const kill = require("tree-kill");
 const { setupAutoUpdater } = require("./modules/updater");
+const { autoUpdater } = require("electron-updater"); // 顶部
 const { autoUpdateCheck } = require("./modules/updater");
 const backendManager = require("./modules/backendManager");
 const startBackend = backendManager.startBackend;
@@ -44,6 +45,28 @@ ipcMain.on("set-autostart", (event, enable) => {
     appLauncher.disable().catch((err) => log.error("禁用失败:", err));
   }
 });
+ipcMain.on("check-for-updates", () => {
+  manualUpdateCheck(); // 本来菜单里用的函数
+  autoUpdater.checkForUpdates();
+});
+
+ipcMain.on("app-exit", () => {
+  gracefulExit();
+});
+
+/* 如果想把进度推给渲染进程 ↓ */
+autoUpdater.on("update-available", () =>
+  mainWindow.webContents.send("update-status", "发现新版本，正在下载…")
+);
+autoUpdater.on("update-not-available", () =>
+  mainWindow.webContents.send("update-status", "已经是最新版本")
+);
+autoUpdater.on("error", (err) =>
+  mainWindow.webContents.send("update-status", `检查失败：${err.message}`)
+);
+autoUpdater.on("update-downloaded", () =>
+  mainWindow.webContents.send("update-status", "下载完成，准备安装…")
+);
 
 function createWindow() {
   mainWindow = new BrowserWindow({

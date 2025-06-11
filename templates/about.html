@@ -1,122 +1,157 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
   <head>
-    <!--#include virtual="theme-init.html" -->
     <meta charset="UTF-8" />
-    <title>关于 ResearchHelper</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <title>关于 ResearchHelper</title>
     <link
-      href="https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap"
       rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     />
     <style>
+      /* ---------- 基础排版 & 居中 ---------- */
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+      }
+
       body {
         font-family: "Segoe UI", Roboto, sans-serif;
-        background-color: #f4f4f4;
-        margin: 0;
-        padding: 40px;
+        display: flex;
+        align-items: center; /* 垂直居中 */
+        justify-content: center; /* 水平居中 */
+        background: #f4f4f4;
+        padding: 24px 20px; /* 较小的上下留白，避免溢出 */
+        box-sizing: border-box; /* padding 计入高度 */
         color: #333;
       }
 
+      /* ---------- 卡片 ---------- */
       .container {
-        max-width: 600px;
-        margin: auto;
-        background: #fff;
-        padding: 30px;
-        border-radius: 10px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        width: min(600px, 92%);
+        max-height: calc(100vh - 48px); /* 绝不超出视口高度 */
+        background: #ffffff;
+        padding: 28px 24px;
+        border-radius: 12px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
         text-align: center;
+        position: relative;
+        overflow: hidden;
+        box-sizing: border-box;
       }
 
-      h1 {
-        font-size: 24px;
-        margin-bottom: 20px;
-        color: #2c3e50;
+      /* 柔光渐变装饰 */
+      .container::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          80% 140% at 50% -40%,
+          rgba(0, 123, 255, 0.12),
+          transparent 70%
+        );
+        pointer-events: none;
       }
 
-      p {
-        font-size: 16px;
-        font-size: 16px;
-        line-height: 1.6;
-      }
-
-      .label {
-        font-weight: bold;
-        color: #555;
-      }
-
-      .value {
-        margin-left: 8px;
-        font-family: "Poetsen One", sans-serif;
-        font-size: 16px;
-        color: #000;
-      }
-
-      .avatar {
-        width: 100px;
-        height: 100px;
+      /* ---------- 内容排版 ---------- */
+      img.avatar {
+        width: 120px;
+        height: 120px;
         border-radius: 50%;
-        margin-bottom: 20px;
+        object-fit: cover;
+      }
+      h1 {
+        font-size: 32px;
+        margin: 24px 0 12px;
+      }
+      p {
+        margin: 12px 0;
+        font-size: 18px;
       }
 
-      .button {
+      a.button {
         display: inline-block;
-        margin-top: 30px;
-        padding: 10px 20px;
-        font-size: 16px;
-        color: white;
-        background-color: #0078d7;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        text-decoration: none;
-      }
-
-      .github-link {
-        display: inline-block;
-        margin-top: 20px;
-        font-size: 14px;
-        color: #0366d6;
-        text-decoration: none;
-      }
-      body.dark-mode {
-        background-color: #1e1e1e;
-        color: #eee;
-      }
-
-      body.dark-mode .container {
-        background-color: #2b2b2b;
-        color: #eee;
-        box-shadow: 0 2px 8px rgba(255, 255, 255, 0.05);
-      }
-
-      body.dark-mode h1 {
-        color: white;
-      }
-
-      body.dark-mode .label {
+        background: #2563eb;
         color: #ffffff;
+        text-decoration: none;
+        padding: 10px 28px;
+        border-radius: 8px;
+        font-size: 18px;
+        margin-top: 24px;
+        transition: background 0.2s;
+      }
+      a.button:hover {
+        background: #1e4ed8;
       }
 
-      body.dark-mode .value {
-        color: #fff;
+      a.link {
+        color: #64748b;
+        text-decoration: none;
+        font-size: 16px;
+        margin-top: 20px;
+        display: inline-block;
+      }
+      a.link:hover {
+        color: #2563eb;
       }
 
-      body.dark-mode .button {
-        background-color: #3391ff;
-        color: white;
+      /* ---------- 暗色模式 ---------- */
+      body.dark-mode {
+        background: #1e1e1e;
+        color: #e5e5e5;
+      }
+      body.dark-mode .container {
+        background: #2b2b2b;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+      }
+      body.dark-mode .container::before {
+        background: radial-gradient(
+          80% 140% at 50% -40%,
+          rgba(37, 99, 235, 0.18),
+          transparent 70%
+        );
+      }
+      body.dark-mode a.button {
+        background: #3b82f6;
+      }
+      body.dark-mode a.button:hover {
+        background: #2563eb;
+      }
+      body.dark-mode a.link {
+        color: #a1a1aa;
+      }
+      body.dark-mode a.link:hover {
+        color: #3b82f6;
       }
 
-      body.dark-mode .github-link {
-        color: #4fa3f7;
+      /* ---------- 窄高设备优化 ---------- */
+      @media (max-height: 640px) {
+        body {
+          padding: 16px 12px;
+        }
+        .container {
+          padding: 20px 18px;
+          max-height: calc(100vh - 32px);
+        }
+        h1 {
+          font-size: 28px;
+          margin: 18px 0 10px;
+        }
+        p {
+          font-size: 16px;
+        }
+        a.button {
+          font-size: 16px;
+          padding: 8px 20px;
+          margin-top: 18px;
+        }
       }
     </style>
   </head>
   <body>
     <div class="container">
-      <img class="avatar" src="../assets/self.jpg" alt="Logo" />
-      <h1>关于 ResearchHelper</h1>
+      <img class="avatar" src=../assets/self.jpg alt="avatar" />
+      <h1>关于&nbsp;ResearchHelper</h1>
       <p>
         <span class="label">Ver: </span><span id="version" class="value"></span>
       </p>
@@ -125,19 +160,16 @@
         ><span class="value">June Drinleng</span>
       </p>
 
-      <a class="button" href="./index.html">返回首页</a>
-      <br />
+      <a href="#" class="button" onclick="history.back()">返回首页</a><br />
       <a
-        class="github-link"
         href="https://github.com/JuneDrinleng/ResearchHelper"
         target="_blank"
-        >🔗 GitHub 项目主页</a
+        class="link"
       >
+        <i class="fa-solid fa-link"></i>&nbsp;GitHub 项目主页
+      </a>
     </div>
-
     <script>
-      const theme = localStorage.getItem("theme") || "light";
-      document.body.classList.add(theme + "-mode");
       fetch("../package.json")
         .then((res) => res.json())
         .then((pkg) => {

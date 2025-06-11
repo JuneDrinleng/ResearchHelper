@@ -129,6 +129,8 @@
         <input type="checkbox" id="autostart" />
         开机时自动启动 ResearchHelper
       </label>
+      <button id="checkUpdate">检查更新</button>
+      <p id="updateStatus" style="margin-top: 8px; font-size: 14px"></p>
     </form>
 
     <div class="footer">ResearchHelper | From June Drinleng</div>
@@ -188,6 +190,18 @@
         if (localStorage.getItem("theme") === "system") {
           applyTheme("system");
         }
+      });
+      const checkUpdateBtn = document.getElementById("checkUpdate");
+      const updateStatus = document.getElementById("updateStatus");
+
+      checkUpdateBtn.addEventListener("click", () => {
+        updateStatus.textContent = "正在检查更新…";
+        ipcRenderer.send("check-for-updates"); // 发给主进程
+      });
+
+      /* 主进程回传进度（可选，美化体验） */
+      ipcRenderer.on("update-status", (_e, msg) => {
+        updateStatus.textContent = msg;
       });
     </script>
   </body>
