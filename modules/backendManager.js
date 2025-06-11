@@ -1,6 +1,6 @@
 const { spawn } = require("child_process");
 const path = require("path");
-
+const log = require("./logger");
 let backendProcess = null;
 
 function getBackendExePath(app) {
@@ -20,15 +20,15 @@ function startBackend(app) {
   backendProcess = spawn(exePath);
 
   backendProcess.stdout.on("data", (data) => {
-    console.log(`[Flask] ${data}`);
+    log.info(`[Flask] ${data}`);
   });
 
   backendProcess.stderr.on("data", (data) => {
-    console.error(`[Flask Error] ${data}`);
+    log.error(`[Flask Error] ${data}`);
   });
 
   backendProcess.on("close", (code) => {
-    console.log(`Flask backend exited with code ${code}`);
+    log.info(`Flask backend exited with code ${code}`);
   });
 
   return backendProcess;

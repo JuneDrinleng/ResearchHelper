@@ -6,6 +6,7 @@ const { autoUpdateCheck } = require("./modules/updater");
 const backendManager = require("./modules/backendManager");
 const startBackend = backendManager.startBackend;
 const { createAppMenu } = require("./modules/menuManager");
+const log = require("./modules/logger");
 const { ipcMain } = require("electron");
 const AutoLaunch = require("auto-launch");
 let mainWindow;
@@ -24,7 +25,7 @@ const appLauncher = new AutoLaunch({
 });
 
 if (isPackaged) {
-  appLauncher.enable().catch(console.error);
+  appLauncher.enable().catch(log.error);
 }
 
 ipcMain.handle("get-autostart", async () => {
@@ -32,15 +33,15 @@ ipcMain.handle("get-autostart", async () => {
     const isEnabled = await appLauncher.isEnabled();
     return isEnabled;
   } catch (err) {
-    console.error("查询自启动状态失败:", err);
+    log.error("查询自启动状态失败:", err);
     return false;
   }
 });
 ipcMain.on("set-autostart", (event, enable) => {
   if (enable) {
-    appLauncher.enable().catch((err) => console.error("启用失败:", err));
+    appLauncher.enable().catch((err) => log.error("启用失败:", err));
   } else {
-    appLauncher.disable().catch((err) => console.error("禁用失败:", err));
+    appLauncher.disable().catch((err) => log.error("禁用失败:", err));
   }
 });
 
@@ -68,15 +69,12 @@ function createWindow() {
 function gracefulExit() {
   forceQuit = true;
   if (backendManager.backendProcess) {
-    console.log(
-      "trying to kill backend PID:",
-      backendManager.backendProcess.pid
-    );
+    log.info("trying to kill backend PID:", backendManager.backendProcess.pid);
     kill(backendManager.backendProcess.pid, "SIGTERM", (err) => {
       if (err) {
-        console.error("Failed to kill backend:", err);
+        log.error("Failed to kill backend:", err);
       } else {
-        console.log("Backend closed.");
+        log.info("Backend closed.");
       }
       app.exit();
     });

@@ -1,4 +1,5 @@
 const { Menu, shell } = require("electron");
+const log = require("./logger");
 const path = require("path");
 const { manualUpdateCheck } = require("./updater");
 function createAppMenu(app, mainWindow, autoUpdater, gracefulExit) {
@@ -22,11 +23,11 @@ function createAppMenu(app, mainWindow, autoUpdater, gracefulExit) {
           label: "退出",
           accelerator: "CmdOrCtrl+Q",
           click: () => {
-            console.log("🟢 menu is clicked ");
+            log.info("🟢 menu is clicked ");
             try {
               gracefulExit();
             } catch (e) {
-              console.error("using gracefulExit error:", e);
+              log.error("using gracefulExit error:", e);
             }
           },
         },

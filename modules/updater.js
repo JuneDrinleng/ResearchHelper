@@ -1,4 +1,5 @@
 const { autoUpdater } = require("electron-updater");
+const log = require("./logger");
 let manualCheck = false;
 function setupAutoUpdater(dialog) {
   autoUpdater.autoDownload = false;
