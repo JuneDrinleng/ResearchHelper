@@ -118,6 +118,20 @@
       .sidebar .footer {
         margin: 0 !important;
       }
+      .pin-btn {
+        background: transparent !important; /* 覆盖 nav-links 的默认背景 */
+      }
+
+      .pin-btn i {
+        color: #fff;
+        transition: color 0.25s ease, transform 0.25s ease;
+      }
+
+      /* 激活：钉子本身变 Accent 颜色，并轻轻旋转 */
+      .pin-btn.pin-active i {
+        color: var(--accent, #3d7dff);
+        transform: rotate(45deg);
+      }
     </style>
   </head>
   <body>
@@ -136,6 +150,9 @@
           <a data-src="settings.html" title="设置"
             ><i class="fa-solid fa-gear"></i
           ></a>
+          <a id="btnPin" class="pin-btn" title="窗口置顶">
+            <i class="fa-solid fa-thumbtack"></i>
+          </a>
         </div>
 
         <!-- ③ 底部“二人组” ⭐️⭐️⭐️ -->
@@ -164,7 +181,7 @@
 
       document.addEventListener("DOMContentLoaded", () => {
         const iframe = document.getElementById("mainFrame");
-        const navLinks = document.querySelectorAll(".nav-links a");
+        const navLinks = document.querySelectorAll(".nav-links a[data-src]");
         const footer = document.querySelector(".footer[data-src]");
 
         /** 高亮处理 */
@@ -227,6 +244,18 @@
         // if (confirm("确认退出 ResearchHelper？")) {
         ipcRenderer.send("app-exit"); // 发给主进程
         // }
+      });
+      const btnPin = document.getElementById("btnPin");
+
+      /* 请求主进程切换置顶；收到状态后再改图标 */
+      btnPin.addEventListener("click", (e) => {
+        e.preventDefault();
+        window.electronAPI.toggleTop();
+      });
+
+      /* 主进程返回置顶状态时切换样式 */
+      window.electronAPI.onTopState((isTop) => {
+        btnPin.classList.toggle("pin-active", isTop); // ← 只改这里
       });
     </script>
   </body>

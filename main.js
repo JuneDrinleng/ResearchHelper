@@ -53,6 +53,14 @@ ipcMain.on("check-for-updates", () => {
 ipcMain.on("app-exit", () => {
   gracefulExit();
 });
+ipcMain.on("toggle-always-on-top", () => {
+  const newState = !mainWindow.isAlwaysOnTop();
+  mainWindow.setAlwaysOnTop(
+    newState,
+    process.platform === "darwin" ? "floating" : "screen-saver"
+  );
+  mainWindow.webContents.send("always-on-top-state", newState);
+});
 
 /* 如果想把进度推给渲染进程 ↓ */
 autoUpdater.on("update-available", () =>
@@ -142,6 +150,12 @@ app.on("before-quit", (e) => {
 app.whenReady().then(() => {
   startBackend(app);
   createWindow();
+  mainWindow.webContents.on("did-finish-load", () => {
+    mainWindow.webContents.send(
+      "always-on-top-state",
+      mainWindow.isAlwaysOnTop()
+    );
+  });
   // createAppMenu(
   //   app,
   //   mainWindow,
