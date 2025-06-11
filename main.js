@@ -80,7 +80,7 @@ function createWindow() {
       preload: path.join(__dirname, "modules", "preload.js"),
     },
   });
-
+  mainWindow.removeMenu();
   mainWindow.loadFile(path.join(__dirname, "templates", "index.html"));
 
   mainWindow.on("close", (event) => {
@@ -142,12 +142,12 @@ app.on("before-quit", (e) => {
 app.whenReady().then(() => {
   startBackend(app);
   createWindow();
-  createAppMenu(
-    app,
-    mainWindow,
-    require("electron-updater").autoUpdater,
-    gracefulExit
-  );
+  // createAppMenu(
+  //   app,
+  //   mainWindow,
+  //   require("electron-updater").autoUpdater,
+  //   gracefulExit
+  // );
   createTray();
   autoUpdateCheck();
   setupAutoUpdater(dialog);
