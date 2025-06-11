@@ -27,6 +27,15 @@ if (isPackaged) {
   appLauncher.enable().catch(console.error);
 }
 
+ipcMain.handle("get-autostart", async () => {
+  try {
+    const isEnabled = await appLauncher.isEnabled();
+    return isEnabled;
+  } catch (err) {
+    console.error("查询自启动状态失败:", err);
+    return false;
+  }
+});
 ipcMain.on("set-autostart", (event, enable) => {
   if (enable) {
     appLauncher.enable().catch((err) => console.error("启用失败:", err));
