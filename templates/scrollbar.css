@@ -1,0 +1,78 @@
+/* =========================================================================
+   scrollbar.css — Custom overlay scrollbar
+   last update: 2025-06-12
+   ========================================================================= */
+
+/* ───────── ① 主题变量 ───────── */
+:root {
+  /* 基础色（浅色主题默认） */
+  --sb-track: #e5e5ea; /* 轨道备用色 */
+  --sb-thumb-light: rgba(0, 0, 0, 0.07); /* thumb 浅灰 */
+  --sb-thumb-dark: rgba(255, 255, 255, 0.16); /* thumb 深灰 */
+  --sb-thumb-hover-light: #ff453a; /* hover 浅色高亮 */
+  --sb-thumb-hover-dark: #ffb347; /* hover 暗色高亮 */
+
+  /* 尺寸 / 圆角 / 阴影 */
+  --sb-radius: 6px;
+  --sb-shadow-light: 0 0 4px rgba(0, 0, 0, 0.15);
+  --sb-shadow-dark: 0 0 4px rgba(0, 0, 0, 0.4);
+
+  /* 默认映射（浅色模式）——★ 修复点：给 --sb-thumb 默认值 ★ */
+  --sb-thumb: var(--sb-thumb-light);
+  --sb-thumb-hover: var(--sb-thumb-hover-light);
+  --sb-shadow: var(--sb-shadow-light);
+}
+
+/* 深色模式覆盖 */
+html.dark-mode {
+  --sb-track: #2c2c2e;
+  --sb-thumb: var(--sb-thumb-dark);
+  --sb-thumb-hover: var(--sb-thumb-hover-dark);
+  --sb-shadow: var(--sb-shadow-dark);
+}
+
+/* ───────── ② WebKit / Blink (Chrome - Edge - Safari) ───────── */
+body::-webkit-scrollbar {
+  width: 12px; /* 胶囊宽度（水平同理） */
+  height: 12px;
+  background: transparent;
+}
+
+body::-webkit-scrollbar-track {
+  background: transparent; /* 轨道不可见，保持 overlay 效果 */
+}
+
+body::-webkit-scrollbar-thumb {
+  background: var(--sb-thumb);
+  border-radius: var(--sb-radius);
+  min-height: 40px; /* 不至于太短 */
+  border: 3px solid transparent; /* thumb 与边缘间隙 */
+  box-shadow: var(--sb-shadow);
+  transition: background 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* 悬停 / 拖拽反馈 */
+body::-webkit-scrollbar-thumb:hover {
+  background: var(--sb-thumb-hover);
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.25);
+}
+body::-webkit-scrollbar-thumb:active {
+  background: color-mix(in srgb, var(--sb-thumb-hover) 80%, #000 20%);
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.35);
+}
+
+/* 拐角透明（避免双轴时留白） */
+body::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* ───────── ③ Firefox ───────── */
+html {
+  scrollbar-width: thin; /* 宽度接近 12px */
+  scrollbar-color: var(--sb-thumb) transparent; /* thumb / track */
+}
+
+/* 若想在 Firefox 彻底隐藏原生滚动条（自行绘制），可改为：
+   html{ scrollbar-width: none; }  */
+
+/* ========================================================================= */

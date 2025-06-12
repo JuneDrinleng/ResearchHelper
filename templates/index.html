@@ -7,6 +7,8 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
+    <link rel="stylesheet" href="scrollbar.css" />
+
     <style>
       * {
         box-sizing: border-box;
@@ -43,9 +45,24 @@
         flex-direction: column;
         justify-content: space-between;
         align-items: center;
+        -webkit-app-region: drag;
       }
 
-      .logo,
+      .logo {
+        cursor: default; /* Logo 只是装饰，不是按钮 */
+        -webkit-app-region: drag; /* 保留拖窗功能 */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 40px;
+        height: 40px;
+        margin-bottom: 20px;
+        font-size: 24px;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 8px;
+        transition: background 0.2s, transform 0.2s, color 0.2s;
+      }
       .nav-links a,
       .footer {
         /* 把 footer 也当按钮处理 */
@@ -61,6 +78,7 @@
         border-radius: 8px;
         transition: background 0.2s, transform 0.2s, color 0.2s;
         cursor: pointer;
+        -webkit-app-region: no-drag; /* 让按钮可点击 */
       }
 
       .logo:hover,
@@ -140,7 +158,7 @@
       <!-- 侧边栏 -->
       <div class="sidebar">
         <!-- ① 顶部 Logo -->
-        <a href="#" class="logo" title="ResearchHelper">📟</a>
+        <div class="logo" title="ResearchHelper">📟</div>
 
         <!-- ② 主导航 -->
         <div class="nav-links">
@@ -256,6 +274,17 @@
       /* 主进程返回置顶状态时切换样式 */
       window.electronAPI.onTopState((isTop) => {
         btnPin.classList.toggle("pin-active", isTop); // ← 只改这里
+      });
+
+      const applyTheme = (t) => {
+        document.documentElement.classList.remove("light-mode", "dark-mode");
+        document.body.classList.remove("light-mode", "dark-mode");
+        document.documentElement.classList.add(`${t}-mode`);
+        document.body.classList.add(`${t}-mode`);
+      };
+      applyTheme(localStorage.getItem("theme") || "light");
+      window.addEventListener("storage", (e) => {
+        if (e.key === "theme") applyTheme(e.newValue || "light");
       });
     </script>
   </body>
