@@ -109,3 +109,9 @@ app.whenReady().then(() => {
   autoUpdateCheck();
   setupAutoUpdater(dialog);
 });
+/* ===== 三个 IPC 事件 ===== */
+ipcMain.on("win-min", () => mainWindow.minimize());
+ipcMain.on("win-max-toggle", () =>
+  mainWindow.isMaximized() ? mainWindow.unmaximize() : mainWindow.maximize()
+);
+ipcMain.on("win-close", () => mainWindow.close());
