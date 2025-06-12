@@ -27,7 +27,6 @@
 
 
 ---
-## 🇨🇳 中文版  <a id="中文版"></a>
 
 <p align="right"><a href="#research-helper 🧑‍🎓">
 
