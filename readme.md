@@ -1,73 +1,98 @@
-# README
+<p align="center">
+  <img src="./readme.assets/logo.png" alt="Research Helper Logo" width="120" />
+</p>
 
-## 1 QUICKLY START
+<h1 align="center">Research Helper 🧑‍🎓</h1>
 
-Download the setup application from the [release](https://github.com/JuneDrinleng/ResearchHelper/releases) and double click it to install the application. After installing, it will automatically show up
+<p align="center">
+  <a href="#quick-start">🚀 Quick Start</a> •
+  <a href="#appearance--features">🎨 Appearance & Features</a> •
+  <a href="#try-it-yourself">🛠️ Try It Yourself</a> •
+  <a href="#packaging">📦 Packaging</a> •
+  <a href="#中文版">🇨🇳 中文</a>
+</p>
 
-## 2 APPEARENCE AND FUNCTION
+---
 
-Your research helper! 🧑‍🎓
+## Table of Contents
 
-- [x] 😊 Help you to surfing the internet, translate unknown words and so on ! 
+1. [Quick Start](#quick-start)
+2. [Appearance & Features](#appearance--features)
+3. [Try It Yourself](#try-it-yourself)
+4. [Packaging](#packaging)
+5. [中文 (Chinese Version)](#中文版)
 
-- [x] ✨ It has light mode and dark mode depending your choice!  
+---
 
-- [x] 📕 You can conveniently using translator!
+## Quick Start
 
-- [x] 🔥 You can surfing all the hot point from weibo. If you want to know more, you can click specific word theme to look for details!
+Download the latest installer from the [Releases page](https://github.com/JuneDrinleng/ResearchHelper/releases) and double‑click to install.
 
-- [x] 📌 It is easy for you to pin the window of Research Helper in the front of the screen
+Once installed, **Research Helper** launches automatically and is ready to assist you. 🎉
 
-![image-20250612212048348](./readme.assets/image-20250612212048348.png)
+---
 
-![image-20250612212106765](./readme.assets/image-20250612212106765.png)
+## Appearance & Features
 
-![image-20250612212119743](./readme.assets/image-20250612212119743.png)
+|  Feature               |  Description                                 |
+| ---------------------- | -------------------------------------------- |
+| 🌐 Surf the web        | Inline translation, quick look‑ups, and more |
+| 🌓 Light / Dark Mode   | Select the look that suits your eyes         |
+| 📕 Built‑in Translator | Highlight & translate any text instantly     |
+| 🔥 Weibo Hot Topics    | One‑click to explore trending hashtags       |
+| 📌 Pin Window          | Keep **Research Helper** always on top       |
 
-![image-20250612212132885](./readme.assets/image-20250612212132885.png)
+<p align="center"><img src="./readme.assets/image-20250612212048348.png" width="45%" /> <img src="./readme.assets/image-20250612212106765.png" width="45%" /></p>
+<p align="center"><img src="./readme.assets/image-20250612212119743.png" width="45%" /> <img src="./readme.assets/image-20250612212132885.png" width="45%" /></p>
 
-## 3 TRY YOURSELF
+---
 
-### 3.1 How to run
+## Try It Yourself
 
-#### 3.1.1 Backend
+### Backend (🔧 Python / FastAPI)
 
-1. create virtual environment and install Python dependencies:
-   ```bash
-    cd backend
-    python -m venv venv
-    venv\Scripts\activate
-    pip install -r requirements.txt
-   ```
-2. run the backend service:
-   ```bash
-    python main.py
-   ```
+```bash
+# 1️⃣ Create and activate a virtual environment
+cd backend
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
 
-if you directly git clone the repo in Windows, you can ignore it. Because the backend is packaged into `.exe` file in the `./backend/dist`
+# 2️⃣ Install dependencies
+pip install -r requirements.txt
 
-#### 3.1.2 Frontend
-
-1. install Node.js dependencies:
-   ```bash
-    npm install
-   ```
-2. run the frontend app:
-   ```bash
-    npm start
-   ```
-
-### 3.2 How to package
-
-####  3.2.1 Packaging Python Projects
-
+# 3️⃣ Run the backend service
+python main.py
 ```
+
+> **Tip:** If you cloned the repo on Windows you can also use the pre‑built `ResearchHelperService.exe` located in `backend/dist` — no Python setup required.
+
+### Frontend (⚡ Electron + React)
+
+```bash
+# Install dependencies
+npm install
+
+# Start the app in dev mode
+npm start
+```
+
+---
+
+## Packaging
+
+### Package the Python Backend
+
+```bash
 cd backend
 pyinstaller --onefile --noconsole --name ResearchHelperService --icon=../favicon.ico main.py
 ```
 
-#### 3.2.2 package electron app in windows
+### Package the Electron App (on Windows)
 
-```
+```bash
 electron-builder --win
 ```
+
+---
+
+<p align="center">✨ Happy Researching! ✨</p>
