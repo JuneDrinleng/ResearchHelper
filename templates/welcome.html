@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <title>欢迎使用 ResearchHelper</title>
+    <link rel="stylesheet" href="./welcome.css" />
+  </head>
+  <body>
+    <div class="welcome">
+      <img
+        src="../assets/self.jpg"
+        alt="logo"
+        onerror="this.style.display='none';"
+      />
+      <h1>欢迎使用 ResearchHelper</h1>
+      <p>请选择左侧导航开始使用</p>
+    </div>
+
+    <script>
+      /* ============ 主题检测&切换 ============ */
+      const applyTheme = () => {
+        const pref = localStorage.getItem("theme") || "system";
+        const systemDark = matchMedia("(prefers-color-scheme:dark)").matches;
+        document.body.classList.toggle(
+          "dark",
+          pref === "dark" || (pref === "system" && systemDark)
+        );
+      };
+      applyTheme();
+      /* 监听系统主题变化（只有存 system 时才响应） */
+      matchMedia("(prefers-color-scheme:dark)").addEventListener(
+        "change",
+        applyTheme
+      );
+    </script>
+  </body>
+</html>

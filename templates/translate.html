@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <title>翻译器</title>
+    <link rel="stylesheet" href="./translate.css" />
+  </head>
+  <body>
+    <div class="top-bar">
+      <div class="lang-select left" id="from-langs">
+        <button class="lang-btn active" data-lang="auto">自动</button>
+        <button class="lang-btn" data-lang="zh-CN">简中</button>
+        <button class="lang-btn" data-lang="en">英文</button>
+        <button class="lang-btn" data-lang="ja">日语</button>
+      </div>
+
+      <button class="swap-btn" title="交换语言" id="swapBtn">⇄</button>
+
+      <div class="lang-select right" id="to-langs">
+        <button class="lang-btn active" data-lang="zh-CN">简中</button>
+        <button class="lang-btn" data-lang="en">英文</button>
+        <button class="lang-btn" data-lang="ja">日语</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="box input-box">
+        <textarea id="input" placeholder="输入文本" maxlength="5000"></textarea>
+        <div class="info" id="charCount">0 / 5,000</div>
+      </div>
+      <div class="box output-box">
+        <div id="result" class="output">翻译</div>
+      </div>
+    </div>
+    <div class="footer">
+      <a
+        href="#"
+        class="link"
+        onclick="parent.postMessage({ type: 'open-external', url: 'https://translate.google.com' }, '*')"
+      >
+        Google 翻译
+      </a>
+    </div>
+
+    <script src="./translate.js"></script>
+  </body>
+</html>

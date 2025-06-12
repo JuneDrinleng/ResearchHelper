@@ -1,0 +1,244 @@
+/* ─────────────────────  全局变量  ───────────────────── */
+:root {
+  --btn-h: 40px; /* 统一按钮高度                 */
+  --max-width: 1000px; /* 页面最大内容宽               */
+  --panel-gap: 24px; /* 两个文本框之间的间距         */
+  --swap-offset: calc((var(--panel-gap) - var(--btn-h)) / 2); /* = -8px */
+}
+
+/* ─────────────────────  基础布局  ───────────────────── */
+body {
+  margin: 0;
+  font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #f5f6fa;
+  color: #1f1f1f;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+}
+
+/* ─────────────────────  语言选择顶栏  ───────────────────── */
+.top-bar {
+  width: 100%;
+  max-width: var(--max-width);
+  display: flex; /* 回到 flex 布局 */
+  align-items: center;
+  gap: 0; /* 间距用 swap-btn 补偿 */
+  margin-bottom: 32px; /* 顶栏与文本框的距离 */
+}
+
+/* 两侧按钮组 */
+.lang-select {
+  flex: 1; /* 左右各占一半 */
+  display: flex;
+  gap: 12px; /* 组内按钮间距 */
+  justify-content: center; /* 在各自区域水平居中 */
+  align-items: center;
+}
+
+/* 交换按钮 */
+.swap-btn {
+  flex: 0 0 var(--btn-h);
+  width: var(--btn-h);
+  height: var(--btn-h);
+  margin: 0 var(--swap-offset); /* 关键：左右各 -8px 抵消错位 */
+  background: #e4e7eb;
+  border: none;
+  color: #1f2937;
+  font-size: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.3s, background 0.3s;
+}
+.swap-btn:hover {
+  background: #c7d2fe;
+  transform: rotate(180deg);
+}
+
+/* 语言按钮 */
+.lang-btn {
+  background: #fff;
+  border: 1px solid #d0d7de;
+  padding: 0 20px;
+  height: var(--btn-h);
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: #333;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+.lang-btn:hover {
+  background: #f0f4ff;
+  border-color: #a8c7fa;
+  color: #1a73e8;
+}
+.lang-btn.active {
+  background: #1a73e8;
+  color: #fff;
+  border-color: #1a73e8;
+  box-shadow: 0 2px 4px rgba(26, 115, 232, 0.3);
+}
+
+/* ─────────────────────  主内容面板  ───────────────────── */
+.panel {
+  width: 100%;
+  max-width: var(--max-width);
+  display: flex;
+  gap: var(--panel-gap);
+  flex-wrap: wrap;
+}
+
+.box {
+  flex: 1;
+  min-width: 320px;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  padding: 20px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 输入框 */
+.input-box textarea {
+  border: none;
+  resize: vertical;
+  font-size: 16px;
+  min-height: 160px;
+  outline: none;
+  background: transparent;
+  color: #1f1f1f;
+  line-height: 1.6;
+  font-family: inherit;
+}
+
+/* 隐藏 textarea 把手（Chrome/Firefox/旧 IE） */
+.input-box textarea::-webkit-resizer {
+  display: none;
+}
+.input-box textarea::-moz-resizer {
+  visibility: hidden;
+}
+.input-box textarea::-ms-resizer {
+  display: none;
+}
+.input-box textarea::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+.output {
+  font-size: 16px;
+  color: #1f1f1f;
+  white-space: pre-wrap;
+  min-height: 160px;
+  line-height: 1.6;
+}
+
+/* 字符统计 */
+.info {
+  font-size: 13px;
+  color: #666;
+  position: absolute;
+  bottom: 12px;
+  right: 20px;
+  user-select: none;
+  pointer-events: none;
+  caret-color: transparent;
+}
+
+/* ─────────────────────  链接 / 页脚  ───────────────────── */
+a.link {
+  color: #64748b;
+  text-decoration: none;
+  font-size: 16px;
+  margin-top: 20px;
+  display: inline-block;
+}
+a.link:hover {
+  color: #2563eb;
+}
+
+.footer {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.link {
+  color: #64748b;
+  text-decoration: none;
+  font-size: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  transition: background 0.2s, color 0.2s;
+}
+.link:hover {
+  color: #2563eb;
+  background: rgba(37, 99, 235, 0.1);
+}
+.link-icon {
+  font-size: 14px;
+  transform: translateY(1px);
+}
+
+/* ─────────────────────  响应式  ───────────────────── */
+@media (max-width: 768px) {
+  .panel {
+    flex-direction: column;
+  }
+  .swap-btn {
+    margin: 10px 0;
+  } /* 竖排时上下留白 */
+}
+/* ── 最终版：底部 “Google 翻译” 按钮 ────────────────── */
+
+/* ① 胶囊按钮整体样式（保留上次的放大+渐变+动效） */
+.footer .link {
+  font-size: 18px; /* 文字大一点 */
+  font-weight: 600;
+  padding: 10px 28px;
+  color: #1a73e8;
+  background: linear-gradient(135deg, #e8f0fe 0%, #d2e3fc 100%);
+  border-radius: 9999px;
+  box-shadow: 0 4px 10px rgba(26, 115, 232, 0.25);
+  backdrop-filter: saturate(180%) blur(8px);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+.footer .link:hover {
+  background: #1a73e8;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(26, 115, 232, 0.35);
+}
+.footer .link:active {
+  transform: none;
+  box-shadow: 0 2px 6px rgba(26, 115, 232, 0.25) inset;
+}
+
+/* ② 只有这一条伪元素，专门负责显示 G 标识 */
+.footer .link::before {
+  content: "";
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  background: url("../assets/Google.svg") center/contain no-repeat;
+}

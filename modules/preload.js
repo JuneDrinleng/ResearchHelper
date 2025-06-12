@@ -6,6 +6,7 @@ contextBridge.exposeInMainWorld("electronAPI", {
   winMin: () => ipcRenderer.send("win-min"),
   winMaxToggle: () => ipcRenderer.send("win-max-toggle"),
   winClose: () => ipcRenderer.send("win-close"),
+  openExternal: (url) => ipcRenderer.invoke("open-external", url), // 👈 改为通过 ipc 调用主进程
 });
 
 contextBridge.exposeInMainWorld("ipcRenderer", {

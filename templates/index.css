@@ -36,8 +36,8 @@ body.dark-mode {
   z-index: 100;
 }
 body.dark-mode .titlebar {
-  background: linear-gradient(90deg, #000 0 72px, #1e1e1e 72px);
-  --bg-col: #1e1e1e;
+  background: linear-gradient(90deg, #000 0 72px, var(--bg-col) 72px);
+  --bg-col: #1e1f22;
 }
 
 /* ==================== 窗口控制按钮 (mac / win) ==================== */
@@ -252,7 +252,7 @@ body.dark-mode .nav-links a.active {
   transition: color 0.25s, transform 0.25s;
 }
 .pin-btn.pin-active i {
-  color: var(--accent, #3d7dff);
+  color: var(--accent, #5da3fa);
   transform: rotate(45deg);
 }
 
@@ -265,7 +265,7 @@ iframe {
   height: 100%;
   border: none;
   display: block;
-  background: #1e1e1e;
+  background: #1e1f22;
 }
 body.light-mode iframe {
   background: #f9fafc;

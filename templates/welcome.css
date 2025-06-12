@@ -1,0 +1,136 @@
+/* ───────────────── 主题变量 ───────────────── */
+:root {
+  /* 背景 */
+  --bg-light: #f5f6fa;
+  --bg-dark: #1e1f22; /* 深色模式下纯色背景 */
+
+  /* 卡片 */
+  --card-light: rgba(255, 255, 255, 0.65);
+  --card-dark: rgba(255, 255, 255, 0.06);
+
+  /* 文本 */
+  --text-light: #333;
+  --text-dark: #f1f1f1;
+
+  /* 其他常用 */
+  --blur: 12px;
+  --radius: 22px;
+  --shadow-light: 0 8px 32px rgba(0, 0, 0, 0.08);
+  --shadow-dark: 0 8px 32px rgba(0, 0, 0, 0.45);
+}
+
+/* ───────────────── 页面基线 ───────────────── */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-light);
+  color: var(--text-light);
+  transition: background 0.4s ease, color 0.4s ease;
+}
+
+/* 亮色柔和径向渐变 */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 60% 20%,
+    rgba(98, 114, 255, 0.12),
+    transparent 65%
+  );
+  pointer-events: none;
+}
+
+/* 深色主题：纯色背景，无渐变 */
+html.dark,
+body.dark {
+  background: var(--bg-dark) !important;
+  color: var(--text-dark);
+}
+body.dark::before {
+  background: none;
+}
+
+/* ───────────────── 欢迎卡片 ───────────────── */
+.welcome {
+  max-width: 480px;
+  padding: 48px 28px;
+  text-align: center;
+  border-radius: var(--radius);
+  background: var(--card-light);
+  backdrop-filter: blur(var(--blur));
+  -webkit-backdrop-filter: blur(var(--blur));
+  box-shadow: var(--shadow-light);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  animation: pop 0.6s cubic-bezier(0.22, 1.12, 0.84, 1.08);
+}
+body.dark .welcome {
+  background: var(--card-dark);
+  box-shadow: var(--shadow-dark);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Logo */
+.welcome img {
+  width: 96px;
+  margin-bottom: 24px;
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.35s ease;
+}
+.welcome img:hover {
+  transform: rotate(-8deg) scale(1.05);
+}
+
+/* 文本 */
+.welcome h1 {
+  margin: 0 0 16px;
+  font-size: 26px;
+}
+.welcome p {
+  margin: 0;
+  font-size: 17px;
+  opacity: 0.68;
+}
+
+/* ───────────────── 动效 ───────────────── */
+@keyframes pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.84) translateY(30px);
+  }
+  60% {
+    opacity: 0.9;
+    transform: scale(1.02) translateY(-6px);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ───────────────── 响应式 ───────────────── */
+@media (max-width: 480px) {
+  .welcome {
+    padding: 36px 24px;
+  }
+  .welcome h1 {
+    font-size: 22px;
+  }
+  .welcome p {
+    font-size: 15px;
+  }
+}
+html,
+body {
+  width: 100%;
+} /* 保证横向始终占满 iframe */

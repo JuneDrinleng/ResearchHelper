@@ -26,7 +26,7 @@ navLinks.forEach((l) => {
     setActive(l);
   });
 });
-setActive(document.querySelector('.nav-links a[data-src="./hotsearch.html"]'));
+// setActive(document.querySelector('.nav-links a[data-src="./hotsearch.html"]'));
 document.querySelector(".footer[data-src]").onclick = (e) => {
   e.preventDefault();
   iframe.src = e.currentTarget.dataset.src;
@@ -53,5 +53,18 @@ document.getElementById("btnClose").onclick = () => api.winClose?.();
 document.getElementById("btnMin").onclick = () => api.winMin?.();
 document.getElementById("btnMax").onclick = () => api.winMaxToggle?.();
 
-/* ========= 预取子页面 ========= */
-["hotsearch.html", "settings.html", "about.html"].forEach((u) => fetch(u));
+/* ========= 预加载子页面 ========= */
+[
+  "hotsearch.html",
+  "translate.html",
+  "settings.html",
+  "about.html",
+  "welcome.html",
+].forEach((u) => fetch(u));
+
+/* ========= 打开外连接 ========= */
+window.addEventListener("message", (event) => {
+  if (event.data?.type === "open-external") {
+    window.electronAPI?.openExternal(event.data.url);
+  }
+});

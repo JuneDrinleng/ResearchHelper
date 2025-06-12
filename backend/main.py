@@ -3,16 +3,11 @@ from flask import jsonify
 from utils.get_hot import hot_search_loop
 import signal
 import sys
+from utils.get_google_tranlate import Google_translator
 app = Flask(__name__)
+from flask import request
 
 @app.route('/')
-@app.route('/settings')
-def settings():
-    return render_template("settings.html")
-
-@app.route('/hotsearch')
-def hotsearch():
-    return render_template('hotsearch.html')
 
 @app.route("/api/hotsearch")
 def hotsearch_api():
@@ -23,6 +18,19 @@ def hotsearch_api():
 def index():
     return render_template("index.html")
 
+@app.route("/api/translate", methods=["POST"])
+def translate():
+    data = request.get_json()
+    text = data.get("text", "")
+    to_lang = data.get("to", "en")
+    from_lang = data.get("from", "auto")
+    print(data, text, to_lang, from_lang)
+
+    try:
+        result = Google_translator(text, to_lang, from_lang)
+        return jsonify({"result": result})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
 

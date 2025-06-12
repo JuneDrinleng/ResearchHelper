@@ -4,7 +4,7 @@ const kill = require("tree-kill");
 const { setupAutoUpdater, autoUpdateCheck } = require("./modules/updater");
 const backendManager = require("./modules/backendManager");
 const log = require("./modules/logger");
-
+const { shell } = require("electron");
 let mainWindow;
 let tray = null;
 let forceQuit = false;
@@ -23,7 +23,9 @@ ipcMain.on("toggle-always-on-top", () => {
   );
   mainWindow.webContents.send("always-on-top-state", newState);
 });
-
+ipcMain.handle("open-external", async (_event, url) => {
+  await shell.openExternal(url);
+});
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 900,

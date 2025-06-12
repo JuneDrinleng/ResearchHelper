@@ -305,3 +305,8 @@ option {
     padding: 18px 22px;
   }
 }
+/* ── 让暗色主题背景保持纯 #1e1f22 ─────────────── */
+:root[data-theme="dark"] body {
+  background: #1e1f22; /* 纯色背景 */
+  background-image: none; /* 关掉叠加渐变 */
+}

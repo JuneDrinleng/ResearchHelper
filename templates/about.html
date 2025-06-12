@@ -146,6 +146,45 @@
           margin-top: 18px;
         }
       }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(24px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .container {
+        animation: fadeUp 0.6s ease-out;
+      }
+
+      .container > * {
+        opacity: 0;
+        animation: fadeUp 0.6s ease-out forwards;
+      }
+
+      /* 分别延迟显示子元素 */
+      .container img.avatar {
+        animation-delay: 0.2s;
+      }
+      .container h1 {
+        animation-delay: 0.35s;
+      }
+      .container p:nth-of-type(1) {
+        animation-delay: 0.5s;
+      }
+      .container p:nth-of-type(2) {
+        animation-delay: 0.65s;
+      }
+      .container a.button {
+        animation-delay: 0.8s;
+      }
+      .container a.link {
+        animation-delay: 1s;
+      }
     </style>
   </head>
   <body>
@@ -160,11 +199,19 @@
         ><span class="value">June Drinleng</span>
       </p>
 
-      <a href="#" class="button" onclick="history.back()">返回首页</a><br />
       <a
-        href="https://github.com/JuneDrinleng/ResearchHelper"
-        target="_blank"
+        href="#"
+        class="button"
+        onclick="parent.document.getElementById('mainFrame').src = './welcome.html'"
+      >
+        <i class="fa-solid fa-house"></i>&nbsp;返回首页
+      </a>
+      <!-- 分开放，GitHub链接单独一行 -->
+      <br />
+      <a
+        href="#"
         class="link"
+        onclick="parent.postMessage({ type: 'open-external', url: 'https://github.com/JuneDrinleng/ResearchHelper' }, '*')"
       >
         <i class="fa-solid fa-link"></i>&nbsp;GitHub 项目主页
       </a>
