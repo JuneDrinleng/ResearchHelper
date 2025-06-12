@@ -20,7 +20,7 @@
 2. [Appearance & Features](#appearance--features)
 3. [Try It Yourself](#try-it-yourself)
 4. [Packaging](#packaging)
-5. [中文 (Chinese Version)](#中文版)
+5. [English (Chinese Version)](#language)
 
 ---
 ## 🇨🇳 中文版  <a id="中文版"></a>
