@@ -29,7 +29,6 @@ function createWindow() {
     width: 900,
     height: 700,
     frame: false, // ⬅ Win / Linux 必须 false
-    icon: path.join(__dirname, "favicon.ico"),
     show: true,
     webPreferences: {
       nodeIntegration: false,
@@ -71,7 +70,10 @@ function gracefulExit() {
 }
 
 function createTray() {
-  const iconPath = path.join(__dirname, "favicon.ico");
+  const iconPath =
+    process.platform === "darwin"
+      ? path.join(__dirname, "favicon.icns")
+      : path.join(__dirname, "favicon.ico");
   tray = new Tray(iconPath);
 
   tray.on("click", () => {
