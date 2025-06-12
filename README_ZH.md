@@ -20,12 +20,12 @@
 2. [Appearance & Features](#appearance--features)
 3. [Try It Yourself](#try-it-yourself)
 4. [Packaging](#packaging)
-5. [English (Chinese Version)](#language)
+
 
 ---
 ## 🇨🇳 中文版  <a id="中文版"></a>
 
-<p align="right"><a href="#research-helper 🧑‍🎓">🔙 English Version</a></p>
+<p align="right"><a href="#research-helper 🧑‍🎓">
 
 ### 快速开始 🚀
 
