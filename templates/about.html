@@ -60,10 +60,27 @@
         border-radius: 50%;
         object-fit: cover;
       }
+      /* 亮色模式：淡蓝 → 灰紫渐变 */
       h1 {
         font-size: 32px;
         margin: 24px 0 12px;
+
+        background: linear-gradient(
+          90deg,
+          #6a7ec2 0%,
+          /* 蓝 */ #8d82a8 50%,
+          /* 过渡 */ #a896a1 100% /* 灰紫 */
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
       }
+
+      /* 深色模式：整体压暗 10%，防止过亮 */
+      body.dark-mode h1 {
+        filter: brightness(0.9) contrast(1.05);
+      }
+
       p {
         margin: 12px 0;
         font-size: 18px;

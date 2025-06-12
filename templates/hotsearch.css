@@ -18,14 +18,34 @@ body.dark-mode {
   text-align: center;
   margin-bottom: 24px;
 }
+/* 亮色模式：番茄红 → 橙红 */
 .hot-title {
   font-size: 26px;
   font-weight: 700;
-  color: #ff453a;
   margin: 0;
+
+  background: linear-gradient(
+    90deg,
+    #ff453a 0%,
+    /* 番茄红 */ #ff7440 50%,
+    /* 过渡橙 */ #ffa142 100% /* 橙黄 */
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; /* 标准属性 */
 }
+
+/* 深色模式：略调亮，避免太暗 */
 body.dark-mode .hot-title {
-  color: #ff9580;
+  background: linear-gradient(
+    90deg,
+    #ff6b5e 0%,
+    /* 较亮番茄 */ #ff8b5c 50%,
+    #ffb256 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 /* ========== 卡片外容器（负责 hover 放大 & 动画） ========== */

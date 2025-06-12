@@ -356,3 +356,81 @@ html,
 body {
   overflow: hidden; /* 不出现任何滚动条 */
 }
+/* ───────── 美化输入/输出框滚动条 ───────── */
+
+/* 统一变量（默认＝亮色模式） */
+:root {
+  --scroll-thumb: #c1c5ce; /* 滑块 */
+  --scroll-thumb-hover: #a1a4ad;
+  --scroll-track: transparent; /* 轨道 */
+  --scroll-width: 6px; /* 宽度 */
+}
+
+/* 深色主题覆盖变量 */
+body.dark-mode {
+  --scroll-thumb: #5a5d66;
+  --scroll-thumb-hover: #7a7d86;
+  --scroll-track: transparent;
+}
+
+/* WebKit 浏览器（Chrome / Edge / Safari） */
+.input-box textarea::-webkit-scrollbar,
+.output::-webkit-scrollbar {
+  width: var(--scroll-width);
+}
+.input-box textarea::-webkit-scrollbar-track,
+.output::-webkit-scrollbar-track {
+  background: var(--scroll-track);
+}
+.input-box textarea::-webkit-scrollbar-thumb,
+.output::-webkit-scrollbar-thumb {
+  background: var(--scroll-thumb);
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+.input-box textarea::-webkit-scrollbar-thumb:hover,
+.output::-webkit-scrollbar-thumb:hover {
+  background: var(--scroll-thumb-hover);
+}
+
+/* Firefox */
+.input-box textarea,
+.output {
+  scrollbar-width: thin; /* 宽度 */
+  scrollbar-color: var(--scroll-thumb) var(--scroll-track);
+}
+/* ── 将标题改成截图那种蓝紫柔和渐变 ── */
+.page-title {
+  font-size: 38px;
+  padding: 32px 0 20px;
+  font-weight: 900;
+  letter-spacing: 2px; /* 略微拉开字距 */
+  line-height: 1.1;
+  margin: 0 0 64px; /* 与语言栏留更多空 */
+
+  /* 双色柔雾渐变：左偏蓝 → 右偏紫灰 */
+  background: linear-gradient(
+    90deg,
+    #6a7ec2 0%,
+    /* 蓝 */ #8d82a8 50%,
+    /* 过渡 */ #a896a1 100%
+  ); /* 紫灰 */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; /* 标准属性 */
+
+  user-select: none;
+}
+
+/* 深色主题：整体再暗 10%，提一点对比 */
+body.dark-mode .page-title {
+  filter: brightness(0.9) contrast(1.05);
+}
+
+/* 小屏自适应 */
+@media (max-width: 768px) {
+  .page-title {
+    font-size: 48px;
+    margin-bottom: 24px;
+  }
+}
