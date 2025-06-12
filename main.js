@@ -30,6 +30,8 @@ function createWindow() {
     height: 700,
     frame: false, // ⬅ Win / Linux 必须 false
     show: true,
+    icon: path.join(__dirname, "favicon.ico"),
+
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
