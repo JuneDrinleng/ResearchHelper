@@ -5,3 +5,7 @@
 *.spec
 research-helper.log
 *.log
+/assets/signin-assets/__MACOSX
+assets/signin-assets/signin-assets/Android/png@1x/dark/.DS_Store
+assets/signin-assets/signin-assets/Android/.DS_Store
+assets/signin-assets/signin-assets/.DS_Store
