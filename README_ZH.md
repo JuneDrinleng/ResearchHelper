@@ -5,23 +5,25 @@
 <h1 align="center">Research Helper 🧑‍🎓</h1>
 
 <p align="center">
-  <a href="#quick-start">🚀 Quick Start</a> •
-  <a href="#appearance--features">🎨 Appearance & Features</a> •
-  <a href="#try-it-yourself">🛠️ Try It Yourself</a> •
+  <a href="#quick-start">🚀 Quick Start</a> •
+  <a href="#appearance--features">🎨 Appearance & Features</a> •
+  <a href="#try-it-yourself">🛠️ Try It Yourself</a> •
   <a href="#packaging">📦 Packaging</a> •
-
+  <a href="#language-switch">🌐 Language</a>
 </p>
-  [🅰️English]("./README.md")
 
+<p align="center" id="language-switch">
+  <a href="./README.md"><strong>🅰️ English</strong></a>
+</p>
   
 ---
 
 ## Table of Contents
 
-1. [Quick Start](#quick-start)
-2. [Appearance & Features](#appearance--features)
-3. [Try It Yourself](#try-it-yourself)
-4. [Packaging](#packaging)
+1. [快速开始](#quick-start)
+2. [外观与功能](#appearance--features)
+3. [本地编译](#try-it-yourself)
+4. [打包](#packaging)
 
 
 ---
@@ -52,7 +54,7 @@
   <img src="./readme.assets/image-20250612212132885.png" width="45%" />
 </div>
 
-### 自己动手试试看 🛠️
+### 本地编译 🛠️
 
 #### 后端（Python / FastAPI）
 
