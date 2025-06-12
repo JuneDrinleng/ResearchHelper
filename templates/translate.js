@@ -87,3 +87,37 @@ async function translate() {
     result.textContent = "网络异常：" + err.message;
   }
 }
+/* ---------- 主题同步 ---------- */
+const applyTheme = (t) => {
+  document.documentElement.classList.remove("light-mode", "dark-mode");
+  document.body.classList.remove("light-mode", "dark-mode");
+  document.documentElement.classList.add(`${t}-mode`);
+  document.body.classList.add(`${t}-mode`);
+};
+
+/* ---------- DOM Ready ---------- */
+document.addEventListener("DOMContentLoaded", () => {
+  /* ① 进入时取本地存储 */
+  applyTheme(localStorage.getItem("theme") || "light");
+
+  /* ② 父窗口切换时，storage 事件同步 */
+  window.addEventListener("storage", (e) => {
+    if (e.key === "theme") applyTheme(e.newValue || "light");
+  });
+});
+/* ---------- DOM Ready ---------- */
+document.addEventListener("DOMContentLoaded", () => {
+  /* ① 进入时取本地存储 */
+  applyTheme(localStorage.getItem("theme") || "light");
+
+  /* ② 父窗口切换时 … */
+  window.addEventListener("storage", (e) => {
+    if (e.key === "theme") applyTheme(e.newValue || "light");
+  });
+
+  /* ▼▼▼ 新增：播放打开动画 ▼▼▼ */
+  document.body.classList.remove("preload");
+  // 用 requestAnimationFrame 保证重绘后再加动画类
+  requestAnimationFrame(() => document.body.classList.add("page-enter"));
+  /* ▲▲▲ 新增结束 ▲▲▲ */
+});
