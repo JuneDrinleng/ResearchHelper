@@ -37,17 +37,7 @@
     "extraResources": [
       {
         "from": "backend/dist/ResearchHelperService.exe",
-        "to": "backend/dist/ResearchHelperService.exe",
-        "platform": "win32"
-      },
-      {
-        "from": "backend/dist/ResearchHelperService",
-        "to": "backend/dist/ResearchHelperService",
-        "platform": "darwin",
-        "arch": [
-          "arm64",
-          "x64"
-        ]
+        "to": "backend/dist/ResearchHelperService.exe"
       }
     ],
     "asar": true,
@@ -55,22 +45,6 @@
       "target": "nsis",
       "icon": "favicon.ico",
       "artifactName": "ResearchHelper-Setup-${version}.${ext}"
-    },
-    "mac": {
-      "target": [
-        {
-          "target": "dmg",
-          "arch": [
-            "x64",
-            "arm64"
-          ]
-        }
-      ],
-      "icon": "favicon.icns",
-      "category": "public.app-category.productivity",
-      "asarUnpack": [
-        "backend/dist/**"
-      ]
     },
     "publish": [
       {
