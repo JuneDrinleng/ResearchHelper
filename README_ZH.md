@@ -9,9 +9,11 @@
   <a href="#appearance--features">🎨 Appearance & Features</a> •
   <a href="#try-it-yourself">🛠️ Try It Yourself</a> •
   <a href="#packaging">📦 Packaging</a> •
-  <a src="./README.md">🅰️English</a>
-</p>
 
+</p>
+  [🅰️English]("./README.md")
+
+  
 ---
 
 ## Table of Contents
