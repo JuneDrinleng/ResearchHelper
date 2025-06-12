@@ -1,0 +1,307 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
+
+:root {
+  --blue: #2f80ed;
+  --green: #27ae60;
+  --orange: #f2994a;
+  --radius: 16px;
+  font-family: "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+:root[data-theme="light"] {
+  --page-bg: #f5f6fa;
+  --card-bg: #ffffffcc; /* 80% 透明度做玻璃拟物 */
+  --text: #1f1f1f;
+  --muted: #6b6b6b;
+  --divider: #e2e2e2;
+  --hover: rgba(0, 0, 0, 0.04);
+  /* 下拉按钮背景/边框（浅色） */
+  --select-bg: #ffffffcc;
+  --select-border: var(--divider);
+}
+
+:root[data-theme="dark"] {
+  --page-bg: #1e1f22;
+  --card-bg: #2a2c31cc; /* 80% 透明度 */
+  --text: #f8f8f8;
+  --muted: #a2a2a2;
+  --divider: #333;
+  --hover: rgba(255, 255, 255, 0.05);
+  /* 下拉按钮背景/边框（深色） */
+  --select-bg: #2f3238;
+  --select-border: #444;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--page-bg);
+  color: var(--text);
+  display: flex;
+  flex-direction: column; /* 纵向排列：标题在上，卡片在下 */
+  align-items: center;
+  justify-content: flex-start; /* 顶部开始，而非垂直居中 */
+  min-height: 100vh;
+  padding: 80px 16px 40px; /* 上方留出呼吸空间 */
+  gap: 48px; /* 标题与内容间距 */
+  background-image: radial-gradient(
+      circle at 30% 30%,
+      rgba(255, 255, 255, 0.2) 0%,
+      transparent 60%
+    ),
+    radial-gradient(circle at 70% 70%, rgba(0, 0, 0, 0.2) 0%, transparent 60%);
+  background-blend-mode: overlay;
+}
+
+/* --------------------------------------------------
+   卡片
+-------------------------------------------------- */
+.card {
+  position: relative;
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  background: var(--select-bg, var(--card-bg));
+  border: 1px solid var(--select-border, var(--divider));
+  width: 100%;
+  max-width: 580px; /* 稍微窄一些，更贴合单列设置 */
+  border-radius: var(--radius);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  padding: 48px 40px 56px; /* 内边距统一 */
+  overflow: visible; /* 允许下拉溢出 */
+  animation: fade-in 0.4s ease-out;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+h1 {
+  margin: 0;
+  text-align: center;
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 1.26;
+  background: linear-gradient(90deg, var(--blue), var(--orange));
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* --------------------------------------------------
+   设置行
+-------------------------------------------------- */
+.setting-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 22px 28px;
+  border-top: 1px solid var(--divider);
+  transition: background 0.25s ease;
+}
+
+.setting-row:first-of-type {
+  border-top: none;
+}
+
+.setting-row:hover {
+  /* 去掉整行块状高亮，改为透明以免出现大方框 */
+  background: transparent;
+}
+
+/* 仅在悬停到选择器本身时轻微高亮 */
+.custom-select > .selected:hover {
+  background: var(--hover);
+}
+
+.setting-icon {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.setting-icon svg {
+  width: 24px;
+  height: 24px;
+  stroke-width: 2;
+  stroke: currentColor;
+  fill: none;
+}
+
+.icon-theme {
+  color: var(--blue);
+}
+.icon-autostart {
+  color: var(--green);
+}
+.icon-update {
+  color: var(--orange);
+}
+
+label {
+  flex: 1;
+  font-weight: 500;
+}
+
+/* --------------------------------------------------
+   原生 Select 简易美化（保留）
+-------------------------------------------------- */
+.select {
+  font: inherit;
+  padding: 8px 36px 8px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--divider);
+  background: var(--card-bg);
+  color: var(--text);
+  cursor: pointer;
+  line-height: 1.2;
+  position: relative;
+  transition: border-color 0.25s ease, background 0.25s ease;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' stroke='%23999' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 14px 14px;
+}
+.select:focus {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(47, 128, 237, 0.25);
+}
+
+option {
+  background: var(--card-bg);
+  color: var(--text);
+}
+
+/* --------------------------------------------------
+   全自定义下拉菜单（需要配合 JS）
+   1. 结构：
+      <div class="custom-select" data-value="light">
+        <span class="selected">Light</span>
+        <ul class="options">
+          <li data-value="light">Light</li>
+          <li data-value="dark">Dark</li>
+        </ul>
+      </div>
+   2. 在 JS 中给 .custom-select 添加 / 移除 .open
+-------------------------------------------------- */
+.custom-select {
+  position: relative;
+  min-width: 160px;
+  user-select: none;
+}
+.custom-select .selected {
+  display: block;
+  padding: 8px 36px 8px 12px;
+  border: 1px solid var(--divider);
+  border-radius: 8px;
+  background: var(--card-bg);
+  color: var(--text);
+  cursor: pointer;
+  line-height: 1.2;
+  transition: border-color 0.25s ease, background 0.25s ease;
+}
+.custom-select.open .selected {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(47, 128, 237, 0.25);
+}
+.custom-select > .selected::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  width: 12px;
+  height: 12px;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' stroke='%23aaa' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-size: 12px 12px;
+  background-repeat: no-repeat;
+  background-position: center;
+  transform: translateY(-50%) rotate(0deg);
+  transition: transform 0.3s ease;
+}
+.custom-select.open .selected::after {
+  transform: translateY(-50%) rotate(180deg);
+}
+/* 下拉列表 */
+.custom-select .options {
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 0;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--card-bg);
+  border: 1px solid var(--divider);
+  border-radius: 8px;
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-8px);
+  pointer-events: none;
+  transition: max-height 0.35s cubic-bezier(0.24, 0.82, 0.42, 1),
+    opacity 0.3s ease, transform 0.35s cubic-bezier(0.24, 0.82, 0.42, 1);
+  z-index: 5;
+}
+.custom-select.open .options {
+  max-height: 260px; /* 足够容纳多项 */
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.custom-select .options li {
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+.custom-select .options li:hover {
+  background: var(--hover);
+}
+.custom-select .options li.selected {
+  font-weight: 600;
+  background: rgba(47, 128, 237, 0.12);
+  color: var(--blue);
+}
+
+/* --------------------------------------------------
+   滚动条美化（WebKit）
+-------------------------------------------------- */
+.custom-select .options::-webkit-scrollbar {
+  width: 6px;
+}
+.custom-select .options::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+/* --------------------------------------------------
+   响应式
+-------------------------------------------------- */
+@media (max-width: 480px) {
+  .card {
+    border-radius: 0;
+    max-width: none;
+  }
+  h1 {
+    font-size: 28px;
+    padding: 32px 0 20px;
+  }
+  .setting-row {
+    padding: 18px 22px;
+  }
+}
