@@ -1,0 +1,255 @@
+/* ==================== 通用 & 主题 ==================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html,
+body {
+  height: 100%;
+  font-family: "Segoe UI", sans-serif;
+  transition: background-color 0.3s, color 0.3s;
+}
+body.light-mode {
+  background: #f5f6fa;
+  color: #000;
+  --bg-col: #f5f6fa;
+}
+body.dark-mode {
+  background: #1e1f22;
+  color: #eee;
+  --bg-col: #1e1f22;
+}
+
+/* ==================== 顶部标题栏 ==================== */
+.titlebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  padding-left: 12px;
+  background: linear-gradient(90deg, #000 0 72px, var(--bg-col) 72px);
+  -webkit-app-region: drag;
+  z-index: 100;
+}
+body.dark-mode .titlebar {
+  background: linear-gradient(90deg, #000 0 72px, #1e1e1e 72px);
+  --bg-col: #1e1e1e;
+}
+
+/* ==================== 窗口控制按钮 (mac-style) ==================== */
+.window-controls {
+  display: flex;
+  gap: 10px;
+}
+
+/* traffic-light buttons */
+.win-btn {
+  --size: 12px; /* 直径，可全局调整 */
+  width: var(--size);
+  height: var(--size);
+  position: relative;
+  border: none;
+  border-radius: 50%;
+  outline: none;
+  cursor: pointer;
+  background: #888; /* 兜底色，随后个别覆盖 */
+  -webkit-app-region: no-drag;
+  transition: filter 0.15s;
+}
+/* 颜色 */
+.win-close {
+  background: #ff5f57;
+}
+.win-min {
+  background: #ffbd2e;
+}
+.win-max {
+  background: #28c940;
+}
+/* hover 亮度 */
+.win-btn:hover {
+  filter: brightness(1.15);
+}
+.win-close:hover {
+  filter: brightness(1.3);
+}
+body.dark-mode .win-btn {
+  filter: brightness(0.9);
+}
+body.dark-mode .win-btn:hover {
+  filter: brightness(1.1);
+}
+body.dark-mode .win-close:hover {
+  filter: brightness(1.25);
+}
+
+/* ** 形状符号 — 用纯 CSS 画线，确保完美居中 ** */
+.win-btn::before,
+.win-btn::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(var(--size) * 0.6); /* 线长：按钮直径 60% */
+  height: calc(var(--size) * 0.14); /* 线粗：按钮直径 14%  */
+  background: #444;
+  border-radius: 9999px; /* 圆角端点 */
+  transform: translate(-50%, -50%) rotate(var(--r, 0deg));
+  transform-origin: center;
+  opacity: 0; /* 默认隐藏 */
+  pointer-events: none;
+  transition: opacity 0.15s;
+}
+body.dark-mode .win-btn::before,
+body.dark-mode .win-btn::after {
+  background: #eee;
+}
+.win-btn:hover::before,
+.win-btn:hover::after {
+  opacity: 1;
+}
+
+/* --- Close (×) 两条对角线 --- */
+.win-close::before {
+  --r: 45deg;
+}
+.win-close::after {
+  --r: -45deg;
+}
+
+/* --- Minimise (–) 单横线 --- */
+.win-min::before {
+  display: none;
+} /* 只要一条线 */
+.win-min::after {
+  --r: 0deg;
+}
+
+/* --- Maximise (+) 十字 --- */
+.win-max::before {
+  --r: 0deg;
+}
+.win-max::after {
+  --r: 90deg;
+}
+
+/* ==================== 页面主体 ==================== */
+.container {
+  position: fixed;
+  top: 32px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+}
+
+/* —— 侧边栏 —— */
+.sidebar {
+  width: 72px;
+  background: #000;
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  -webkit-app-region: drag;
+}
+
+.logo,
+.nav-links a,
+.footer {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  text-decoration: none;
+  color: #fff;
+  transition: background 0.2s, transform 0.2s, color 0.2s;
+}
+.logo {
+  cursor: default;
+  -webkit-app-region: drag;
+}
+.nav-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.nav-links a,
+.footer {
+  -webkit-app-region: no-drag;
+  cursor: pointer;
+}
+/* hover translucent highlight */
+.logo:hover,
+.nav-links a:hover,
+.footer:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+/* 激活态 */
+.nav-links a.active {
+  background: #5da3fa;
+  color: #fff;
+}
+body.dark-mode .nav-links a.active {
+  background: #2e7ae5;
+  color: #fff;
+}
+
+/* —— 底部按钮组 —— */
+.bottom-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  position: relative;
+}
+.bottom-links::before {
+  content: "";
+  position: absolute;
+  top: -22px;
+  width: 32px;
+  height: 1px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.sidebar .footer {
+  margin: 0 !important;
+}
+.pin-btn {
+  background: transparent !important;
+}
+.pin-btn i {
+  color: #fff;
+  transition: color 0.25s, transform 0.25s;
+}
+.pin-btn.pin-active i {
+  color: var(--accent, #3d7dff);
+  transform: rotate(45deg);
+}
+
+/* —— iframe —— */
+.main {
+  flex: 1;
+}
+iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+  background: #1e1e1e;
+}
+body.light-mode iframe {
+  background: #f9fafc;
+}
