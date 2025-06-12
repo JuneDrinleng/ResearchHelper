@@ -1,4 +1,28 @@
+<p align="center">
+  <img src="./favicon.ico" alt="Research Helper Logo" width="120" />
+</p>
 
+<h1 align="center">Research Helper 🧑‍🎓</h1>
+
+<p align="center">
+  <a href="#quick-start">🚀 Quick Start</a> •
+  <a href="#appearance--features">🎨 Appearance & Features</a> •
+  <a href="#try-it-yourself">🛠️ Try It Yourself</a> •
+  <a href="#packaging">📦 Packaging</a> •
+  
+</p>
+
+---
+
+## Table of Contents
+
+1. [Quick Start](#quick-start)
+2. [Appearance & Features](#appearance--features)
+3. [Try It Yourself](#try-it-yourself)
+4. [Packaging](#packaging)
+5. [中文 (Chinese Version)](#中文版)
+
+---
 ## 🇨🇳 中文版  <a id="中文版"></a>
 
 <p align="right"><a href="#research-helper 🧑‍🎓">🔙 English Version</a></p>
