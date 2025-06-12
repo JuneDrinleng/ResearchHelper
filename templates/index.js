@@ -1,3 +1,6 @@
+/* ========= 识别平台，给 <body> 打标签 ========= */
+// document.body.classList.add(/mac/i.test(navigator.userAgent) ? "mac" : "win");/
+// document.body.classList.add("mac");
 /* ========= 主题初始化 ========= */
 const initTheme = () => {
   const t = localStorage.getItem("theme") || "light";

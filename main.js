@@ -29,8 +29,6 @@ function createWindow() {
     width: 900,
     height: 700,
     frame: false, // ⬅ Win / Linux 必须 false
-    // macOS 也可以用 frame:false；如果想保留 traffic lights：
-    titleBarStyle: "hiddenInset",
     icon: path.join(__dirname, "favicon.ico"),
     show: true,
     webPreferences: {
