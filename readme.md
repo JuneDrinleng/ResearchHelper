@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./logo.ico" alt="Research Helper Logo" width="120" />
+  <img src="./favicon.ico" alt="Research Helper Logo" width="120" />
 </p>
 
 <h1 align="center">Research Helper 🧑‍🎓</h1>
