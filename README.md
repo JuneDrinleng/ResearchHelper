@@ -66,7 +66,7 @@ python main.py
 
 > **Tip:** If you cloned the repo on Windows you can also use the pre‑built `ResearchHelperService.exe` located in `backend/dist` — no Python setup required.
 
-### Frontend (⚡ Electron + React)
+### Frontend (⚡ Electron)
 
 ```bash
 # Install dependencies
