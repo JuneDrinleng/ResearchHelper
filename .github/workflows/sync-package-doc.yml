@@ -18,24 +18,26 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }} # 默认令牌即可推回仓库
 
-      # 2) 复制 package.json
-      - name: Copy package.json to ./docs
+      # 2) 复制前端静态资源到 ./docs
+      - name: Copy site static files
         run: |
           mkdir -p docs
           cp -f package.json favicon.ico docs/          # 覆盖同名文件
-          cp -r readme.assets docs/                     # 递归复制整个
+          cp -r readme.assets docs/                     # 递归复制整个目录
 
-      # 3) 若有变动就提交
+      # 3) 若 docs 有变动就提交
       - name: Commit & push if changed
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          # 检查文件是否修改
-          if [[ -n $(git status --porcelain docs/package.json) ]]; then
-            git add docs/package.json
-            git commit -m "chore: sync package.json to docs [skip ci]"
+          # 将 docs 整个目录加入暂存区（含新增、修改、删除）
+          git add -A docs
+
+          # 如果暂存区有变更则提交
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: sync static files to docs [skip ci]"
             git push
           else
-            echo "No changes in version; skip commit."
+            echo "No changes detected; skip commit."
           fi
