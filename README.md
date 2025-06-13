@@ -5,98 +5,93 @@
 <h1 align="center">Research Helper 🧑‍🎓</h1>
 
 <p align="center">
-  <a href="#quick-start">🚀 Quick Start</a> •
-  <a href="#appearance--features">🎨 Appearance & Features</a> •
-  <a href="#local-compilation">🛠️ Local Compilation</a> •
-  <a href="#packaging">📦 Packaging</a> •
-  <a href="./README_ZH.md"><strong>🀄中文</strong></a>
+  <a href="#quick-start">🚀 快速开始</a> •
+  <a href="#appearance--features">🎨 外观与功能</a> •
+  <a href="#try-it-yourself">🛠️ 本地编译</a> •
+  <a href="#packaging">📦 打包</a> 
 </p>
 
+<p align="center" id="language-switch">
+  <a href="./README_EN.md"><strong>🅰️ English</strong></a>
+</p>
+  
 ---
 
 ## Table of Contents
 
-1. [Quick Start](#quick-start)
-2. [Appearance & Features](#appearance--features)
-3. [Local Compilation](#Local-Compilation)
-4. [Packaging](#packaging)
-5. [中文 (Chinese Version)](#中文版)
+1. [快速开始](#quick-start)
+2. [外观与功能](#appearance--features)
+3. [本地编译](#try-it-yourself)
+4. [打包](#packaging)
 
----
-## License
-
-This project is licensed under the GNU General Public License v3.0.  
-See the [LICENSE](./LICENSE) file for details.
-
-## Quick Start
-
-Download the latest installer from the [Releases page](https://github.com/JuneDrinleng/ResearchHelper/releases) and double‑click to install.
-
-Once installed, **Research Helper** launches automatically and is ready to assist you. 🎉
 
 ---
 
-## Appearance & Features
+<p align="right"><a href="#research-helper 🧑‍🎓">
 
-|  Feature               |  Description                                 |
-| ---------------------- | -------------------------------------------- |
-| 🌐 Surf the web        | Inline translation, quick look‑ups, and more |
-| 🌓 Light / Dark Mode   | Select the look that suits your eyes         |
-| 📕 Built‑in Translator | Highlight & translate any text instantly     |
-| 🔥 Weibo Hot Topics    | One‑click to explore trending hashtags       |
-| 📌 Pin Window          | Keep **Research Helper** always on top       |
+### 快速开始 🚀
 
-<p align="center"><img src="./readme.assets/image-20250612212048348.png" width="45%" /> <img src="./readme.assets/image-20250612212106765.png" width="45%" /></p>
-<p align="center"><img src="./readme.assets/image-20250612212119743.png" width="45%" /> <img src="./readme.assets/image-20250612212132885.png" width="45%" /></p>
+1. 前往 [Releases 页面](https://github.com/JuneDrinleng/ResearchHelper/releases) 下载最新安装包。
+2. 双击安装，安装完成后 **Research Helper** 会自动启动。
 
----
+### 外观与功能 🎨
 
-## Local Compilation
+| 功能         | 说明                            |
+| ---------- | ----------------------------- |
+| 🌐 便捷上网    | 内置翻译、快速查询等多合一工具               |
+| 🌓 浅色/深色主题 | 根据喜好自由切换                      |
+| 📕 实时翻译    | 选中文本即刻翻译                      |
+| 🔥 微博热搜    | 一键查看并深入了解热门话题                 |
+| 📌 窗口置顶    | 让 **Research Helper** 始终保持在最前 |
 
-### Backend (🔧 Python / FastAPI)
+<div align="center">
+  <img src="./readme.assets/image-20250612212048348.png" width="45%" />
+  <img src="./readme.assets/image-20250612212106765.png" width="45%" />
+  <br/>
+  <img src="./readme.assets/image-20250612212119743.png" width="45%" />
+  <img src="./readme.assets/image-20250612212132885.png" width="45%" />
+</div>
+
+### 本地编译 🛠️
+
+#### 后端（Python / FastAPI）
 
 ```bash
-# 1️⃣ Create and activate a virtual environment
+# 创建并激活虚拟环境
 cd backend
 python -m venv venv
 source venv/bin/activate  # Windows: venv\Scripts\activate
 
-# 2️⃣ Install dependencies
+# 安装依赖
 pip install -r requirements.txt
 
-# 3️⃣ Run the backend service
+# 运行后端服务
 python main.py
 ```
 
-> **Tip:** If you cloned the repo on Windows you can also use the pre‑built `ResearchHelperService.exe` located in `backend/dist` — no Python setup required.
+> **提示：** Windows 用户可直接使用 `backend/dist` 中已打包好的 `ResearchHelperService.exe`。
 
-### Frontend (⚡ Electron)
+#### 前端（Electron）
 
 ```bash
-# Install dependencies
+# 安装依赖
 npm install
 
-# Start the app in dev mode
+# 开发模式启动
 npm start
 ```
 
----
+### 打包发布 📦
 
-## Packaging
-
-### Package the Python Backend
+#### 打包 Python 后端
 
 ```bash
 cd backend
 pyinstaller --onefile --noconsole --name ResearchHelperService --icon=../favicon.ico main.py
 ```
 
-### Package the Electron App (on Windows)
+#### 打包 Electron App（Windows）
 
 ```bash
 electron-builder --win
 ```
-
----
-
-<p align="center">✨ Happy Researching! ✨</p>
