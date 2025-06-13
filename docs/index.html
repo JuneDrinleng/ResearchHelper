@@ -4,14 +4,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Research Helper — 跨平台桌面研究助手</title>
+
+    <!-- 样式 -->
     <link rel="stylesheet" href="styles.css" />
+    <!-- 标签页图标 -->
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
   </head>
   <body>
     <!-- 顶部导航 -->
     <nav class="nav">
       <div class="logo">
-        <img src="./favicon.ico" alt="Research Helper" />
+        <img src="favicon.ico" alt="Research Helper" />
         <span>Research Helper</span>
       </div>
       <ul class="nav-links">
@@ -21,10 +24,10 @@
       </ul>
     </nav>
 
-    <!-- Hero：左图右文 -->
-    <header class="hero">
+    <!-- Hero：左图右文（同样可加 reveal 动画） -->
+    <header class="hero reveal">
       <img
-        src="./readme.assets/image-20250612212048348.png"
+        src="readme.assets/image-20250612212048348.png"
         class="hero-img"
         alt="应用示意图"
       />
@@ -36,7 +39,7 @@
     </header>
 
     <!-- 功能栅格 -->
-    <section id="features" class="grid">
+    <section id="features" class="grid reveal">
       <article>
         <h2>🔥 微博热搜</h2>
         <p>一键查看实时话题，灵感不止于学术。</p>
@@ -52,24 +55,34 @@
     </section>
 
     <!-- 截图轮播 -->
-    <section id="screens" class="carousel">
+    <section id="screens" class="carousel reveal">
       <div class="slides">
-        <img src="./readme.assets/image-20250612212106765.png" alt="界面 1" />
-        <img src="./readme.assets/image-20250612212119743.png" alt="界面 2" />
-        <img src="./readme.assets/image-20250612212132885.png" alt="界面 3" />
+        <img src="readme.assets/image-20250612212106765.png" alt="界面 1" />
+        <img src="readme.assets/image-20250612212119743.png" alt="界面 2" />
+        <img src="readme.assets/image-20250612212132885.png" alt="界面 3" />
       </div>
       <div class="dots"></div>
     </section>
 
-    <section id="download" class="download">
+    <!-- 下载 CTA -->
+    <section id="download" class="download reveal">
       <h2>安装包</h2>
       <p>Windows</p>
+
+      <!-- ① 先放好图标 + 文本占位 -->
       <a
         id="downloadBtn"
-        href="https://github.com/JuneDrinleng/ResearchHelper/releases"
         class="btn-primary"
+        href="https://github.com/JuneDrinleng/ResearchHelper/releases"
       >
-        前往下载
+        <!-- Windows Logo (纯 SVG，不依赖外部字体) -->
+        <svg class="win-icon" viewBox="0 0 512 512" aria-hidden="true">
+          <path
+            fill="currentColor"
+            d="M0 93l240-34v186H0V93zm0 326l240 34V267H0v152zm272-361l240-34v221H272V58zm0 399l240 34V291H272v128z"
+          />
+        </svg>
+        <span class="btn-text">前往下载</span>
       </a>
     </section>
 
@@ -78,6 +91,7 @@
       <p>© 2025 June Drinleng · Version <span id="version">--</span></p>
     </footer>
 
+    <!-- 脚本 -->
     <script src="script.js"></script>
   </body>
 </html>
