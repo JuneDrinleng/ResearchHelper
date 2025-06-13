@@ -5,10 +5,10 @@
 <h1 align="center">Research Helper 🧑‍🎓</h1>
 
 <p align="center">
-  <a href="#quick-start">🚀 Quick Start</a> •
-  <a href="#appearance--features">🎨 Appearance & Features</a> •
-  <a href="#try-it-yourself">🛠️ Try It Yourself</a> •
-  <a href="#packaging">📦 Packaging</a> 
+  <a href="#quick-start">🚀 快速开始</a> •
+  <a href="#appearance--features">🎨 外观与功能</a> •
+  <a href="#try-it-yourself">🛠️ 本地编译</a> •
+  <a href="#packaging">📦 打包</a> 
 </p>
 
 <p align="center" id="language-switch">
@@ -71,7 +71,7 @@ python main.py
 
 > **提示：** Windows 用户可直接使用 `backend/dist` 中已打包好的 `ResearchHelperService.exe`。
 
-#### 前端（Electron + React）
+#### 前端（Electron）
 
 ```bash
 # 安装依赖
