@@ -1,13 +1,30 @@
-/* ——全局变量—— */
+/* ——— 主题与基础变量 ——— */
 :root {
   --accent: #2ebb6a;
+  --accent-dark: #1e9f56;
   --dark: #222;
   --light: #fafafa;
   --grey: #666;
-  --radius: 10px;
+  --radius: 12px;
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
-/* 全局基础 */
+/* 暗色模式变量（通过 body.dark 或系统偏好自动触发） */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --dark: #f5f5f5;
+    --light: #151515;
+    --grey: #aaa;
+  }
+}
+body.dark {
+  --dark: #f5f5f5;
+  --light: #151515;
+  --grey: #aaa;
+}
+
+/* ——— 全局基础 ——— */
 * {
   margin: 0;
   padding: 0;
@@ -15,15 +32,16 @@
 }
 html {
   scroll-behavior: smooth;
-} /* <— 平滑滚动 */
+}
 body {
   font-family: "Helvetica Neue", Arial, sans-serif;
   background: var(--light);
   color: var(--dark);
   line-height: 1.6;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
-/* 顶部导航（同旧版） … */
+/* ——— 顶部导航 ——— */
 .nav {
   position: sticky;
   top: 0;
@@ -31,9 +49,14 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 14px 5%;
-  background: #fff;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: saturate(180%) blur(20px);
+  box-shadow: var(--shadow-sm);
   z-index: 100;
+  transition: background 0.3s ease;
+}
+body.dark .nav {
+  background: rgba(20, 20, 20, 0.8);
 }
 .logo {
   display: flex;
@@ -49,42 +72,96 @@ body {
   gap: 28px;
   list-style: none;
 }
-.nav a {
-  color: var(--dark);
+/* —— 新增统一按钮风格 —— */
+.nav-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  font-size: 0.94rem;
+  font-weight: 600;
+  border: 1px solid var(--accent);
+  border-radius: calc(var(--radius) + 4px);
+  background: transparent;
+  color: var(--accent);
   text-decoration: none;
-  font-size: 0.95rem;
   position: relative;
+  cursor: pointer;
+  transition: background 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
 }
-.nav a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -6px;
-  width: 0;
-  height: 2px;
-  background: var(--accent);
-  transition: width 0.3s;
+.nav-links a:hover,
+.nav-links a:focus-visible {
+  background: linear-gradient(
+    135deg,
+    var(--accent) 0%,
+    var(--accent-dark) 100%
+  );
+  color: #fff;
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-2px);
 }
-.nav a:hover::after {
-  width: 100%;
+.nav-links a:active {
+  transform: translateY(1px);
+  box-shadow: none;
+}
+/* 去除旧的下划线动画 */
+.nav-links a::after {
+  display: none;
+}
+/* 保留 GitHub 按钮，保持一致 */
+.github-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  font-size: 0.94rem;
+  font-weight: 600;
+  border: 1px solid var(--accent);
+  border-radius: calc(var(--radius) + 4px);
+  background: transparent;
+  color: var(--accent);
+  cursor: pointer;
+  transition: background 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+.github-btn:hover,
+.github-btn:focus-visible {
+  background: linear-gradient(
+    135deg,
+    var(--accent) 0%,
+    var(--accent-dark) 100%
+  );
+  color: #fff;
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-2px);
+}
+.github-btn:active {
+  transform: translateY(1px);
+  box-shadow: none;
 }
 
-/* Hero … */
+/* ——— Hero ——— */
 .hero {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  padding: 60px 5%;
-  gap: 40px;
+  padding: 80px 5%;
+  gap: 48px;
   background: linear-gradient(135deg, #e8f5e9 0%, #ffffff 60%);
+}
+body.dark .hero {
+  background: linear-gradient(135deg, #1c1c1c 0%, #222 60%);
 }
 .hero-img {
   flex: 1 1 380px;
   max-width: 500px;
   width: 100%;
   border-radius: var(--radius);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.07);
+  box-shadow: var(--shadow-md);
+  transition: transform 0.4s ease;
+}
+.hero-img:hover {
+  transform: translateY(-6px);
 }
 .hero-text {
   flex: 1 1 320px;
@@ -99,36 +176,56 @@ body {
   color: var(--grey);
   margin-bottom: 26px;
 }
+
+/* 主按钮 */
 .btn-primary {
-  display: inline-block;
-  background: var(--accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(
+    135deg,
+    var(--accent) 0%,
+    var(--accent-dark) 100%
+  );
   color: #fff;
   padding: 14px 32px;
   border-radius: var(--radius);
   text-decoration: none;
-  transition: background 0.25s;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 .btn-primary:hover {
-  background: #24a85c;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+.btn-primary:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
 }
 
-/* 功能栅格 … */
+/* ——— 功能栅格 ——— */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 28px;
-  padding: 80px 8%;
+  gap: 32px;
+  padding: 100px 8%;
   background: #fff;
+}
+body.dark .grid {
+  background: #181818;
 }
 .grid article {
   background: var(--light);
   border-radius: var(--radius);
-  padding: 28px 22px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
-  transition: transform 0.3s;
+  padding: 32px 24px;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+body.dark .grid article {
+  background: #1f1f1f;
 }
 .grid article:hover {
-  transform: translateY(-6px);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: var(--shadow-md);
 }
 .grid h2 {
   font-size: 1.3rem;
@@ -139,68 +236,83 @@ body {
   color: var(--grey);
 }
 
-/* Carousel */
+/* ——— Carousel ——— */
 .carousel {
   position: relative;
   overflow: hidden;
   max-width: 1000px;
   margin: 0 auto;
-  padding: 60px 0 80px;
+  padding: 60px 0 100px;
 }
 .slides {
   display: flex;
   transition: transform 0.6s ease;
 }
-
 .slides img {
   width: 100%;
   flex-shrink: 0;
   border-radius: var(--radius);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow-md);
+  transition: transform 0.4s ease;
+}
+.slides img:hover {
+  transform: scale(1.02);
 }
 .dots {
   display: flex;
   justify-content: center;
-  gap: 10px;
-  margin-top: 20px;
+  gap: 12px;
+  margin-top: 24px;
 }
 .dots span {
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   background: #ddd;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background 0.3s, transform 0.3s;
+}
+.dots span:hover {
+  transform: scale(1.25);
 }
 .dots .active {
   background: var(--accent);
 }
 
-/* 下载区 … */
+/* ——— 下载区 ——— */
 .download {
-  padding: 80px 5%;
+  padding: 100px 5%;
   text-align: center;
   background: #f1f8f5;
 }
+body.dark .download {
+  background: #1a1a1a;
+}
 .download h2 {
   font-size: 2rem;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 }
 .download p {
   color: var(--grey);
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 
-/* 页脚 … */
+/* ——— 页脚 ——— */
 footer {
-  padding: 30px 0;
+  padding: 40px 0;
   background: #fff;
   color: var(--grey);
   font-size: 0.9rem;
   text-align: center;
+  border-top: 1px solid #eee;
+}
+body.dark footer {
+  background: #181818;
+  color: var(--grey);
+  border-color: #222;
 }
 
-/* Reveal 动画 */
+/* ——— Reveal 动画 ——— */
 .reveal {
   opacity: 0;
   transform: translateY(40px);
@@ -211,13 +323,13 @@ footer {
   transform: none;
 }
 
-/* 响应式 */
+/* ——— 响应式调整 ——— */
 @media (max-width: 820px) {
   .nav-links {
-    display: none;
+    display: none; /* 可在以后替换为汉堡菜单 */
   }
   .hero {
-    padding-top: 40px;
+    padding-top: 60px;
   }
   .hero-text {
     text-align: center;
@@ -226,10 +338,11 @@ footer {
     width: 90%;
   }
 }
-/* 按钮内图标 */
+
+/* ——— 图标细节 ——— */
 .win-icon {
   width: 20px;
   height: 20px;
   margin-right: 8px;
-  vertical-align: -4px; /* 轻微下沉让居中更自然，可按需微调 */
+  vertical-align: -4px;
 }
