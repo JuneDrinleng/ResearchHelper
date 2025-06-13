@@ -9,8 +9,8 @@
   --card-dark: rgba(255, 255, 255, 0.06);
 
   /* 文本 */
-  --text-light: #333;
-  --text-dark: #f1f1f1;
+  --text-light: #2ebb6a; /* 浅色界面：鲜亮主绿，与浅背景仍有足够对比 */
+  --text-dark: #9befc5; /* 暗色界面：明亮柔绿，在深背景上可读性良好 */
 
   /* 其他常用 */
   --blur: 12px;

@@ -4,6 +4,12 @@
   --max-width: 1000px; /* 页面最大内容宽               */
   --panel-gap: 24px; /* 两个文本框之间的间距         */
   --swap-offset: calc((var(--panel-gap) - var(--btn-h)) / 2); /* = -8px */
+  --btn-light: #57c887; /* 未按：柔和浅绿 */
+  --btn-light-active: #2ebb6a; /* 按下：主绿色，稍深 */
+
+  /* 深色模式（Dark Mode）*/
+  --btn-dark: #34a866; /* 未按：明度略高，暗背景上更显眼 */
+  --btn-dark-active: #1e9f56; /* 按下：加深对比，更沉稳 */
 }
 
 /* ─────────────────────  基础布局  ───────────────────── */
@@ -42,8 +48,8 @@ body {
   flex: 0 0 var(--btn-h);
   width: var(--btn-h);
   height: var(--btn-h);
-  margin: 0 var(--swap-offset); /* 关键：左右各 -8px 抵消错位 */
-  background: #e4e7eb;
+  margin: 0 var(--swap-offset); /* 左右 -8px 抵消错位 */
+  background: #e4e7eb; /* 保持浅灰底，任何主题都协调 */
   border: none;
   color: #1f2937;
   font-size: 20px;
@@ -54,8 +60,9 @@ body {
   cursor: pointer;
   transition: transform 0.3s, background 0.3s;
 }
+
 .swap-btn:hover {
-  background: #c7d2fe;
+  background: #c9f5df; /* 旧 #c7d2fe → 柔浅绿 */
   transform: rotate(180deg);
 }
 
@@ -76,16 +83,19 @@ body {
   transition: all 0.2s ease;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
 }
+/* 浅色主题：悬停 */
 .lang-btn:hover {
-  background: #f0f4ff;
-  border-color: #a8c7fa;
-  color: #1a73e8;
+  background: #e7fbf0; /* 轻柔浅绿 */
+  border-color: #9fdcb4; /* 边框绿 */
+  color: #2ebb6a; /* 文本绿（品牌主色） */
 }
+
+/* 选中 / 激活 */
 .lang-btn.active {
-  background: #1a73e8;
+  background: #2ebb6a; /* 主绿色 */
   color: #fff;
-  border-color: #1a73e8;
-  box-shadow: 0 2px 4px rgba(26, 115, 232, 0.3);
+  border-color: #2ebb6a;
+  box-shadow: 0 2px 4px rgba(46, 187, 106, 0.3); /* 绿色阴影 */
 }
 
 /* ─────────────────────  主内容面板  ───────────────────── */
@@ -158,14 +168,14 @@ body {
 
 /* ─────────────────────  链接 / 页脚  ───────────────────── */
 a.link {
-  color: #64748b;
+  color: #648b78;
   text-decoration: none;
   font-size: 16px;
   margin-top: 20px;
   display: inline-block;
 }
 a.link:hover {
-  color: #2563eb;
+  color: #6cd6a5;
 }
 
 .footer {
@@ -187,9 +197,10 @@ a.link:hover {
   transition: background 0.2s, color 0.2s;
 }
 .link:hover {
-  color: #2563eb;
-  background: rgba(37, 99, 235, 0.1);
+  color: #2ebb6a; /* 主绿色 */
+  background: rgba(46, 187, 106, 0.1); /* 浅绿色背景 */
 }
+
 .link-icon {
   font-size: 14px;
   transform: translateY(1px);
@@ -211,10 +222,10 @@ a.link:hover {
   font-size: 18px; /* 文字大一点 */
   font-weight: 600;
   padding: 10px 28px;
-  color: #1a73e8;
-  background: linear-gradient(135deg, #e8f0fe 0%, #d2e3fc 100%);
+  color: #2ebb6a; /* 主绿色 */
+  background: linear-gradient(135deg, #e4fff3 0%, #d2fbe4 100%);
   border-radius: 9999px;
-  box-shadow: 0 4px 10px rgba(26, 115, 232, 0.25);
+  box-shadow: 0 4px 10px rgba(46, 187, 106, 0.25);
   backdrop-filter: saturate(180%) blur(8px);
   display: inline-flex;
   align-items: center;
@@ -222,15 +233,17 @@ a.link:hover {
   text-decoration: none;
   transition: all 0.25s ease;
 }
+
 .footer .link:hover {
-  background: #1a73e8;
+  background: #2ebb6a; /* 实心主绿 */
   color: #fff;
   transform: translateY(-2px);
-  box-shadow: 0 6px 14px rgba(26, 115, 232, 0.35);
+  box-shadow: 0 6px 14px rgba(46, 187, 106, 0.35);
 }
+
 .footer .link:active {
   transform: none;
-  box-shadow: 0 2px 6px rgba(26, 115, 232, 0.25) inset;
+  box-shadow: 0 2px 6px rgba(46, 187, 106, 0.25) inset;
 }
 
 /* ② 只有这一条伪元素，专门负责显示 G 标识 */
@@ -255,14 +268,17 @@ body.dark-mode .lang-btn {
   border-color: #4a4d52;
   color: #e5e7eb;
 }
+
 body.dark-mode .lang-btn:hover {
   background: #4a4d52;
   border-color: #6b6e73;
   color: #fff;
 }
+
+/* ★ 选中状态：改为深绿色系 ★ */
 body.dark-mode .lang-btn.active {
-  background: #1a73e8;
-  border-color: #1a73e8;
+  background: #1e9f56; /* 原 #1a73e8 */
+  border-color: #1e9f56;
   color: #fff;
 }
 
@@ -270,8 +286,10 @@ body.dark-mode .swap-btn {
   background: #3a3d42;
   color: #e5e7eb;
 }
+
+/* ★ 悬停时：改为深绿色 ★ */
 body.dark-mode .swap-btn:hover {
-  background: #1a73e8;
+  background: #1e9f56; /* 原 #1a73e8 */
   color: #fff;
 }
 
@@ -284,20 +302,21 @@ body.dark-mode .swap-btn:hover {
   border-radius: 50%;
   font-size: 18px;
   cursor: pointer;
-  background: #e4e7eb;
+  background: #e4e7eb; /* 保持中性灰 */
   display: flex;
   align-items: center;
   justify-content: center;
   transition: 0.25s all ease;
 }
 .theme-btn:hover {
-  background: #c7d2fe;
+  background: #d6fae7; /* 旧 #c7d2fe → 浅柔绿 */
 }
+
 body.dark-mode .theme-btn {
-  background: #3a3d42;
+  background: #3a3d42; /* 维持深灰底 */
 }
 body.dark-mode .theme-btn:hover {
-  background: #4a4d52;
+  background: #4a654f; /* 旧 #4a4d52 → 深柔绿 */
 }
 
 /* 输入/输出框 */
@@ -315,16 +334,17 @@ body.dark-mode .info {
   color: #9ca3af;
 }
 
-/* 底部 Google 翻译按钮 */
+/* 底部 Google 翻译按钮（暗色模式） */
 body.dark-mode .footer .link {
-  background: linear-gradient(135deg, #465070 0%, #283044 100%);
+  background: linear-gradient(135deg, #385644 0%, #2a4134 100%); /* 绿系渐变 */
   color: #e5e7eb;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
 }
 body.dark-mode .footer .link:hover {
-  background: #1a73e8;
+  background: #1e9f56; /* 旧 #1a73e8 → 深绿 */
   color: #fff;
 }
+
 /* ─────────  打开页面动画  ───────── */
 body.preload {
   opacity: 0; /* 先完全看不见 */
@@ -399,32 +419,28 @@ body.dark-mode {
   scrollbar-width: thin; /* 宽度 */
   scrollbar-color: var(--scroll-thumb) var(--scroll-track);
 }
-/* ── 将标题改成截图那种蓝紫柔和渐变 ── */
+/* ——— 谷歌翻译页标题：纯色主绿，无渐变 ——— */
 .page-title {
   font-size: 38px;
   padding: 32px 0 20px;
   font-weight: 900;
-  letter-spacing: 2px; /* 略微拉开字距 */
+  letter-spacing: 2px;
   line-height: 1.1;
-  margin: 0 0 64px; /* 与语言栏留更多空 */
+  margin: 0 0 64px;
 
-  /* 双色柔雾渐变：左偏蓝 → 右偏紫灰 */
-  background: linear-gradient(
-    90deg,
-    #6a7ec2 0%,
-    /* 蓝 */ #8d82a8 50%,
-    /* 过渡 */ #a896a1 100%
-  ); /* 紫灰 */
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text; /* 标准属性 */
+  color: #2ebb6a; /* 统一品牌绿色 */
+  background: none; /* 去掉线性渐变 */
+  -webkit-background-clip: initial;
+  -webkit-text-fill-color: inherit;
+  background-clip: initial;
 
   user-select: none;
 }
 
-/* 深色主题：整体再暗 10%，提一点对比 */
+/* 深色模式：稍调亮度即可，无需滤镜 */
 body.dark-mode .page-title {
-  filter: brightness(0.9) contrast(1.05);
+  color: #57c887;
+  filter: none;
 }
 
 /* 小屏自适应 */

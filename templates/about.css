@@ -1,0 +1,197 @@
+/* ---------- 基础排版 & 居中 ---------- */
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: "Segoe UI", Roboto, sans-serif;
+  display: flex;
+  align-items: center; /* 垂直居中 */
+  justify-content: center; /* 水平居中 */
+  background: #f5f6fa;
+  padding: 24px 20px; /* 较小的上下留白，避免溢出 */
+  box-sizing: border-box; /* padding 计入高度 */
+  color: #333;
+}
+
+/* ---------- 卡片 ---------- */
+.container {
+  width: min(600px, 92%);
+  max-height: calc(100vh - 48px); /* 绝不超出视口高度 */
+  background: #ffffff;
+  padding: 28px 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* 柔光渐变装饰 */
+.container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    80% 140% at 50% -40%,
+    rgba(46, 187, 106, 0.18),
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+/* ---------- 内容排版 ---------- */
+img.avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+/* 亮色模式：淡蓝 → 灰紫渐变 */
+h1 {
+  font-size: 32px;
+  margin: 24px 0 12px;
+
+  background: linear-gradient(
+    90deg,
+    #1e9f56 0%,
+    /* 深绿 (accent-dark) */ #57c887 50%,
+    /* 过渡：浅一档 */ #d8f5e6 100% /* 最浅柔绿 */
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* 深色模式：整体压暗 10%，防止过亮 */
+body.dark-mode h1 {
+  filter: brightness(0.9) contrast(1.05);
+}
+
+p {
+  margin: 12px 0;
+  font-size: 18px;
+}
+
+a.button {
+  display: inline-block;
+  background: #2ebb6a; /* 主绿色 */
+  color: #ffffff;
+  text-decoration: none;
+  padding: 10px 28px;
+  border-radius: 8px;
+  font-size: 18px;
+  margin-top: 24px;
+  transition: background 0.2s;
+}
+
+a.button:hover {
+  background: #1e9f56; /* 深绿色 */
+}
+
+a.link {
+  color: #5b7b68; /* 中性灰绿 */
+  text-decoration: none;
+  font-size: 16px;
+  margin-top: 20px;
+  display: inline-block;
+}
+
+a.link:hover {
+  color: #2ebb6a; /* 主绿色 */
+}
+
+/* ---------- 暗色模式 ---------- */
+body.dark-mode {
+  background: #1e1f22;
+  color: #e5e5e5;
+}
+body.dark-mode .container {
+  background: #2b2b2b;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+body.dark-mode .container::before {
+  background: radial-gradient(
+    80% 140% at 50% -40%,
+    rgba(46, 187, 106, 0.18),
+    /* 深绿雾光 */ transparent 70%
+  );
+}
+
+body.dark-mode a.button {
+  background: #319a5e;
+}
+body.dark-mode a.button:hover {
+  background: #2c7c4f;
+}
+body.dark-mode a.link {
+  color: #a1a1aa;
+}
+body.dark-mode a.link:hover {
+  color: #3ca46d; /* 亮一点的绿色高亮 */
+}
+
+/* ---------- 窄高设备优化 ---------- */
+@media (max-height: 640px) {
+  body {
+    padding: 16px 12px;
+  }
+  .container {
+    padding: 20px 18px;
+    max-height: calc(100vh - 32px);
+  }
+  h1 {
+    font-size: 28px;
+    margin: 18px 0 10px;
+  }
+  p {
+    font-size: 16px;
+  }
+  a.button {
+    font-size: 16px;
+    padding: 8px 20px;
+    margin-top: 18px;
+  }
+}
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.container {
+  animation: fadeUp 0.6s ease-out;
+}
+
+.container > * {
+  opacity: 0;
+  animation: fadeUp 0.6s ease-out forwards;
+}
+
+/* 分别延迟显示子元素 */
+.container img.avatar {
+  animation-delay: 0.2s;
+}
+.container h1 {
+  animation-delay: 0.35s;
+}
+.container p:nth-of-type(1) {
+  animation-delay: 0.5s;
+}
+.container p:nth-of-type(2) {
+  animation-delay: 0.65s;
+}
+.container a.button {
+  animation-delay: 0.8s;
+}
+.container a.link {
+  animation-delay: 1s;
+}

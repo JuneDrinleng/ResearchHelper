@@ -219,11 +219,11 @@ body.dark-mode .win-btn::after {
 }
 /* active */
 .nav-links a.active {
-  background: #5da3fa;
+  background: #57c887;
   color: #fff;
 }
 body.dark-mode .nav-links a.active {
-  background: #2e7ae5;
+  background: #34a866;
   color: #fff;
 }
 
@@ -252,7 +252,7 @@ body.dark-mode .nav-links a.active {
   transition: color 0.25s, transform 0.25s;
 }
 .pin-btn.pin-active i {
-  color: var(--accent, #5da3fa);
+  color: var(--accent, #57c887);
   transform: rotate(45deg);
 }
 
