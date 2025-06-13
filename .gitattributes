@@ -1,2 +1,5 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+backend/* linguist-language=Python
+frontend/* linguist-language=Javascript
