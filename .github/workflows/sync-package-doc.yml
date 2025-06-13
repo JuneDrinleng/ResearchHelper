@@ -22,9 +22,8 @@ jobs:
       - name: Copy package.json to ./docs
         run: |
           mkdir -p docs
-          cp package.json docs/package.json
-          cp readme.assets docs/readme.assets
-          cp favicon.ico docs/favicon.ico
+          cp -f package.json favicon.ico docs/          # 覆盖同名文件
+          cp -r readme.assets docs/                     # 递归复制整个
 
       # 3) 若有变动就提交
       - name: Commit & push if changed
