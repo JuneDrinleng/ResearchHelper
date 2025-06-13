@@ -197,6 +197,7 @@ footer {
   background: #fff;
   color: var(--grey);
   font-size: 0.9rem;
+  text-align: center;
 }
 
 /* Reveal 动画 */

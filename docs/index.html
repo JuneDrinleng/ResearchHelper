@@ -20,7 +20,7 @@
       <ul class="nav-links">
         <li><a href="#features">功能特色</a></li>
         <li><a href="#screens">界面预览</a></li>
-        <li><a href="#download">下载</a></li>
+        <!-- <li><a href="#download">下载</a></li> -->
       </ul>
     </nav>
 
@@ -34,7 +34,20 @@
       <div class="hero-text">
         <h1>一站式科研/摸鱼效率助手</h1>
         <p>热点追踪 · 即时翻译 · 置顶小窗</p>
-        <a href="#download" class="btn-primary">立即下载</a>
+        <a
+          id="downloadBtn"
+          class="btn-primary"
+          href="https://github.com/JuneDrinleng/ResearchHelper/releases"
+        >
+          <!-- Windows Logo (纯 SVG，不依赖外部字体) -->
+          <svg class="win-icon" viewBox="0 0 512 512" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M0 93l240-34v186H0V93zm0 326l240 34V267H0v152zm272-361l240-34v221H272V58zm0 399l240 34V291H272v128z"
+            />
+          </svg>
+          <span class="btn-text">前往下载</span>
+        </a>
       </div>
     </header>
 
@@ -62,28 +75,6 @@
         <img src="readme.assets/image-20250612212132885.png" alt="界面 3" />
       </div>
       <div class="dots"></div>
-    </section>
-
-    <!-- 下载 CTA -->
-    <section id="download" class="download reveal">
-      <h2>安装包</h2>
-      <p>Windows</p>
-
-      <!-- ① 先放好图标 + 文本占位 -->
-      <a
-        id="downloadBtn"
-        class="btn-primary"
-        href="https://github.com/JuneDrinleng/ResearchHelper/releases"
-      >
-        <!-- Windows Logo (纯 SVG，不依赖外部字体) -->
-        <svg class="win-icon" viewBox="0 0 512 512" aria-hidden="true">
-          <path
-            fill="currentColor"
-            d="M0 93l240-34v186H0V93zm0 326l240 34V267H0v152zm272-361l240-34v221H272V58zm0 399l240 34V291H272v128z"
-          />
-        </svg>
-        <span class="btn-text">前往下载</span>
-      </a>
     </section>
 
     <!-- 页脚 -->
