@@ -24,6 +24,7 @@ jobs:
           mkdir -p docs
           cp package.json docs/package.json
           cp readme.assets docs/readme.assets
+          cp favicon.ico docs/favicon.ico
 
       # 3) 若有变动就提交
       - name: Commit & push if changed
