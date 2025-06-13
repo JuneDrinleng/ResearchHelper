@@ -1,0 +1,63 @@
+{
+  "name": "researchhelper",
+  "version": "4.0.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JuneDrinleng/ResearchHelper.git"
+  },
+  "keywords": [],
+  "author": "June Drinleng <",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JuneDrinleng/ResearchHelper/issues"
+  },
+  "homepage": "https://github.com/JuneDrinleng/ResearchHelper#readme",
+  "description": "",
+  "devDependencies": {
+    "electron": "36.4.0",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "com.junedrinleng.researchhelper",
+    "productName": "ResearchHelper",
+    "files": [
+      "main.js",
+      "templates/**/*",
+      "modules/**/*",
+      "assets/**/*",
+      "favicon.ico"
+    ],
+    "extraResources": [
+      {
+        "from": "backend/dist/ResearchHelperService.exe",
+        "to": "backend/dist/ResearchHelperService.exe"
+      }
+    ],
+    "asar": true,
+    "win": {
+      "target": "nsis",
+      "icon": "favicon.ico",
+      "artifactName": "ResearchHelper-Setup-${version}.${ext}"
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "JuneDrinleng",
+        "repo": "ResearchHelper"
+      }
+    ]
+  },
+  "dependencies": {
+    "auto-launch": "^5.0.6",
+    "electron-log": "^5.4.1",
+    "electron-updater": "^6.6.2",
+    "tree-kill": "^1.2.2"
+  }
+}
