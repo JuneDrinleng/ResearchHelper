@@ -12,7 +12,7 @@
 </p>
 
 <p align="center" id="language-switch">
-  <a href="./README.md"><strong>🅰️ English</strong></a>
+  <a href="./README_EN.md"><strong>🅰️ English</strong></a>
 </p>
   
 ---
