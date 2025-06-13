@@ -44,7 +44,7 @@ body::before {
   inset: 0;
   background: radial-gradient(
     ellipse at 60% 20%,
-    rgba(98, 114, 255, 0.12),
+    rgba(46, 187, 106, 0.18),
     transparent 65%
   );
   pointer-events: none;
