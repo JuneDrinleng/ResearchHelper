@@ -7,7 +7,7 @@
 <p align="center">
   <a href="#quick-start">🚀 Quick Start</a> •
   <a href="#appearance--features">🎨 Appearance & Features</a> •
-  <a href="#try-it-yourself">🛠️ Try It Yourself</a> •
+  <a href="#Local Compilation">🛠️ Try It Yourself</a> •
   <a href="#packaging">📦 Packaging</a> •
   <a href="./README_ZH.md"><strong>🀄中文</strong></a>
 </p>
@@ -18,7 +18,7 @@
 
 1. [Quick Start](#quick-start)
 2. [Appearance & Features](#appearance--features)
-3. [Try It Yourself](#try-it-yourself)
+3. [Local Compilation](#Local Compilation)
 4. [Packaging](#packaging)
 5. [中文 (Chinese Version)](#中文版)
 
@@ -47,7 +47,7 @@ Once installed, **Research Helper** launches automatically and is ready to assi
 
 ---
 
-## Try It Yourself
+## Local Compilation
 
 ### Backend (🔧 Python / FastAPI)
 
