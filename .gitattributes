@@ -2,4 +2,4 @@
 * text=auto
 
 backend/* linguist-language=Python
-frontend/* linguist-language=JavaScript
+templates/* linguist-language=JavaScript
