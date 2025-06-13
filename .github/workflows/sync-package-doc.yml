@@ -23,6 +23,7 @@ jobs:
         run: |
           mkdir -p docs
           cp package.json docs/package.json
+          cp readme.assets docs/readme.assets
 
       # 3) 若有变动就提交
       - name: Commit & push if changed
