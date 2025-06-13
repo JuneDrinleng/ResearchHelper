@@ -1,0 +1,39 @@
+name: Sync package.json → doc
+
+on:
+  push:
+    branches: [reformat_electron] # 如果你的默认分支不是 main，请改成对应名字
+    paths-ignore: # ❶ 避免因机器提交再次触发
+      - "doc/package.json"
+
+jobs:
+  copy-and-commit:
+    if: github.actor != 'github-actions[bot]' # ❷ 双保险，阻止递归
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1) 拉取代码
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }} # 默认令牌即可推回仓库
+
+      # 2) 复制 package.json
+      - name: Copy package.json to ./doc
+        run: |
+          mkdir -p doc
+          cp package.json doc/package.json
+
+      # 3) 若有变动就提交
+      - name: Commit & push if changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          # 检查文件是否修改
+          if [[ -n $(git status --porcelain doc/package.json) ]]; then
+            git add doc/package.json
+            git commit -m "chore: sync package.json to doc [skip ci]"
+            git push
+          else
+            echo "No changes in version; skip commit."
+          fi
