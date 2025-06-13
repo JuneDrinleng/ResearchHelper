@@ -9,7 +9,7 @@
   <a href="#appearance--features">🎨 Appearance & Features</a> •
   <a href="#local-compilation">🛠️ Local Compilation</a> •
   <a href="#packaging">📦 Packaging</a> •
-  <a href="./README_ZH.md"><strong>🀄中文</strong></a>
+  <a href="./README.md"><strong>🀄中文</strong></a>
 </p>
 
 ---
