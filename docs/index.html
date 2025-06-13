@@ -1,28 +1,78 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Research Helper Test Page</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      text-align: center;
-      margin-top: 100px;
-      background-color: #f9f9f9;
-    }
-    h1 {
-      font-size: 2.5em;
-      color: #2e8b57;
-    }
-    p {
-      font-size: 1.2em;
-      color: #333;
-    }
-  </style>
-</head>
-<body>
-  <h1>✅ GitHub Pages is Working!</h1>
-  <p>This is a test page for <strong>ResearchHelper</strong> at http://helper.junedrinleng.com/ </p>
-</body>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Research Helper — 跨平台桌面研究助手</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- 顶部导航 -->
+    <nav class="nav">
+      <div class="logo">
+        <img src="favicon.ico" alt="Research Helper" />
+        <span>Research Helper</span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#features">功能特色</a></li>
+        <li><a href="#screens">界面预览</a></li>
+        <li><a href="#download">下载</a></li>
+      </ul>
+    </nav>
+
+    <!-- Hero：左图右文 -->
+    <header class="hero">
+      <img src="assets/hero.png" class="hero-img" alt="应用示意图" />
+      <div class="hero-text">
+        <h1>一站式科研效率助手</h1>
+        <p>热点追踪 · 即时翻译 · 网页速查 · 置顶小窗</p>
+        <a href="#download" class="btn-primary">立即下载</a>
+      </div>
+    </header>
+
+    <!-- 功能栅格 -->
+    <section id="features" class="grid">
+      <article>
+        <h2>🔥 微博热搜</h2>
+        <p>一键查看实时话题，灵感不止于学术。</p>
+      </article>
+      <article>
+        <h2>📚 谷歌翻译</h2>
+        <p>支持多语种，单词脱口而出。</p>
+      </article>
+      <article>
+        <h2>📌 置顶小窗</h2>
+        <p>灵活贴边，笔记/速查两不误。</p>
+      </article>
+    </section>
+
+    <!-- 截图轮播 -->
+    <section id="screens" class="carousel">
+      <div class="slides">
+        <img src="../readme.assets/image-20250612212048348.png" alt="界面 1" />
+        <img src="../readme.assets/image-20250612212106765.png" alt="界面 2" />
+        <img src="../readme.assets/image-20250612212119743.png" alt="界面 3" />
+        <img src="../readme.assets/image-20250612212132885.png" alt="界面 3" />
+      </div>
+      <div class="dots"></div>
+    </section>
+
+    <!-- 下载 CTA -->
+    <section id="download" class="download">
+      <h2>安装包</h2>
+      <p>Windows</p>
+      <a
+        href="https://github.com/JuneDrinleng/ResearchHelper/releases"
+        class="btn-primary"
+        >前往下载</a
+      >
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+      <p>© 2025 June Drinleng · Version <span id="app-version">--</span></p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
 </html>
