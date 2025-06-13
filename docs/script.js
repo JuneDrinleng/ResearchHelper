@@ -34,3 +34,24 @@ fetch("./package.json") // 如果 index.html 在根目录就写 './package.json'
   .catch(() => {
     document.getElementById("version").textContent = "unknown";
   });
+/* ---------- 自动取最新 Windows 安装包 ---------- */
+(async () => {
+  const api =
+    "https://api.github.com/repos/JuneDrinleng/ResearchHelper/releases/latest";
+  try {
+    const res = await fetch(api);
+    if (!res.ok) throw new Error("GitHub API error");
+    const release = await res.json();
+
+    // 找到名字以 .exe 结尾的资产；可按实际文件名关键字再精确过滤
+    const winAsset = release.assets.find((a) => a.name.endsWith(".exe"));
+    if (winAsset) {
+      const btn = document.getElementById("downloadBtn");
+      btn.href = winAsset.browser_download_url; // 改成直链
+      btn.textContent = `下载最新版 (${release.tag_name})`;
+      btn.setAttribute("download", winAsset.name); // 浏览器保存同名文件
+    }
+  } catch (err) {
+    console.warn("获取最新安装包失败，继续使用 Releases 页面链接", err);
+  }
+})();
