@@ -9,7 +9,6 @@
   <a href="#appearance--features">🎨 Appearance & Features</a> •
   <a href="#try-it-yourself">🛠️ Try It Yourself</a> •
   <a href="#packaging">📦 Packaging</a> •
-  <a href="#language-switch">🌐 Language</a>
 </p>
 
 <p align="center" id="language-switch">
