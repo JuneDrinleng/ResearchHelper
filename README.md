@@ -9,7 +9,7 @@
   <a href="#appearance--features">🎨 Appearance & Features</a> •
   <a href="#try-it-yourself">🛠️ Try It Yourself</a> •
   <a href="#packaging">📦 Packaging</a> •
-  <a href="#中文版">🇨🇳 中文</a>
+  <a href="./README_ZH.md"><strong>🀄中文</strong></a>
 </p>
 
 ---
