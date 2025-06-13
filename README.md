@@ -14,7 +14,7 @@
 <p align="center" id="language-switch">
   <a href="./README_EN.md"><strong>🅰️ English</strong></a>
 </p>
-  
+
 ---
 
 ## Table of Contents
@@ -45,11 +45,11 @@
 | 📌 窗口置顶    | 让 **Research Helper** 始终保持在最前 |
 
 <div align="center">
-  <img src="./readme.assets/image-20250612212048348.png" width="45%" />
-  <img src="./readme.assets/image-20250612212106765.png" width="45%" />
+  <img src="./readme.assets/1.png" width="45%" />
+  <img src="./readme.assets/2.png" width="45%" />
   <br/>
-  <img src="./readme.assets/image-20250612212119743.png" width="45%" />
-  <img src="./readme.assets/image-20250612212132885.png" width="45%" />
+  <img src="./readme.assets/3.png" width="45%" />
+  <img src="./readme.assets/4.png" width="45%" />
 </div>
 
 ### 本地编译 🛠️

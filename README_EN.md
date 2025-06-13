@@ -46,8 +46,8 @@ Once installed, **Research Helper** launches automatically and is ready to assi
 | 🔥 Weibo Hot Topics    | One‑click to explore trending hashtags       |
 | 📌 Pin Window          | Keep **Research Helper** always on top       |
 
-<p align="center"><img src="./readme.assets/image-20250612212048348.png" width="45%" /> <img src="./readme.assets/image-20250612212106765.png" width="45%" /></p>
-<p align="center"><img src="./readme.assets/image-20250612212119743.png" width="45%" /> <img src="./readme.assets/image-20250612212132885.png" width="45%" /></p>
+<p align="center"><img src="./readme.assets/1.png" width="45%" /> <img src="./readme.assets/2.png" width="45%" /></p>
+<p align="center"><img src="./readme.assets/3.png" width="45%" /> <img src="./readme.assets/4.png" width="45%" /></p>
 
 ---
 
