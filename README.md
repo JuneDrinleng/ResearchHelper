@@ -7,7 +7,7 @@
 <p align="center">
   <a href="#quick-start">🚀 Quick Start</a> •
   <a href="#appearance--features">🎨 Appearance & Features</a> •
-  <a href="#Local Compilation">🛠️ Try It Yourself</a> •
+  <a href="#local-compilation">🛠️ Local Compilation</a> •
   <a href="#packaging">📦 Packaging</a> •
   <a href="./README_ZH.md"><strong>🀄中文</strong></a>
 </p>
@@ -18,7 +18,7 @@
 
 1. [Quick Start](#quick-start)
 2. [Appearance & Features](#appearance--features)
-3. [Local Compilation](#Local Compilation)
+3. [Local Compilation](#Local-Compilation)
 4. [Packaging](#packaging)
 5. [中文 (Chinese Version)](#中文版)
 
