@@ -1,11 +1,12 @@
-name: Sync package.json → docs
+name: Sync package.json to docs
 
 on:
   push:
     branches: [reformat_electron] # 如果你的默认分支不是 main，请改成对应名字
     paths-ignore: # ❶ 避免因机器提交再次触发
       - "docs/package.json"
-
+permissions: # ★ 新增：授予写入代码库权限
+  contents: write
 jobs:
   copy-and-commit:
     if: github.actor != 'github-actions[bot]' # ❷ 双保险，阻止递归

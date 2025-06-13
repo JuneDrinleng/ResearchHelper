@@ -3,8 +3,6 @@ name: Build Python + Electron
 on:
   push:
     branches: [electron]
-permissions: # ★ 新增：授予写入代码库权限
-  contents: write
 jobs:
   build:
     # 同时编 win-x64 + mac-arm64（或改 universal）
