@@ -12,8 +12,12 @@ jobs:
         include:
           - os: windows-latest
             build_args: "--win --x64"
+            py_dist: "dist/win32"
+            chmod_needed: false
           - os: macos-14
             build_args: "--mac --arm64"
+            py_dist: "dist/darwin"
+            chmod_needed: true
 
     runs-on: ${{ matrix.os }}
 
@@ -39,11 +43,12 @@ jobs:
           pip install pyinstaller
           pyinstaller main.py --onefile --noconsole \
                     --name ResearchHelperService \
-                    --icon ../favicon.ico
+                    --icon ../favicon.ico\
+                    --distpath ${{ matrix.py_dist }}
       # -------- 只有 macOS 跑 chmod --------
-      - name: 🛠 chmod +x (mac only)
-        if: runner.os == 'macOS'
-        run: chmod +x backend/dist/ResearchHelperService
+      - name: 🛠 chmod +x (unix only)
+        if: ${{ matrix.chmod_needed }} # ✅ 用矩阵变量判断
+        run: chmod +x backend/${{ matrix.py_dist }}/ResearchHelperService
 
       # ---------- Node / Electron ----------
       - name: ⚙️ Set up Node 18
