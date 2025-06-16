@@ -14,7 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-
 const { app, BrowserWindow, Tray, Menu, dialog, ipcMain } = require("electron");
 const path = require("path");
 const kill = require("tree-kill");
@@ -129,6 +128,14 @@ app.whenReady().then(() => {
   createTray();
   autoUpdateCheck();
   setupAutoUpdater(dialog);
+  // macOS: 点击 Dock 图标或 Cmd+Tab 回到应用时恢复窗口
+  app.on("activate", () => {
+    if (mainWindow) {
+      mainWindow.show();
+    } else {
+      createWindow();
+    }
+  });
 });
 /* ===== 三个 IPC 事件 ===== */
 ipcMain.on("win-min", () => mainWindow.minimize());
