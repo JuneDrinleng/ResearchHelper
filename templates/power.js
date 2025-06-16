@@ -66,7 +66,18 @@ async function fetchPower() {
     const res = await fetch("http://localhost:8080/api/power");
     const data = await res.json();
 
-    const recent = data.slice(-5);
+    // 筛出 power 值变化的记录
+    const filtered = [];
+    let lastPower = null;
+    for (const item of data) {
+      const power = Number(item.power);
+      if (power !== lastPower) {
+        filtered.push(item);
+        lastPower = power;
+      }
+    }
+    // 只保留最后变化的 5 条
+    const recent = filtered.slice(-5);
     const labels = recent.map((d) => d.time);
     const values = recent.map((d) => Number(d.power));
 
