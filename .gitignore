@@ -13,3 +13,5 @@ assets/signin-assets/signin-assets/.DS_Store
 /backend/utils/__pycache__
 /build
 /backend/dist
+*.csv
+.thb_cookie
