@@ -22,7 +22,12 @@ const setActive = (link) =>
 navLinks.forEach((l) => {
   l.addEventListener("click", (e) => {
     e.preventDefault();
-    iframe.src = l.dataset.src;
+    if (iframe.getAttribute("src") === l.dataset.src) {
+      // 同一个页面，手动刷新
+      iframe.contentWindow.location.reload();
+    } else {
+      iframe.src = l.dataset.src; // 切到新页面
+    }
     setActive(l);
   });
 });
@@ -66,5 +71,28 @@ document.getElementById("btnMax").onclick = () => api.winMaxToggle?.();
 window.addEventListener("message", (event) => {
   if (event.data?.type === "open-external") {
     window.electronAPI?.openExternal(event.data.url);
+  }
+});
+/* ========= 监听信息 ========= */
+window.addEventListener("message", async (ev) => {
+  if (!ev.data || ev.data.channel !== "settings") return;
+
+  const { action, payload } = ev.data;
+
+  if (action === "get") {
+    const cred = await window.electronAPI.getCredential();
+    ev.source.postMessage(
+      { channel: "settings", action: "get-reply", payload: cred },
+      "*"
+    );
+  }
+
+  if (action === "save") {
+    const { account, password } = payload;
+    const ok = await window.electronAPI.saveCredential(account, password);
+    ev.source.postMessage(
+      { channel: "settings", action: "save-reply", payload: ok },
+      "*"
+    );
   }
 });

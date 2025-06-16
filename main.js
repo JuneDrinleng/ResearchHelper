@@ -26,6 +26,24 @@ let tray = null;
 let forceQuit = false;
 
 const isPackaged = app.isPackaged;
+const keytar = require("keytar");
+/* ========== Keytar 常量 ========== */
+const SERVICE = "ResearchHelper";
+
+ipcMain.handle("save-credential", async (_e, { account, password }) => {
+  // ① 删除旧账号（若有）
+  const olds = await keytar.findCredentials(SERVICE);
+  await Promise.all(olds.map((c) => keytar.deletePassword(SERVICE, c.account)));
+
+  // ② 写入新账号
+  await keytar.setPassword(SERVICE, account, password);
+  await backendManager.restartBackend(app);
+  return true;
+});
+ipcMain.handle("get-credential", async () => {
+  const [c] = await keytar.findCredentials(SERVICE);
+  return c || null;
+});
 
 // 退出与托盘等逻辑
 ipcMain.on("app-exit", () => {
@@ -136,6 +154,10 @@ app.whenReady().then(() => {
       createWindow();
     }
   });
+  if (!app.isPackaged) {
+    // 只在开发环境
+    mainWindow.webContents.openDevTools({ mode: "detach" });
+  }
 });
 /* ===== 三个 IPC 事件 ===== */
 ipcMain.on("win-min", () => mainWindow.minimize());

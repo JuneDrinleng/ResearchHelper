@@ -450,3 +450,34 @@ body.dark-mode .page-title {
     margin-bottom: 24px;
   }
 }
+/* 输入框 */
+.setting-row input {
+  font: inherit;
+  padding: 8px 10px;
+  border: 1px solid var(--divider);
+  border-radius: 8px;
+  background: var(--card-bg);
+  color: var(--text);
+  min-width: 140px;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.setting-row input:focus {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: 0 0 0 2px rgba(46, 187, 106, 0.25);
+}
+
+/* 保存按钮 */
+.setting-row button {
+  margin-left: 16px;
+  padding: 8px 18px;
+  border: none;
+  border-radius: 8px;
+  background: var(--blue);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+.setting-row button:hover {
+  background: var(--green);
+}

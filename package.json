@@ -1,10 +1,11 @@
 {
   "name": "researchhelper",
-  "version": "4.1.5",
+  "version": "4.2.5",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "electron-builder install-app-deps",
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
     "build:backend:win": "pyinstaller -y -F --noconsole --name ResearchHelperService --icon=favicon.ico backend/main.py --distpath backend/dist/win32",
@@ -78,6 +79,7 @@
     "auto-launch": "^5.0.6",
     "electron-log": "^5.4.1",
     "electron-updater": "^6.6.2",
+    "keytar": "^7.9.0",
     "tree-kill": "^1.2.2"
   }
 }

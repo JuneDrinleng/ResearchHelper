@@ -36,7 +36,21 @@
         </div>
       </div>
     </div>
-
+    <!-- 账号 & 密码 -->
+    <div class="setting-row" id="cred-row">
+      <div class="setting-icon icon-user">
+        <!-- 简单用户 icon -->
+        <svg viewBox="0 0 24 24">
+          <circle cx="12" cy="8" r="4"></circle>
+          <path d="M4 20c0-4 4-6 8-6s8 2 8 6"></path>
+        </svg>
+      </div>
+      <label style="min-width: 64px">账号</label>
+      <input id="account" type="text" placeholder="Username / Email" />
+      <label style="min-width: 64px; margin-left: 24px">密码</label>
+      <input id="password" type="password" placeholder="Password" />
+      <!-- <button id="cred-save" title="保存">保存</button> -->
+    </div>
     <script src="./settings.js" defer></script>
   </body>
 </html>

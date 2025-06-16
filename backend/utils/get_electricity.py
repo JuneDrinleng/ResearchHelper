@@ -73,5 +73,6 @@ def get_electricty(name,password):
     res.encoding = 'gbk'
     soup = bs4.BeautifulSoup(res.text, 'html.parser')
     reading = soup.find('span', {'id': 'weixin_student_electricity_searchCtrl1_lblele'}).text
-    return str(reading)
+    return {"time":datetime().strftime("%Y-%m-%d %H:%M:%S"),
+            "power":float(reading)}
 

@@ -18,11 +18,30 @@
 from flask import Flask, render_template
 from flask import jsonify
 from utils.get_hot import hot_search_loop
-import signal
-import sys
 from utils.get_google_tranlate import Google_translator
+from utils.get_electricity import get_electricty
+from datetime import datetime
+import pandas as pd
 app = Flask(__name__)
 from flask import request
+import os
+
+RH_ACCOUNT  = os.getenv("RH_ACCOUNT")   # 如果变量缺失将得到 None
+RH_PASSWORD = os.getenv("RH_PASSWORD")
+
+if not RH_ACCOUNT or not RH_PASSWORD:
+    print("后端启动时未收到账号或密码，请检查 Electron 端的 keytar 保存 / env 传递。")
+POWER_CSV = os.getenv("POWER_CSV")
+if not POWER_CSV:                                    # ← ① 给默认路径
+    POWER_CSV = os.path.join(os.getcwd(), "power.csv")
+
+# 若文件不存在则创建空模板
+if not os.path.exists(POWER_CSV):
+    print(f"[info] {POWER_CSV} 不存在，自动创建空白模板")
+    pd.DataFrame(columns=["time", "power"]).to_csv(POWER_CSV, index=False)
+
+power_df = pd.read_csv(POWER_CSV)
+print(f"[info] 载入 POWER_CSV，共 {len(power_df)} 条记录")
 
 @app.route('/')
 
@@ -49,7 +68,67 @@ def translate():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+# ---------- 路由 ----------
+from apscheduler.schedulers.background import BackgroundScheduler
+import atexit
+def fetch_power_job():
+    """
+    每 30 min 执行一次：
+        • 有账号密码 → 调 get_electricty() 抓最新读数，成功即追加进 CSV
+        • 缺账号密码 → 记录日志，不写 CSV
+        • 抓取异常   → 日志警告，不写 CSV
+    """
+    if not RH_ACCOUNT or not RH_PASSWORD:
+        app.logger.warning("[fetch_power_job] 无账号密码，跳过")
+        return
+
+    try:
+        reading = get_electricty(RH_ACCOUNT, RH_PASSWORD)
+        # 转成 DataFrame 并写 CSV
+        try:
+            df_old = pd.read_csv(POWER_CSV)
+        except FileNotFoundError:
+            df_old = pd.DataFrame(columns=["time", "power"])
+        df_all = pd.concat([df_old, pd.DataFrame([reading])], ignore_index=True)
+        df_all.to_csv(POWER_CSV, index=False)
+        app.logger.info("[fetch_power_job] 已写入最新电量")
+    except Exception as e:
+        app.logger.warning(f"[fetch_power_job] 抓取失败：{e}")
+
+@app.route("/api/power")
+def power_api():
+    """
+    • 如果没有账号密码 AND CSV 空 ⇒ 返回单条全 0 JSON
+    • 否则 ⇒ 读 CSV（或空 DataFrame），≤100 行返全表，>100 行返尾 100 行
+    """
+    try:
+        df = pd.read_csv(POWER_CSV)
+    except FileNotFoundError:
+        df = pd.DataFrame(columns=["time", "power"])
+
+    # 没账号密码且 CSV 也空 → 返回全 0
+    if df.empty and (not RH_ACCOUNT or not RH_PASSWORD):
+        df = pd.DataFrame([{
+            "time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "power": 0
+        }])
+
+    df_resp = df if len(df) <= 100 else df.tail(100)
+    return jsonify(df_resp.to_dict(orient="records"))
 
 
 if __name__ == '__main__':
+
+    # main.py（放在 create_app/app = Flask(...) 之后）
+    scheduler = BackgroundScheduler(timezone="Asia/Shanghai")   # Helsinki +5 ⇒ 上海 +8；两地时间差 3h 不影响周期
+    scheduler.add_job(
+        fetch_power_job,
+        "interval",
+        minutes=30,
+        next_run_time=datetime.now()   # 立即跑一次，避免首 30 min 空窗
+    )
+    scheduler.start()
+
+    # 优雅关闭
+    atexit.register(lambda: scheduler.shutdown(wait=False))
     app.run(port=8080)
