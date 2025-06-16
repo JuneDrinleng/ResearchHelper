@@ -1,12 +1,16 @@
 {
   "name": "researchhelper",
-  "version": "4.1.0",
+  "version": "4.1.1",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1",
     "pack": "electron-builder --dir",
-    "dist": "electron-builder"
+    "dist": "electron-builder",
+    "build:backend:win": "pyinstaller -y -F --noconsole --icon=favicon.ico backend/main.py --distpath backend/dist/win32",
+    "pack:win": "npm run build:backend:win && electron-builder --win",
+    "build:backend:mac": "pyinstaller -y -F backend/main.py --distpath backend/dist/darwin && chmod +x backend/dist/darwin/ResearchHelperService",
+    "pack:mac": "npm run build:backend:mac && electron-builder --mac"
   },
   "repository": {
     "type": "git",
@@ -32,12 +36,10 @@
       "templates/**/*",
       "modules/**/*",
       "assets/**/*",
-      "favicon.ico"
-    ],
-    "extraResources": [
+      "favicon.ico",
       {
-        "from": "backend/dist/ResearchHelperService.exe",
-        "to": "backend/dist/ResearchHelperService.exe"
+        "from": "backend/dist",
+        "to": "backend/dist"
       }
     ],
     "asar": true,
