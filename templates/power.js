@@ -19,10 +19,29 @@ function createChart() {
           label: "剩余电量 (kWh)",
           data: [],
           tension: 0.25,
-          borderColor: "#11c15b", // 初始色
           borderWidth: 2,
           pointRadius: 2,
           fill: false,
+          segment: {
+            borderColor: (ctx) => {
+              const y = ctx.p1.parsed.y;
+              if (y < 15) return "#ff4d4f"; // 红色
+              if (y < 50) return "#faad14"; // 黄色
+              return getRingColor(); // 正常绿色
+            },
+          },
+          pointBackgroundColor: (ctx) => {
+            const y = ctx.raw;
+            if (y < 15) return "#ff4d4f";
+            if (y < 50) return "#faad14";
+            return getRingColor();
+          },
+          pointBorderColor: (ctx) => {
+            const y = ctx.raw;
+            if (y < 15) return "#ff4d4f";
+            if (y < 50) return "#faad14";
+            return getRingColor();
+          },
         },
       ],
     },
