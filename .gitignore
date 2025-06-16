@@ -9,3 +9,5 @@ research-helper.log
 assets/signin-assets/signin-assets/Android/png@1x/dark/.DS_Store
 assets/signin-assets/signin-assets/Android/.DS_Store
 assets/signin-assets/signin-assets/.DS_Store
+/backend/utils/__pycache__
+/backend/utils/__pycache__
