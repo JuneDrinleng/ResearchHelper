@@ -9,13 +9,8 @@
 
   /** 根据系统/手动值应用主题 */
   function applyTheme(val) {
-    if (val === "auto") {
-      root.dataset.theme = prefersDark.matches ? "dark" : "light";
-      prefersDark.addEventListener("change", applySysTheme);
-    } else {
-      root.dataset.theme = val;
-      prefersDark.removeEventListener("change", applySysTheme);
-    }
+    root.dataset.theme = val;
+    prefersDark.removeEventListener("change", applySysTheme);
   }
   function applySysTheme() {
     if (localStorage.getItem("theme") === "auto")
@@ -36,9 +31,8 @@
   }
 
   /* —— 初始化 —— */
-  const initVal = localStorage.getItem("theme") || "auto";
-  const initLabel =
-    { auto: "跟随系统", light: "浅色", dark: "深色" }[initVal] || "跟随系统";
+  const initVal = localStorage.getItem("theme");
+  const initLabel = { light: "浅色", dark: "深色" }[initVal];
   setTheme(initVal, initLabel); // ★ 关键：首次进入即同步 UI
 
   /* —— 交互 —— */
