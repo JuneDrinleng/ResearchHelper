@@ -1,15 +1,15 @@
 {
   "name": "researchhelper",
-  "version": "4.1.2",
+  "version": "4.1.3",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1",
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
-    "build:backend:win": "pyinstaller -y -F --noconsole --icon=favicon.ico backend/main.py --distpath backend/dist/win32",
+    "build:backend:win": "pyinstaller -y -F --noconsole --name ResearchHelperService --icon=favicon.ico backend/main.py --distpath backend/dist/win32",
     "pack:win": "npm run build:backend:win && electron-builder --win",
-    "build:backend:mac": "pyinstaller -y -F backend/main.py --distpath backend/dist/darwin && chmod +x backend/dist/darwin/ResearchHelperService",
+    "build:backend:mac": "pyinstaller -y -F --name ResearchHelperService backend/main.py  --distpath backend/dist/darwin && chmod +x backend/dist/darwin/ResearchHelperService",
     "pack:mac": "npm run build:backend:mac && electron-builder --mac"
   },
   "repository": {
@@ -37,12 +37,15 @@
       "modules/**/*",
       "assets/**/*",
       "favicon.ico",
+      "!backend/dist/**"
+    ],
+    "asar": true,
+    "extraResources": [
       {
         "from": "backend/dist",
         "to": "backend/dist"
       }
     ],
-    "asar": true,
     "win": {
       "target": "nsis",
       "icon": "favicon.ico",
