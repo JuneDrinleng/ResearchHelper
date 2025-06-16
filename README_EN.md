@@ -38,13 +38,13 @@ Once installed, **Research Helper** launches automatically and is ready to assi
 
 ## Appearance & Features
 
-|  Feature               |  Description                                 |
-| ---------------------- | -------------------------------------------- |
-| 🌐 Surf the web        | Inline translation, quick look‑ups, and more |
-| 🌓 Light / Dark Mode   | Select the look that suits your eyes         |
-| 📕 Built‑in Translator | Highlight & translate any text instantly     |
-| 🔥 Weibo Hot Topics    | One‑click to explore trending hashtags       |
-| 📌 Pin Window          | Keep **Research Helper** always on top       |
+| Feature               | Description                                                  |
+| --------------------- | ------------------------------------------------------------ |
+| ⚡Power monitoring     | Monitor the electricity supply of Tsinghua University student apartment dormitory |
+| 🌓 Light / Dark Mode   | Select the look that suits your eyes                         |
+| 📕 Built‑in Translator | Highlight & translate any text instantly                     |
+| 🔥 Weibo Hot Topics    | One‑click to explore trending hashtags                       |
+| 📌 Pin Window          | Keep **Research Helper** always on top                       |
 
 <p align="center"><img src="./readme.assets/1.png" width="45%" /> <img src="./readme.assets/2.png" width="45%" /></p>
 <p align="center"><img src="./readme.assets/3.png" width="45%" /> <img src="./readme.assets/4.png" width="45%" /></p>
@@ -87,15 +87,11 @@ npm start
 ### Package the Python Backend
 
 ```bash
-cd backend
-pyinstaller --onefile --noconsole --name ResearchHelperService --icon=../favicon.ico main.py
+npm run pack:win
 ```
+ The mac version is also compiled. In GitHub action, but it faces problems such as slow backend startup and no certificates.
 
-### Package the Electron App (on Windows)
 
-```bash
-electron-builder --win
-```
 
 ---
 

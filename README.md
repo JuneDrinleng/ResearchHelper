@@ -36,13 +36,13 @@
 
 ### 外观与功能 🎨
 
-| 功能         | 说明                            |
-| ---------- | ----------------------------- |
-| 🌐 便捷上网    | 内置翻译、快速查询等多合一工具               |
+| 功能            | 说明                                  |
+| --------------- | ------------------------------------- |
 | 🌓 浅色/深色主题 | 根据喜好自由切换                      |
-| 📕 实时翻译    | 选中文本即刻翻译                      |
-| 🔥 微博热搜    | 一键查看并深入了解热门话题                 |
-| 📌 窗口置顶    | 让 **Research Helper** 始终保持在最前 |
+| 📕 实时翻译      | 选中文本即刻翻译                      |
+| 🔥 微博热搜      | 一键查看并深入了解热门话题            |
+| ⚡ 电量监控      | 监控清华大学学生公寓宿舍电量情况      |
+| 📌 窗口置顶      | 让 **Research Helper** 始终保持在最前 |
 
 <div align="center">
   <img src="./readme.assets/1.png" width="45%" />
@@ -83,15 +83,7 @@ npm start
 
 ### 打包发布 📦
 
-#### 打包 Python 后端
-
 ```bash
-cd backend
-pyinstaller --onefile --noconsole --name ResearchHelperService --icon=../favicon.ico main.py
+npm run pack:win
 ```
-
-#### 打包 Electron App（Windows）
-
-```bash
-electron-builder --win
-```
+mac版本也有编译，在GitHub action中，但是面临后端启动较慢，没有证书等问题
