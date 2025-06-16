@@ -48,6 +48,19 @@
       "icon": "favicon.ico",
       "artifactName": "ResearchHelper-Setup-${version}.${ext}"
     },
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "arm64"
+          ]
+        }
+      ],
+      "category": "public.app-category.productivity",
+      "icon": "favicon.icns",
+      "artifactName": "ResearchHelper-${version}-mac.${ext}"
+    },
     "publish": [
       {
         "provider": "github",

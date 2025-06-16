@@ -38,6 +38,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: 🔨 PyInstaller build
+        shell: bash
         working-directory: ./backend
         run: |
           pip install pyinstaller
