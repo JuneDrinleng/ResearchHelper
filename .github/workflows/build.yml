@@ -42,7 +42,7 @@ jobs:
         working-directory: ./backend
         run: |
           pip install pyinstaller
-          pyinstaller main.py --onefile --noconsole \
+          pyinstaller main.py -D --noconsole \
                     --name ResearchHelperService \
                     --icon ../favicon.ico\
                     --distpath ${{ matrix.py_dist }}
