@@ -6,51 +6,83 @@
     <meta name="color-scheme" content="light dark" />
     <link rel="stylesheet" href="./settings.css" />
   </head>
+
   <body>
-    <div class="card">
+    <div class="card settings-card">
       <h1>设置</h1>
 
-      <!-- 主题 -->
-      <div class="setting-row">
-        <div class="setting-icon icon-theme">
-          <svg viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="5"></circle>
-            <line x1="12" y1="1" x2="12" y2="3"></line>
-            <line x1="12" y1="21" x2="12" y2="23"></line>
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-            <line x1="1" y1="12" x2="3" y2="12"></line>
-            <line x1="21" y1="12" x2="23" y2="12"></line>
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-          </svg>
+      <!-- ────────── 子卡片 1：系统外观设置 ────────── -->
+      <div class="sub-card">
+        <h2 class="section-title">系统外观设置</h2>
+
+        <div class="setting-row">
+          <div class="setting-icon icon-theme">
+            <!-- sun svg -->
+            <svg viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+          </div>
+
+          <label>主题</label>
+          <div class="custom-select" id="theme-select" data-value="light">
+            <span class="selected">浅色</span>
+            <ul class="options">
+              <li data-value="light" class="selected">浅色</li>
+              <li data-value="dark">深色</li>
+            </ul>
+          </div>
         </div>
-        <label>主题</label>
-        <div class="custom-select" id="theme-select" data-value="auto">
-          <span class="selected">跟随系统</span>
-          <ul class="options">
-            <!-- <li data-value="auto" class="selected">跟随系统</li> -->
-            <li data-value="light">浅色</li>
-            <li data-value="dark">深色</li>
-          </ul>
+      </div>
+
+      <!-- ────────── 子卡片 2：清华家园网账号 ────────── -->
+      <div class="sub-card">
+        <h2 class="section-title">清华家园网账号</h2>
+
+        <!-- 账号 -->
+        <div class="input-row">
+          <span class="row-icon">
+            <!-- user svg -->
+            <svg viewBox="0 0 24 24">
+              <circle cx="12" cy="8" r="4"></circle>
+              <path d="M4 20c0-4 4-6 8-6s8 2 8 6" />
+            </svg>
+          </span>
+          <input
+            id="account"
+            type="text"
+            placeholder="请输入账号 / 邮箱"
+            autocomplete="username"
+          />
+        </div>
+
+        <!-- 密码 -->
+        <div class="input-row">
+          <span class="row-icon">
+            <!-- lock svg -->
+            <svg viewBox="0 0 24 24">
+              <rect x="5" y="11" width="14" height="10" rx="2" ry="2" />
+              <path d="M12 16v4" />
+              <path d="M8 11v-3a4 4 0 0 1 8 0v3" />
+            </svg>
+          </span>
+          <input
+            id="password"
+            type="password"
+            placeholder="请输入密码"
+            autocomplete="current-password"
+          />
         </div>
       </div>
     </div>
-    <!-- 账号 & 密码 -->
-    <div class="setting-row" id="cred-row">
-      <div class="setting-icon icon-user">
-        <!-- 简单用户 icon -->
-        <svg viewBox="0 0 24 24">
-          <circle cx="12" cy="8" r="4"></circle>
-          <path d="M4 20c0-4 4-6 8-6s8 2 8 6"></path>
-        </svg>
-      </div>
-      <label style="min-width: 64px">账号</label>
-      <input id="account" type="text" placeholder="Username / Email" />
-      <label style="min-width: 64px; margin-left: 24px">密码</label>
-      <input id="password" type="password" placeholder="Password" />
-      <!-- <button id="cred-save" title="保存">保存</button> -->
-    </div>
+
     <script src="./settings.js" defer></script>
   </body>
 </html>

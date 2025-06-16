@@ -312,3 +312,185 @@ option {
   background: #1e1f22; /* 纯色背景 */
   background-image: none; /* 关掉叠加渐变 */
 }
+/* ========== 账号 / 密码输入框美化 ========== */
+.cred-input {
+  flex: 0 0 180px;
+  padding: 8px 10px;
+  border: 1px solid var(--divider);
+  border-radius: 8px;
+  background: var(--select-bg);
+  color: var(--text);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.cred-input:focus {
+  outline: none;
+  border-color: var(--blue); /* 绿色描边 */
+  box-shadow: 0 0 0 3px rgba(46, 187, 106, 0.25);
+}
+
+/* ========== 保存按钮 ========== */
+.btn-save {
+  margin-left: 16px;
+  padding: 8px 18px;
+  border: none;
+  border-radius: 8px;
+  background: var(--blue);
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+.btn-save:hover {
+  background: var(--green);
+  transform: translateY(-2px);
+}
+.btn-save:active {
+  transform: translateY(0);
+}
+
+/* 响应式：窄屏改为纵向排布 */
+@media (max-width: 600px) {
+  #cred-row {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .cred-input {
+    flex: 1 1 100%;
+  }
+  .btn-save {
+    width: 100%;
+    margin-left: 0;
+  }
+}
+/* ────────── 子卡片布局 ────────── */
+.sub-card {
+  background: var(--card-bg);
+  border: 1px solid var(--select-border, var(--divider));
+  border-radius: var(--radius);
+  padding: 28px 32px;
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+}
+
+/* 小标题 */
+.section-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--blue);
+}
+
+/* 账号 / 密码行 */
+.input-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.input-row input {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid var(--divider);
+  border-radius: 8px;
+  background: var(--select-bg);
+  color: var(--text);
+  font: inherit;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.input-row input:focus {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(46, 187, 106, 0.25);
+}
+.row-icon svg {
+  width: 22px;
+  height: 22px;
+  stroke: var(--blue);
+  stroke-width: 2;
+  fill: none;
+}
+@media (max-width: 600px) {
+  .input-row {
+    flex-direction: row;
+  }
+  .input-row input {
+    flex-basis: 100%;
+  }
+}
+
+/* 去掉旧的保存按钮样式（如仍在 CSS 中可保留但不会使用） */
+.btn-save {
+  display: none !important;
+}
+/* ────────── 子卡片布局：更紧凑 ────────── */
+.sub-card {
+  background: var(--card-bg);
+  border: 1px solid var(--select-border, var(--divider));
+  border-radius: var(--radius);
+  padding: 20px 24px; /* ↓ 由 28×32 改为 20×24 */
+  margin-top: 28px; /* ↓ 由 40 改为 28 */
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* ↓ 由 22 改为 16 */
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+}
+
+/* 小标题 */
+.section-title {
+  margin: 0 0 14px; /* ↓ 再压缩与下方间距 */
+  font-size: 18px; /* ↓ 字号微降 */
+  font-weight: 600;
+  color: var(--blue);
+}
+
+/* 账号 / 密码行 */
+.input-row {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* ↓ 行内图标与输入框间距 */
+}
+.input-row input {
+  flex: 1;
+  padding: 8px 10px; /* ↓ 输入框内边距 */
+  border: 1px solid var(--divider);
+  border-radius: 8px;
+  background: var(--select-bg);
+  color: var(--text);
+  font: inherit;
+}
+.input-row input:focus {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: 0 0 0 2px rgba(46, 187, 106, 0.25); /* ↓ 阴影缩窄 */
+}
+.row-icon svg {
+  width: 20px; /* ↓ 图标尺寸 */
+  height: 20px;
+  stroke: var(--blue);
+  stroke-width: 2;
+  fill: none;
+}
+
+/* 移动端保持同样紧凑 */
+@media (max-width: 600px) {
+  .input-row {
+    flex-direction: row;
+  }
+  .input-row input {
+    flex-basis: 100%;
+  }
+}
+/* ========== 整个“大卡片”居中显示 ========== */
+.settings-card {
+  width: 100%;
+  max-width: 640px; /* 卡片最大宽度 */
+  margin: 1vh auto 0; /* 上方留 8% 视口高度，其余 auto 实现水平居中 */
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 32px 36px;
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+}
