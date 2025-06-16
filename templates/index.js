@@ -63,6 +63,7 @@ document.getElementById("btnMax").onclick = () => api.winMaxToggle?.();
   "hotsearch.html",
   "translate.html",
   "settings.html",
+  "power.html",
   "about.html",
   "welcome.html",
 ].forEach((u) => fetch(u));

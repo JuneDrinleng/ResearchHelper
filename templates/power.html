@@ -44,10 +44,6 @@
         </thead>
         <tbody></tbody>
       </table>
-
-      <a href="#" class="button" id="refreshBtn"
-        ><i class="fa-solid fa-arrows-rotate"></i>&nbsp;手动刷新</a
-      >
       <br />
       <a href="./about.html" class="link"
         ><i class="fa-solid fa-circle-info"></i>&nbsp;关于 ResearchHelper</a
@@ -61,7 +57,7 @@
 
       async function fetchPower() {
         try {
-          const res = await fetch("/api/power");
+          const res = await fetch("http://localhost:8080/api/power");
           if (!res.ok) throw new Error(await res.text());
           const data = await res.json();
           renderTable(data);
@@ -80,12 +76,6 @@
           tbody.appendChild(tr);
         });
       }
-
-      document.getElementById("refreshBtn").addEventListener("click", (e) => {
-        e.preventDefault();
-        fetchPower();
-      });
-
       fetchPower(); // 首次加载
       setInterval(fetchPower, 30 * 60 * 1000); // 30 min 轮询
     </script>
