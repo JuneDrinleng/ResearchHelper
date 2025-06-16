@@ -2,82 +2,113 @@
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <title>宿舍电量监控 | ResearchHelper</title>
-    <!-- 图标 & 继承 about 页面配色 → 直接沿用现有 CSS -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    />
-    <link rel="stylesheet" href="./about.css" />
-    <style>
-      /* ------- 电量表格专用微样式 ------- */
-      table.power-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-      }
-      .power-table th,
-      .power-table td {
-        border: 1px solid #e0e0e0;
-        padding: 8px 10px;
-        text-align: center;
-      }
-      .power-table th {
-        background: #f4f6f8;
-      }
-      body.dark-mode .power-table th {
-        background: #383838;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <h1>宿舍剩余电量</h1>
-      <p>最近 100 条记录，页面每 <code>30 min</code> 自动刷新</p>
+    <title>宿舍电量监控 | ResearchHelper</title>
 
-      <table class="power-table" id="powerTable">
-        <thead>
-          <tr>
-            <th>时间</th>
-            <th>剩余电量 (kWh)</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-      <br />
-      <a href="./about.html" class="link"
-        ><i class="fa-solid fa-circle-info"></i>&nbsp;关于 ResearchHelper</a
-      >
+    <!-- 独立样式 -->
+    <link rel="stylesheet" href="./power.css" />
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <!-- 父级大卡片 -->
+      <div class="card outer-card">
+        <h2 class="card-title">电量统计</h2>
+
+        <!-- 网格：左当前电量 / 右折线图 -->
+        <div class="inner-grid">
+          <!-- 左侧：旋转环 -->
+          <div class="sub-card current-card">
+            <div class="ring">
+              <div class="current-power">
+                <span id="powerValue">--</span>
+                <span class="unit">kWh</span>
+              </div>
+            </div>
+            <div id="currentTime">--</div>
+          </div>
+
+          <!-- 右侧：折线图 -->
+          <div class="sub-card chart-card">
+            <canvas id="powerChart"></canvas>
+          </div>
+        </div>
+      </div>
     </div>
 
+    <!-- 脚本：拉取数据并更新页面 -->
     <script>
-      // 继承暗色 / 亮色模式
-      const theme = localStorage.getItem("theme") || "light";
-      document.body.classList.add(theme + "-mode");
+      /* 读取主题绿色——同圆环和标题 */
+      const ringColor =
+        getComputedStyle(document.documentElement)
+          .getPropertyValue("--ring")
+          .trim() || "#11c15b";
 
+      const ctx = document.getElementById("powerChart");
+      const chart = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: [],
+          datasets: [
+            {
+              label: "剩余电量 (kWh)",
+              data: [],
+              tension: 0.25,
+              borderColor: ringColor,
+              borderWidth: 2,
+              pointRadius: 2,
+              fill: false,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          layout: { padding: 0 },
+          plugins: { legend: { display: false } },
+          scales: {
+            x: {
+              ticks: { maxRotation: 45, minRotation: 45, font: { size: 10 } },
+              grid: { display: false },
+            },
+            y: {
+              beginAtZero: false,
+              ticks: { font: { size: 10 } },
+              grid: { drawTicks: false },
+            },
+          },
+        },
+      });
+
+      /* -------------- 只取最新 5 条 -------------- */
       async function fetchPower() {
         try {
           const res = await fetch("http://localhost:8080/api/power");
-          if (!res.ok) throw new Error(await res.text());
           const data = await res.json();
-          renderTable(data);
-        } catch (err) {
-          console.error(err);
-          alert("无法获取电量数据：" + err.message);
+
+          const recent = data.slice(-5); // ← 关键：仅保留 5 条
+          const labels = recent.map((d) => d.time);
+          const values = recent.map((d) => Number(d.power));
+
+          chart.data.labels = labels;
+          chart.data.datasets[0].data = values;
+          chart.update("none");
+
+          const latest = recent.at(-1);
+          document.getElementById("powerValue").textContent =
+            latest?.power ?? "--";
+          document.getElementById("currentTime").textContent =
+            latest?.time ?? "--";
+        } catch (e) {
+          console.error("获取电量失败:", e);
         }
       }
 
-      function renderTable(data) {
-        const tbody = document.querySelector("#powerTable tbody");
-        tbody.innerHTML = "";
-        data.forEach((row) => {
-          const tr = document.createElement("tr");
-          tr.innerHTML = `<td>${row.time}</td><td>${row.power}</td>`;
-          tbody.appendChild(tr);
-        });
-      }
-      fetchPower(); // 首次加载
-      setInterval(fetchPower, 30 * 60 * 1000); // 30 min 轮询
+      /* 首次加载 + 每 30 min 更新一次 */
+      fetchPower();
+      setInterval(fetchPower, 30 * 60 * 1000);
     </script>
   </body>
 </html>
