@@ -55,13 +55,13 @@
       "target": [
         {
           "target": "dmg",
-          "identity": null,
-          "hardenedRuntime": false,
           "arch": [
             "arm64"
           ]
         }
       ],
+      "identity": null,
+      "hardenedRuntime": false,
       "category": "public.app-category.productivity",
       "icon": "favicon.icns",
       "artifactName": "ResearchHelper-${version}-mac.${ext}"
