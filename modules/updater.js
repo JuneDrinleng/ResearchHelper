@@ -38,7 +38,10 @@ function setupAutoUpdater(dialog) {
       })
       .then((result) => {
         if (result.response === 0) {
-          autoUpdater.quitAndInstall();
+          gracefulExit(); // ⬅ 主动优雅退出
+          setTimeout(() => {
+            autoUpdater.quitAndInstall(); // ⬅ 等退出完成后更新
+          }, 1000); // 给 gracefulExit 留一些时间
         }
       });
   });
