@@ -16,17 +16,15 @@
 
 const { app, BrowserWindow, Tray, Menu, dialog, ipcMain } = require("electron");
 const path = require("path");
-const kill = require("tree-kill");
 const { setupAutoUpdater, autoUpdateCheck } = require("./modules/updater");
 const backendManager = require("./modules/backendManager");
 const log = require("./modules/logger");
 const { gracefulExit } = require("./modules/exitManager");
 const { shell } = require("electron");
-
+const kill = require("tree-kill");
 let mainWindow;
 let tray = null;
 let forceQuit = false;
-
 const net = require("net");
 const { bootstrap } = require("global-agent");
 
@@ -136,6 +134,16 @@ app.on("before-quit", (e) => {
 });
 
 app.whenReady().then(async () => {
+  if (backendManager.backendProcess) {
+    log.info("trying to kill backend PID:", backendManager.backendProcess.pid);
+    kill(backendManager.backendProcess.pid, "SIGTERM", (err) => {
+      if (err) {
+        log.error("Failed to kill backend:", err);
+      } else {
+        log.info("Backend closed.");
+      }
+    });
+  }
   await tryEnableProxyIfAvailable();
   backendManager.startBackend(app);
   createWindow();

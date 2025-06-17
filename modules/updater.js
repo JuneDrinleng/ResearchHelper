@@ -1,6 +1,6 @@
 const { autoUpdater } = require("electron-updater");
 const log = require("./logger");
-const { gracefulExit } = require("./modules/exitManager");
+const { gracefulExit } = require("./exitManager");
 let manualCheck = false;
 function setupAutoUpdater(dialog) {
   autoUpdater.autoDownload = false;
@@ -39,10 +39,10 @@ function setupAutoUpdater(dialog) {
       })
       .then((result) => {
         if (result.response === 0) {
-          gracefulExit(); // ⬅ 主动优雅退出
-          setTimeout(() => {
-            autoUpdater.quitAndInstall(); // ⬅ 等退出完成后更新
-          }, 1000); // 给 gracefulExit 留一些时间
+          gracefulExit(() => {
+            // 这里主进程还活着，后端已被干净关闭
+            autoUpdater.quitAndInstall();
+          });
         }
       });
   });
