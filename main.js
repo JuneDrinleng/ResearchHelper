@@ -20,7 +20,9 @@ const kill = require("tree-kill");
 const { setupAutoUpdater, autoUpdateCheck } = require("./modules/updater");
 const backendManager = require("./modules/backendManager");
 const log = require("./modules/logger");
+const { gracefulExit } = require("./modules/exitManager");
 const { shell } = require("electron");
+
 let mainWindow;
 let tray = null;
 let forceQuit = false;
@@ -86,28 +88,6 @@ function createWindow() {
       mainWindow.hide();
     }
   });
-}
-
-function gracefulExit() {
-  forceQuit = true;
-  if (backendManager.backendProcess) {
-    log.info("trying to kill backend PID:", backendManager.backendProcess.pid);
-    kill(backendManager.backendProcess.pid, "SIGTERM", (err) => {
-      if (err) {
-        log.error("Failed to kill backend:", err);
-      } else {
-        log.info("Backend closed.");
-      }
-      app.exit();
-    });
-
-    setTimeout(() => {
-      console.warn("Force exiting Electron.");
-      app.exit();
-    }, 3000);
-  } else {
-    app.exit();
-  }
 }
 
 function createTray() {

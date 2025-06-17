@@ -1,5 +1,6 @@
 const { autoUpdater } = require("electron-updater");
 const log = require("./logger");
+const { gracefulExit } = require("./modules/exitManager");
 let manualCheck = false;
 function setupAutoUpdater(dialog) {
   autoUpdater.autoDownload = false;
