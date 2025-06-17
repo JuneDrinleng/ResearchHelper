@@ -27,7 +27,7 @@ async function startBackend(app) {
   if (backendProcess) return backendProcess; // 防重复
   // ① 统一算出 power.csv 的真实路径
   const powerCsvPath = app.isPackaged
-    ? path.join(process.resourcesPath, "power.csv")
+    ? path.join(app.getPath("userData"), "power.csv")
     : path.join(__dirname, "../power.csv");
   /* ---------- ① 任何环境先拼好 env ---------- */
   let env = { ...process.env, POWER_CSV: powerCsvPath };
