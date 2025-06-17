@@ -25,6 +25,9 @@ let mainWindow;
 let tray = null;
 let forceQuit = false;
 
+const net = require("net");
+const { bootstrap } = require("global-agent");
+
 const isPackaged = app.isPackaged;
 const keytar = require("keytar");
 /* ========== Keytar 常量 ========== */
@@ -128,13 +131,32 @@ function createTray() {
   tray.setToolTip("ResearchHelper");
   tray.setContextMenu(contextMenu);
 }
+async function tryEnableProxyIfAvailable() {
+  const isProxyAvailable = await new Promise((resolve) => {
+    const socket = net.connect(7890, "127.0.0.1");
+    socket.on("connect", () => {
+      socket.end();
+      resolve(true);
+    });
+    socket.on("error", () => resolve(false));
+  });
+
+  if (isProxyAvailable) {
+    process.env.GLOBAL_AGENT_HTTP_PROXY = "http://127.0.0.1:7890";
+    bootstrap();
+    console.log("[代理检测] Clash 代理端口可用，已启用代理");
+  } else {
+    console.log("[代理检测] Clash 代理端口不可用，使用直连");
+  }
+}
 
 app.on("before-quit", (e) => {
   e.preventDefault();
   gracefulExit();
 });
 
-app.whenReady().then(() => {
+app.whenReady().then(async () => {
+  await tryEnableProxyIfAvailable();
   backendManager.startBackend(app);
   createWindow();
   mainWindow.webContents.on("did-finish-load", () => {
